@@ -36,7 +36,13 @@ export async function generateShoppingPlan(description: string): Promise<Shoppin
             },
         });
 
-        const planData: ShoppingPlan = JSON.parse(response.text);
+        const responseText = response.text;
+        // Add a more robust check to ensure the response is a valid, non-empty string.
+        if (typeof responseText !== 'string' || !responseText.trim()) {
+            throw new Error("AI returned an empty or invalid response.");
+        }
+
+        const planData: ShoppingPlan = JSON.parse(responseText);
         
         // Basic validation to ensure the AI returned a structured object
         if (!planData || !planData.budgetAnalysis || !planData.budgetItems) {
