@@ -1,10 +1,42 @@
 
-import { setupUI } from './ui';
+import { 
+    setupLandingPage,
+    setupCreatePlanPage,
+    setupFundWalletPage,
+    setupDashboardPage,
+    setupCravourAdsPage,
+    setupMerchantOnboardingPage,
+    setupMyPlansPage,
+} from './ui';
 
 /**
  * Main entry point for the application.
- * Ensures the DOM is fully loaded before setting up the UI.
+ * This acts as a dispatcher, running the correct UI setup logic
+ * based on the currently loaded page by checking for a unique element ID.
  */
 document.addEventListener('DOMContentLoaded', () => {
-    setupUI();
+    // --- Landing Page Logic ---
+    if (document.getElementById('cravour-ai')) {
+        setupLandingPage();
+    }
+    
+    // --- App Pages Logic ---
+    if (document.getElementById('dashboardGrid')) {
+        setupDashboardPage();
+    }
+    if (document.getElementById('createPlanForm')) {
+        setupCreatePlanPage();
+    }
+    if (document.getElementById('fundWalletForm')) {
+        setupFundWalletPage();
+    }
+    if (document.getElementById('merchantOnboardingForm')) {
+        setupMerchantOnboardingPage();
+    }
+    if (document.querySelector('.plans-grid')) {
+        setupMyPlansPage();
+    }
+    if (document.getElementById('cravourAdsForm')) {
+        setupCravourAdsPage();
+    }
 });

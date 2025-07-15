@@ -1,30 +1,108 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cravour Ads - Coming Soon</title>
+    <title>Cravour Ads - AI Content Generator</title>
     <link rel="icon" href="https://img.icons8.com/color/48/cravour-dot-com.png" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="ads-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="./css/app_styles.css">
+    <link rel="stylesheet" href="./css/ads-styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="content">
-            <div class="logo">Cravour Ads</div>
-            <h1 class="headline">Coming Soon</h1>
-            <h2 class="sub-headline">Amplify Your Business Reach.</h2>
-            <p class="description">
-                Supercharge your marketing with AI. Cravour Ads helps merchants create stunning promotional content in seconds. Generate eye-catching fliers, dynamic 30-second video ads, and engaging social media posts tailored for your brand. Connect with more customers and grow your sales effortlessly.
-            </p>
-            <div class="cta-group">
-                <a href="index.html" class="btn btn-primary">
-                    <i class="fas fa-arrow-left"></i> Go Back Home
+    <div class="app-layout">
+        <aside class="app-sidebar">
+            <div class="sidebar-header">
+                <a href="./index.html" class="logo">C</a>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="./expense_report.html" class="nav-item">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="./create_plan.html" class="nav-item">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>New Plan</span>
+                </a>
+                <a href="./my_plans.html" class="nav-item">
+                    <i class="fas fa-tasks"></i>
+                    <span>My Plans</span>
+                </a>
+                <a href="./fund_wallet.html" class="nav-item">
+                    <i class="fas fa-wallet"></i>
+                    <span>Fund Wallet</span>
+                </a>
+                 <a href="./merchant_onboarding.html" class="nav-item">
+                    <i class="fas fa-store"></i>
+                    <span>For Merchants</span>
+                </a>
+                <a href="./cravour-ads.html" class="nav-item active">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>Cravour Ads</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="./index.html" class="nav-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
                 </a>
             </div>
-        </div>
+        </aside>
+
+        <main class="app-main-content">
+            <header class="app-header">
+                <div class="header-title">
+                    <h1>Cravour Ads Generator</h1>
+                    <p>Create stunning marketing content in seconds with the power of AI.</p>
+                </div>
+            </header>
+
+            <div class="content-panel">
+                <form id="cravourAdsForm" onsubmit="return false;">
+                    <div class="form-section">
+                        <h2 class="form-section-title">1. Describe Your Promotion</h2>
+                        <div class="form-group">
+                            <label for="adDescription">Product, Offer, and Audience</label>
+                            <textarea id="adDescription" name="adDescription" rows="4" placeholder="e.g., A 50% discount on all leather shoes for the weekend at our store in Lekki. Targetting young professionals." required></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h2 class="form-section-title">2. Choose Content Type</h2>
+                        <div class="ad-type-select">
+                             <label>
+                                <input type="radio" name="adType" value="copy" checked>
+                                <div class="ad-type-card">
+                                    <i class="fas fa-pen-alt"></i>
+                                    <span>Social Media Post</span>
+                                    <p>Generate a catchy headline, body text, and hashtags.</p>
+                                </div>
+                            </label>
+                            <label>
+                                <input type="radio" name="adType" value="image">
+                                <div class="ad-type-card">
+                                    <i class="fas fa-image"></i>
+                                    <span>Promotional Flier</span>
+                                    <p>Create a unique, eye-catching flier for your ad.</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-buttons">
+                        <button id="generateAdBtn" type="button" class="btn btn-primary">
+                            <i class="fas fa-magic"></i> Generate Content
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="adResultsContainer" class="ad-results-container" aria-live="polite">
+                <!-- AI generated results will appear here -->
+            </div>
+        </main>
     </div>
+
+    <script src="./index.js"></script>
 </body>
 </html>

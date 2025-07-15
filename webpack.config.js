@@ -1,15 +1,17 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const CopyPlugin = require('copy-webpack-plugin');
 require('dotenv').config({ path: `.env` });
 
 module.exports = {
-    mode: process.env.NODE_ENV || 'development',
+    mode: 'production',
     entry: './src/index.tsx',
     output: {
         filename: 'index.js',
-        path: path.resolve(__dirname, 'public'),
+        path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
+        clean: true,
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.json'],
@@ -25,7 +27,13 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin({
-            'process.env.API_KEY': JSON.stringify(process.env.GEMINI_API_KEY || ''),
+            'process.env.API_KEY': JSON.stringify(process.env.API_KEY || ''),
+        }),
+        new CopyPlugin({
+            patterns: [
+                { from: '*.html', to: '.', context: '.' },
+                { from: 'static/css', to: 'css' },
+            ],
         }),
     ],
     devtool: 'source-map',

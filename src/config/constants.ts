@@ -1,4 +1,3 @@
-
 import { Type } from "@google/genai";
 
 /**
@@ -55,4 +54,33 @@ export const shoppingPlanSchema = {
         }
     },
     required: ["budgetAnalysis", "budgetItems", "priceAnalysis", "recommendedMerchants"]
+};
+
+/**
+ * Defines the JSON structure for the AI's ad copy response.
+ */
+export const adCopySchema = {
+    type: Type.OBJECT,
+    properties: {
+        headline: {
+            type: Type.STRING,
+            description: "A short, catchy title for the ad."
+        },
+        body: {
+            type: Type.STRING,
+            description: "The main text of the ad, 2-3 sentences long."
+        },
+        callToAction: {
+            type: Type.STRING,
+            description: "A compelling call to action, e.g., 'Shop Now!' or 'Visit Us Today'."
+        },
+        hashtags: {
+            type: Type.ARRAY,
+            items: {
+                type: Type.STRING,
+            },
+            description: "An array of 5-7 relevant hashtags."
+        }
+    },
+    required: ["headline", "body", "callToAction", "hashtags"]
 };

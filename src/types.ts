@@ -30,3 +30,10 @@ export interface ShoppingPlan {
     priceAnalysis: PriceAnalysisItem[];
     recommendedMerchants: Merchant[];
 }
+
+export interface AdCopy {
+    headline: string;
+    body: string;
+    callToAction: string;
+    hashtags: string[];
+}
