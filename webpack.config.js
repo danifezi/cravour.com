@@ -1,17 +1,14 @@
 
-// webpack.config.js
 const path = require('path');
 const webpack = require('webpack');
 require('dotenv').config({ path: `.env` });
 
 module.exports = {
     mode: process.env.NODE_ENV || 'development',
-    // Entry point is now at the root level.
-    entry: './index.tsx',
+    entry: './src/index.tsx',
     output: {
         filename: 'index.js',
-        // Output path is the project's root directory.
-        path: path.resolve(__dirname),
+        path: path.resolve(__dirname, 'public'),
         publicPath: '/',
     },
     resolve: {
@@ -28,7 +25,6 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin({
-            // Ensure the API key is available in the build process
             'process.env.API_KEY': JSON.stringify(process.env.GEMINI_API_KEY || ''),
         }),
     ],

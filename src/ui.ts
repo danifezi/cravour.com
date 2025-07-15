@@ -1,23 +1,24 @@
 
-import { fetchPriceData as fetchPrices, generatePlan, generatePriceReportForPlan, findMerchantsForPlan, fetchExpenseReport as fetchReport } from './ai';
-import { showLoadingSpinner, showErrorMessage, showToast, sanitizeInput, debounce } from './utils';
-import { BudgetPlanResponse, PriceReportResponse, Merchant, ExpenseReportResponse } from './types';
-import { API_CONFIG } from './config/constants';
+import { generateShoppingPlan } from './ai';
+import { showLoadingSpinner, showErrorMessage } from './utils';
+import { ShoppingPlan } from './types';
 
-let isExpenseReportFetched = false;
-
+/**
+ * Main UI setup function. Initializes all event listeners.
+ */
 export function setupUI() {
     setupHamburgerMenu();
-    setupPlanner();
-    setupMerchantSuggestions();
-    fetchPriceData(); 
-    
+    setupCravourAI();
+
     const yearSpan = document.getElementById('year');
     if (yearSpan) {
         yearSpan.textContent = new Date().getFullYear().toString();
     }
 }
 
+/**
+ * Sets up the mobile hamburger menu functionality.
+ */
 function setupHamburgerMenu() {
     const hamburger = document.querySelector('.hamburger');
     const headerNav = document.querySelector('.header-nav');
@@ -41,306 +42,120 @@ function setupHamburgerMenu() {
     }
 }
 
-function fetchPriceData() {
-    const grid = document.getElementById('price-tracker-grid');
-    if (!grid) return;
-
-    showLoadingSpinner(grid, 'card');
-
-    fetchPrices().then(data => {
-        requestAnimationFrame(() => {
-            grid.innerHTML = '';
-            data.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'price-card';
-                
-                const isIncreased = item.priceChange > 0;
-                const changeClass = item.priceChange === 0 ? 'stable' : (isIncreased ? 'up' : 'down');
-                const changeIcon = item.priceChange === 0 ? 'fa-equals' : (isIncreased ? 'fa-arrow-up' : 'fa-arrow-down');
-                const trendWidth = Math.min(Math.abs(item.priceChange) / 200 * 100, 100);
-                let priceChangeText = item.priceChange === 0 ? 'Stable' : `${isIncreased ? '+' : '-'}₦${Math.abs(item.priceChange).toLocaleString()}`;
-
-                card.innerHTML = `
-                    <div class="item-name">${sanitizeInput(item.itemName)}</div>
-                    <div class="item-price">₦${item.currentPrice.toLocaleString()}</div>
-                    <div class="price-change ${changeClass}">
-                        <i class="fas ${changeIcon}"></i>
-                        <span>${sanitizeInput(priceChangeText)} (24h)</span>
-                    </div>
-                    <div class="price-trend">
-                        <div class="trend-bar ${changeClass}" style="width: ${trendWidth}%" aria-label="Price trend indicator"></div>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        });
-    }).catch(err => {
-        showErrorMessage(grid, API_CONFIG.FALLBACK_MESSAGE);
-        console.error("Error displaying price data:", err);
-    });
-}
-
-function setupPlanner() {
-    const tabsContainer = document.querySelector('.planner-tabs');
+/**
+ * Sets up the event listener for the main "Cravour AI" form submission.
+ */
+function setupCravourAI() {
     const generatePlanBtn = document.getElementById('generatePlanBtn');
-    const resetPlanBtn = document.getElementById('resetPlanBtn');
-    const descriptionEl = document.getElementById('planDescription') as HTMLTextAreaElement;
-
-    if (tabsContainer) {
-        tabsContainer.addEventListener('click', e => {
-            if (!(e.target instanceof Element)) return;
-            const clickedTab = e.target.closest('.tab-link');
-            if (!clickedTab) return;
-
-            // Deactivate all tabs and content first
-            document.querySelectorAll('.tab-link').forEach(link => {
-                link.classList.remove('active');
-                link.setAttribute('aria-selected', 'false');
-            });
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-
-            // Activate the clicked tab and its corresponding content
-            clickedTab.classList.add('active');
-            clickedTab.setAttribute('aria-selected', 'true');
-            
-            const tabId = (clickedTab as HTMLElement).dataset.tab;
-            if (tabId) {
-                const activeTabContent = document.getElementById(tabId);
-                if (activeTabContent) {
-                    activeTabContent.classList.add('active');
-                }
-            }
-
-            if (tabId === 'expense-report-tab' && !isExpenseReportFetched) {
-                fetchExpenseReport();
-                isExpenseReportFetched = true;
-            }
-        });
+    if (generatePlanBtn) {
+        generatePlanBtn.addEventListener('click', handleGeneratePlan);
     }
-
-    if (generatePlanBtn) generatePlanBtn.addEventListener('click', handleGeneratePlan);
-    
-    if (resetPlanBtn && descriptionEl) {
-        resetPlanBtn.addEventListener('click', () => {
-            descriptionEl.value = '';
-            document.getElementById('planResultWrapper')!.innerHTML = `
-                <div id="planResult" class="result-container" role="region" aria-live="polite"></div>
-                <h3 class="result-heading">AI Price & Savings Report</h3>
-                <div id="planPriceReportResult" class="result-container" role="region" aria-live="polite"></div>
-                <h3 class="result-heading">Suggested Local Merchants</h3>
-                <div id="planMerchantsResult" class="merchant-list-container" role="region" aria-live="polite"></div>`;
-            document.getElementById('planDescriptionError')!.textContent = '';
-            showToast('Budget planner form reset.', 'success');
-        });
-    }
-
-    if (descriptionEl) descriptionEl.addEventListener('input', debounce(() => validatePlanDescription(descriptionEl), 300));
 }
 
-function validatePlanDescription(el: HTMLTextAreaElement): boolean {
-    const errorEl = document.getElementById('planDescriptionError') as HTMLDivElement;
-    const value = sanitizeInput(el.value.trim());
-    if (value.length < 10) {
-        errorEl.textContent = 'Please provide a more descriptive goal (at least 10 characters).';
-        return false;
-    }
-    errorEl.textContent = '';
-    return true;
-}
-
+/**
+ * Handles the click event for generating a shopping plan.
+ * It validates input, shows a loading state, calls the AI, and renders the result.
+ */
 async function handleGeneratePlan() {
     const descriptionEl = document.getElementById('planDescription') as HTMLTextAreaElement;
-    const planContainer = document.getElementById('planResult')!;
-    const reportContainer = document.getElementById('planPriceReportResult')!;
-    const merchantsContainer = document.getElementById('planMerchantsResult')!;
+    const resultsContainer = document.getElementById('shopping-plan-results');
 
-    if (!validatePlanDescription(descriptionEl)) {
-        showToast('Please correct the input errors.', 'error');
+    if (!descriptionEl || !resultsContainer) return;
+
+    const description = descriptionEl.value;
+    if (description.trim().length < 10) {
+        showErrorMessage(resultsContainer, "Please provide a more detailed shopping goal (e.g., items, budget, and location).");
         return;
     }
 
-    showLoadingSpinner(planContainer, 'card');
-    showLoadingSpinner(reportContainer, 'card');
-    showLoadingSpinner(merchantsContainer, 'card');
+    showLoadingSpinner(resultsContainer);
 
     try {
-        const planData = await generatePlan(sanitizeInput(descriptionEl.value));
-        renderPlanResult(planData, planContainer);
-        if (!planData.items || planData.items.length === 0) {
-            showErrorMessage(reportContainer, 'Price report could not be generated.');
-            showErrorMessage(merchantsContainer, 'Merchant suggestions could not be generated.');
-            return;
-        }
-
-        const location = {
-            city: sanitizeInput((document.getElementById('userCity') as HTMLInputElement).value || 'Lagos'),
-            lga: sanitizeInput((document.getElementById('userLGA') as HTMLInputElement).value || '')
-        };
-
-        await Promise.all([
-            generatePriceReportForPlan(planData.items).then(report => renderPriceReport(report, reportContainer)),
-            findMerchantsForPlan(planData.items, location).then(merchants => renderMerchantResults(merchants, merchantsContainer))
-        ]);
-        
-        showToast('Budget plan and reports generated!', 'success');
+        const data = await generateShoppingPlan(description);
+        renderShoppingPlan(data, resultsContainer);
     } catch (err) {
-        showErrorMessage(planContainer, API_CONFIG.FALLBACK_MESSAGE);
-        showErrorMessage(reportContainer, 'Price report generation failed.');
-        showErrorMessage(merchantsContainer, 'Merchant search failed.');
-        console.error("Error in handleGeneratePlan:", err);
+        console.error("Error generating shopping plan:", err);
+        showErrorMessage(resultsContainer, "The AI couldn't generate a shopping plan. Please try rephrasing your goal to be more specific about items, budget, and your location.");
     }
 }
 
-function renderPlanResult(data: BudgetPlanResponse, container: HTMLElement) {
-    if (!data.items || data.items.length === 0) {
-        showErrorMessage(container, 'Could not generate a detailed plan. Please try again.');
-        return;
-    }
-    const itemsHtml = data.items.map(item => `
-        <tr>
-            <td>${sanitizeInput(item.itemName)}</td>
-            <td>${sanitizeInput(item.category)}</td>
-            <td>${sanitizeInput(item.quantity)}</td>
-            <td>₦${item.estimatedPrice.toLocaleString()}</td>
-        </tr>
-    `).join('');
-
-    requestAnimationFrame(() => {
-        container.innerHTML = `
-            <h3 class="result-heading">Your AI-Generated Budget Breakdown:</h3>
+/**
+ * Renders the entire multi-section shopping plan report.
+ * @param data The typed ShoppingPlan object from the AI.
+ * @param container The HTML element to render the results into.
+ */
+function renderShoppingPlan(data: ShoppingPlan, container: HTMLElement) {
+    // --- 1. Budget Analysis Section ---
+    const budget = data.budgetAnalysis;
+    const differenceClass = budget.difference >= 0 ? 'success' : 'error';
+    const budgetHtml = `
+        <div class="result-section">
+            <h3 class="result-heading">Budget vs. Market Prices</h3>
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h4>Your Budget</h4>
+                    <p>₦${budget.userBudget.toLocaleString()}</p>
+                </div>
+                <div class="summary-card">
+                    <h4>AI Estimated Cost</h4>
+                    <p>₦${budget.estimatedCost.toLocaleString()}</p>
+                </div>
+                <div class="summary-card">
+                    <h4>Difference</h4>
+                    <p class="${differenceClass}">₦${Math.abs(budget.difference).toLocaleString()}</p>
+                </div>
+            </div>
+            <p class="summary-text">${budget.summary}</p>
             <table class="plan-result-table">
-                <thead><tr><th>Item</th><th>Category</th><th>Quantity</th><th>Est. Price</th></tr></thead>
+                <thead>
+                    <tr><th>Item</th><th>Quantity</th><th>Est. Price</th></tr>
+                </thead>
                 <tbody>
-                    ${itemsHtml}
-                    <tr class="total-row"><td colspan="3">Estimated Total</td><td>₦${data.estimatedTotal.toLocaleString()}</td></tr>
+                    ${data.budgetItems.map(item => `
+                        <tr>
+                            <td>${item.itemName}</td>
+                            <td>${item.quantity}</td>
+                            <td>₦${item.estimatedPrice.toLocaleString()}</td>
+                        </tr>
+                    `).join('')}
                 </tbody>
             </table>
-            ${data.notes ? `<div class="success-message" role="note"><p><strong>AI Tip:</strong> ${sanitizeInput(data.notes)}</p></div>` : ''}
-        `;
-    });
-}
-
-function renderPriceReport(data: PriceReportResponse, container: HTMLElement) {
-    if (!data.itemReports || data.itemReports.length === 0) {
-        showErrorMessage(container, 'AI could not generate a price report.');
-        return;
-    }
-    const itemsHtml = data.itemReports.map(item => `
-        <div class="report-item">
-            <span class="report-item-name">${sanitizeInput(item.itemName)}</span>
-            <span class="report-item-price">${sanitizeInput(item.averagePrice)}</span>
-            <span class="report-item-stability">${sanitizeInput(item.stability)}</span>
-        </div>
-    `).join('');
-
-    requestAnimationFrame(() => {
-        container.innerHTML = `
-            <div class="price-report-card">
-                <div class="report-summary"><h4>Market Summary</h4><p>${sanitizeInput(data.overallSummary)}</p></div>
-                <div class="report-items-list"><h4>Item Price Insights</h4>${itemsHtml}</div>
-                <div class="report-tips"><h4><i class="fas fa-lightbulb"></i> Savings Tip</h4><p>${sanitizeInput(data.savingTips)}</p></div>
-            </div>
-        `;
-    });
-}
-
-async function fetchExpenseReport() {
-    const container = document.getElementById('reportResult')!;
-    showLoadingSpinner(container, 'card');
-
-    try {
-        const data = await fetchReport();
-        if (!data || !data.spendingByCategory) {
-            showErrorMessage(container, 'AI could not generate a sample expense report.');
-            return;
-        }
-        renderExpenseReport(data, container);
-        showToast('Expense report loaded!', 'success');
-    } catch (err) {
-        showErrorMessage(container, API_CONFIG.FALLBACK_MESSAGE);
-        console.error("Error fetching expense report:", err);
-    }
-}
-
-function renderExpenseReport(data: ExpenseReportResponse, container: HTMLElement) {
-    const summaryHtml = `
-        <div class="report-summary-grid">
-            <div class="summary-card"><h3>Total Spent (Sample)</h3><div class="amount spent">₦${data.totalSpent.toLocaleString()}</div></div>
-            <div class="summary-card"><h3>Avg. Daily Spend</h3><div class="amount">₦${data.avgDailySpend.toLocaleString()}</div></div>
         </div>
     `;
 
-    const barsHtml = data.spendingByCategory.map(cat => {
-        const percentage = data.totalSpent > 0 ? (cat.amount / data.totalSpent) * 100 : 0;
-        return `
-            <div class="report-bar-item">
-                <span class="bar-label">${sanitizeInput(cat.category)}:</span>
-                <div class="bar-container"><div class="bar" style="width: ${percentage.toFixed(2)}%;">₦${cat.amount.toLocaleString()}</div></div>
-            </div>`;
-    }).join('');
+    // --- 2. Price Analysis & Savings Tips Section ---
+    const analysisHtml = `
+        <div class="result-section">
+            <h3 class="result-heading">AI Price & Savings Report</h3>
+            <div class="analysis-grid">
+                ${data.priceAnalysis.map(item => `
+                    <div class="analysis-card">
+                        <h4>${item.itemName}</h4>
+                        <p class="stability"><strong>Price Stability:</strong> ${item.priceStability}</p>
+                        <p class="tip"><i class="fas fa-lightbulb"></i> <strong>Tip:</strong> ${item.savingTip}</p>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
 
-    const transactionsHtml = data.transactions.map(tx => `
-        <tr><td>${sanitizeInput(tx.date)}</td><td>${sanitizeInput(tx.item)}</td><td>${sanitizeInput(tx.category)}</td><td>₦${tx.amount.toLocaleString()}</td></tr>
-    `).join('');
+    // --- 3. Recommended Merchants Section ---
+    const merchantsHtml = `
+        <div class="result-section">
+            <h3 class="result-heading">Recommended Local Merchants</h3>
+            <div class="merchant-grid">
+                ${data.recommendedMerchants.map(merchant => `
+                    <div class="merchant-card">
+                        <h4><i class="fas fa-store"></i> ${merchant.name}</h4>
+                        <div class="details">
+                            <p><i class="fas fa-map-marker-alt"></i> ${merchant.address}</p>
+                        </div>
+                        <p class="deals"><i class="fas fa-tags"></i> ${merchant.deals}</p>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
 
-    requestAnimationFrame(() => {
-        container.innerHTML = summaryHtml +
-            `<div class="report-chart-section"><h3 class="result-heading">Spending by Category</h3><div class="report-bar-chart">${barsHtml}</div></div>` +
-            `<div class="report-transaction-list"><h3 class="result-heading">Recent Transactions</h3><table class="report-transaction-table"><thead><tr><th>Date</th><th>Description</th><th>Category</th><th>Amount</th></tr></thead><tbody>${transactionsHtml}</tbody></table></div>` +
-            (data.insights ? `<div class="success-message" role="note"><p><strong>AI Insight:</strong> ${sanitizeInput(data.insights)}</p></div>` : '');
-    });
-}
-
-function setupMerchantSuggestions() {
-    const findBtn = document.getElementById('findMerchantsBtn');
-    if (findBtn) findBtn.addEventListener('click', debounce(findClosestMerchants, 300));
-}
-
-async function findClosestMerchants() {
-    const cityEl = document.getElementById('userCity') as HTMLInputElement;
-    const lgaEl = document.getElementById('userLGA') as HTMLInputElement;
-    const categoryEl = document.getElementById('itemCategory') as HTMLSelectElement;
-    const container = document.getElementById('merchant-list')!;
-
-    const city = sanitizeInput(cityEl.value.trim());
-    if (!city) {
-        showErrorMessage(container, "Please enter a city to find merchants.");
-        return;
-    }
-    showLoadingSpinner(container, 'card');
-
-    try {
-        const merchants = await findMerchantsForPlan([], { city, lga: sanitizeInput(lgaEl.value), category: sanitizeInput(categoryEl.value) });
-        renderMerchantResults(merchants, container);
-        showToast(merchants && merchants.length > 0 ? 'Merchants found!' : 'No merchants found for your criteria.', 'success');
-    } catch (err) {
-        showErrorMessage(container, API_CONFIG.FALLBACK_MESSAGE);
-        console.error("Error finding merchants:", err);
-    }
-}
-
-
-function renderMerchantResults(merchants: Merchant[], container: HTMLElement) {
-    requestAnimationFrame(() => {
-        if (!merchants || merchants.length === 0) {
-            showErrorMessage(container, `No merchants found matching your criteria.`);
-            return;
-        }
-        container.innerHTML = '';
-        const listDiv = document.createElement('div');
-        listDiv.className = 'merchant-grid';
-        merchants.forEach(merchant => {
-            const card = document.createElement('div');
-            card.className = 'merchant-card';
-            card.innerHTML = `
-                <h4><i class="fas fa-store"></i> ${sanitizeInput(merchant.name)}</h4>
-                <div class="details"><p><i class="fas fa-map-marker-alt"></i> ${sanitizeInput(merchant.address)}</p></div>
-                <p class="deals"><i class="fas fa-tags"></i> ${sanitizeInput(merchant.deals)}</p>
-            `;
-            listDiv.appendChild(card);
-        });
-        container.appendChild(listDiv);
-    });
+    container.innerHTML = budgetHtml + analysisHtml + merchantsHtml;
 }

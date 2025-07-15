@@ -1,165 +1,105 @@
-import { describe, it, expect, beforeEach, jest } from '@jest/globals';
-import { GoogleGenAI } from "@google/genai";
-import { fetchPriceData, generatePlan, generatePriceReportForPlan, findMerchantsForPlan, fetchExpenseReport } from '../src/ai';
-import { setCachedData, getCachedData } from '../src/utils';
-import { API_CONFIG, FALLBACK_DATA } from '../src/config/constants';
 
-// Instruct Jest to use an automatic mock for the @google/genai module
+import { describe, it, expect, beforeEach, jest, afterEach } from '@jest/globals';
+import { GoogleGenAI } from "@google/genai";
+import { shoppingPlanSchema } from '../src/config/constants';
+import { ShoppingPlan } from '../src/types';
+
+// Mock the @google/genai module. This happens before any imports.
 jest.mock('@google/genai');
 
-// Infer Jest's mock type from an actual mock function.
-// This is a workaround for environments where Jest's global types are not automatically recognized.
-const _jestFn = jest.fn();
-type JestMock = typeof _jestFn;
+const MockedGoogleGenAI = GoogleGenAI as jest.Mock;
 
-// Get a handle on the mocked class constructor
-const mockGoogleGenAI = GoogleGenAI as JestMock;
-// Create a persistent mock function for the generateContent method
-const mockGenerateContent = jest.fn();
-
-// Mock localStorage for caching tests
-const localStorageMock = (() => {
-    let store: { [key: string]: string } = {};
-    return {
-        getItem: jest.fn((key: string) => store[key] || null),
-        setItem: jest.fn((key: string, value: string) => { store[key] = value; }),
-        removeItem: jest.fn((key: string) => { delete store[key]; }),
-        clear: jest.fn(() => { store = {}; })
+// By explicitly typing the mock function, we provide TypeScript with the
+// necessary information about its parameters and return value, resolving 'any'/'unknown' issues.
+const mockGenerateContent = jest.fn<(args: {
+    model: string;
+    contents: string;
+    config: {
+        responseMimeType: string;
+        responseSchema: any;
     };
-})();
-Object.defineProperty(window, 'localStorage', { value: localStorageMock });
+}) => Promise<{ text: string }>>();
 
-process.env.GEMINI_API_KEY = 'mock-api-key';
+// The mock constructor for GoogleGenAI returns an object with our mock method.
+MockedGoogleGenAI.mockImplementation(() => ({
+    models: {
+        generateContent: mockGenerateContent,
+    },
+}));
 
-describe('AI Functions', () => {
+// Dynamically import the module under test to handle changes to process.env.
+let generateShoppingPlan: (description: string) => Promise<ShoppingPlan>;
 
-    beforeEach(() => {
-        // Clear mock history and implementations before each test
+describe('AI Function: generateShoppingPlan', () => {
+    const originalApiKey = process.env.API_KEY;
+
+    beforeEach(async () => {
+        // Reset mocks and environment before each test
         mockGenerateContent.mockClear();
-        mockGoogleGenAI.mockClear();
-        localStorageMock.clear();
-        jest.clearAllMocks();
-
-        // Before each test, we configure the mock implementation.
-        // When `new GoogleGenAI()` is called in `ai.ts`, it will return our mock object.
-        mockGoogleGenAI.mockImplementation(() => ({
-            models: {
-                generateContent: mockGenerateContent,
-            },
-        }));
-    });
-
-    describe('fetchPriceData', () => {
-        it('should return cached data if available', async () => {
-            setCachedData('cravour-price-data', FALLBACK_DATA.PRICE_DATA);
-            const result = await fetchPriceData();
-            expect(result).toEqual(FALLBACK_DATA.PRICE_DATA);
-            // Ensure the AI was not called because cached data was used
-            expect(mockGenerateContent).not.toHaveBeenCalled();
-        });
-
-        it('should fetch from AI and cache if not in cache', async () => {
-            const aiResponse = [{ itemName: "Test Rice", currentPrice: 100, priceChange: 10 }];
-            mockGenerateContent.mockResolvedValueOnce({ text: JSON.stringify(aiResponse) });
-
-            const result = await fetchPriceData();
-
-            expect(result).toEqual(aiResponse);
-            expect(mockGenerateContent).toHaveBeenCalledTimes(1);
-            // Verify that the new data was cached
-            expect(localStorageMock.setItem).toHaveBeenCalledWith('cravour-price-data', expect.any(String));
-        });
-
-        it('should return fallback data on AI failure after retries', async () => {
-            // Mock the AI call to consistently fail
-            mockGenerateContent.mockRejectedValue(new Error('AI network error'));
-            
-            const result = await fetchPriceData();
-            
-            expect(result).toEqual(FALLBACK_DATA.PRICE_DATA);
-            // Expect initial call + 2 retries
-            expect(mockGenerateContent).toHaveBeenCalledTimes(API_CONFIG.MAX_RETRIES + 1);
-        });
-    });
-
-    describe('generatePlan', () => {
-        it('should return a valid plan on success', async () => {
-            const aiResponse = { estimatedTotal: 500, items: [{itemName: 'a', category: 'b', quantity: 'c', estimatedPrice: 500}] };
-            mockGenerateContent.mockResolvedValueOnce({ text: JSON.stringify(aiResponse) });
-            
-            const result = await generatePlan('test');
-            
-            expect(result).toEqual(aiResponse);
-        });
+        MockedGoogleGenAI.mockClear();
         
-        it('should return empty plan fallback on AI failure', async () => {
-            mockGenerateContent.mockRejectedValue(new Error('AI error'));
-            
-            const result = await generatePlan('test');
-            
-            expect(result).toEqual(FALLBACK_DATA.EMPTY_PLAN);
-        });
+        // Ensure a valid API key is set for most tests
+        process.env.API_KEY = 'mock-api-key-for-testing';
+
+        // Re-import the module to apply environment changes
+        const aiModule = await import('../src/ai');
+        generateShoppingPlan = aiModule.generateShoppingPlan;
     });
-    
-    describe('generatePriceReportForPlan', () => {
-        const mockItems = [{ itemName: 'Rice', category: 'Food', quantity: '1kg', estimatedPrice: 500 }];
+
+    afterEach(() => {
+        // Restore original environment and reset modules
+        process.env.API_KEY = originalApiKey;
+        jest.resetModules();
+    });
+
+    it('should successfully call the AI and return parsed JSON data', async () => {
+        const description = "I want to buy milk and bread in Ikeja with a budget of 2000 NGN.";
+        const mockAiResponseData: ShoppingPlan = {
+            budgetAnalysis: { userBudget: 2000, estimatedCost: 1500, difference: 500, summary: "Budget is sufficient." },
+            budgetItems: [{ itemName: "Milk", quantity: "1 tin", estimatedPrice: 1200 }, { itemName: "Bread", quantity: "1 loaf", estimatedPrice: 300 }],
+            priceAnalysis: [{ itemName: "Milk", priceStability: "Stable", savingTip: "Buy powdered milk for longer shelf life." }],
+            recommendedMerchants: [{ name: "Shoprite", address: "Ikeja City Mall", deals: "Weekly deals available." }]
+        };
         
-        it('should return a valid report on success', async () => {
-            const aiResponse = { overallSummary: 's', savingTips: 't', itemReports: [{itemName: 'Rice', averagePrice: '500', stability: 'Stable'}]};
-            mockGenerateContent.mockResolvedValueOnce({ text: JSON.stringify(aiResponse) });
-            
-            const result = await generatePriceReportForPlan(mockItems);
-
-            expect(result).toEqual(aiResponse);
+        mockGenerateContent.mockResolvedValue({
+            text: JSON.stringify(mockAiResponseData),
         });
+
+        const result = await generateShoppingPlan(description);
+
+        expect(mockGenerateContent).toHaveBeenCalledTimes(1);
+        const callArgs = mockGenerateContent.mock.calls[0][0];
+        expect(callArgs.model).toBe("gemini-2.5-flash");
+        expect(callArgs.contents).toContain(description);
+        expect(callArgs.config.responseSchema).toEqual(shoppingPlanSchema);
+        expect(result).toEqual(mockAiResponseData);
+    });
+
+    it('should throw a specific error when the AI service call fails', async () => {
+        const description = "some goal";
+        const aiError = new Error("Network failure");
+        mockGenerateContent.mockRejectedValue(aiError);
         
-        it('should return empty report fallback on AI failure', async () => {
-            mockGenerateContent.mockRejectedValue(new Error('AI error'));
+        const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
-            const result = await generatePriceReportForPlan(mockItems);
-
-            expect(result).toEqual(FALLBACK_DATA.EMPTY_PRICE_REPORT);
-        });
+        await expect(generateShoppingPlan(description)).rejects.toThrow(
+            "Failed to generate a shopping plan from the AI service."
+        );
+        
+        expect(consoleSpy).toHaveBeenCalledWith("AI Generation Error:", aiError);
+        consoleSpy.mockRestore();
     });
 
-    describe('findMerchantsForPlan', () => {
-        const mockItems = [{ itemName: 'TV', category: 'Electronics', quantity: '1', estimatedPrice: 100000 }];
-        const mockLocation = { city: 'Lagos', lga: 'Ikeja' };
+    it('should throw an error if API key is not configured', async () => {
+        process.env.API_KEY = '';
 
-        it('should return merchants on success', async () => {
-            const aiResponse = [{ name: 'm1', address: 'a1', deals: 'd1'}];
-            mockGenerateContent.mockResolvedValueOnce({ text: JSON.stringify(aiResponse) });
-            
-            const result = await findMerchantsForPlan(mockItems, mockLocation);
-            
-            expect(result).toEqual(aiResponse);
-        });
+        // We need to re-import the module for the new env variable to be picked up
+        const { generateShoppingPlan: newGenerateShoppingPlan } = await import('../src/ai');
+        
+        await expect(newGenerateShoppingPlan('any description')).rejects.toThrow(
+            'API key is missing. Please configure your environment variables.'
+        );
 
-        it('should return empty merchants fallback on AI failure', async () => {
-            mockGenerateContent.mockRejectedValue(new Error('AI error'));
-            
-            const result = await findMerchantsForPlan(mockItems, mockLocation);
-
-            expect(result).toEqual(FALLBACK_DATA.EMPTY_MERCHANTS);
-        });
-    });
-
-    describe('fetchExpenseReport', () => {
-        it('should return a valid report from AI', async () => {
-            const aiResponse = FALLBACK_DATA.EXPENSE_REPORT;
-            mockGenerateContent.mockResolvedValueOnce({ text: JSON.stringify(aiResponse) });
-            
-            const result = await fetchExpenseReport();
-
-            expect(result).toEqual(aiResponse);
-        });
-
-        it('should return fallback data on AI failure', async () => {
-            mockGenerateContent.mockRejectedValue(new Error('AI error'));
-            
-            const result = await fetchExpenseReport();
-            
-            expect(result).toEqual(FALLBACK_DATA.EXPENSE_REPORT);
-        });
+        expect(mockGenerateContent).not.toHaveBeenCalled();
     });
 });
