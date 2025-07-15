@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cravour Ads - Coming Soon</title>
+    <link rel="icon" href="https://img.icons8.com/color/48/cravour-dot-com.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #0D0D0D; 
+            --color-gold-accent: #FFC107;
+            --color-background: #F8F9FA;
+            --color-surface: #FFFFFF;
+            --color-text-primary: #212529;
+            --color-text-secondary: #6C757D;
+            --font-heading: 'Poppins', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-background);
+            color: var(--color-text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .container {
+            background-color: var(--color-surface);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            font-family: var(--font-heading);
+            font-size: 2.8em;
+            color: var(--color-primary);
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.1em;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 2.2em;
+            font-weight: 700;
+            color: var(--color-gold-accent);
+            display: block;
+            margin-bottom: 20px;
+            text-decoration: none;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid var(--color-primary);
+            cursor: pointer;
+            font-size: 1em;
+            text-decoration: none;
+            background-color: var(--color-primary);
+            color: var(--color-surface);
+        }
+
+        .btn:hover {
+            background-color: var(--color-gold-accent);
+            color: var(--color-primary);
+            border-color: var(--color-gold-accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2em; }
+            p { font-size: 1em; }
+            .container { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="logo">Cravour Ads</a>
+        <h1>Exciting Things Are Brewing!</h1>
+        <p>Cravour Ads is currently under development to bring merchants the most potent tools for propagating their content, from captivating video ads to engaging social media placeholders and dynamic fliers.</p>
+        <p>Stay tuned! We're building something truly powerful to help your business thrive.</p>
+        <a href="index.html" class="btn">Back to Cravour Home</a>
+    </div>
+</body>
+</html>
