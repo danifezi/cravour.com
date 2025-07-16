@@ -1,5 +1,5 @@
 
-import { generateShoppingPlan, generateAdCopy, generateAdImage } from './ai';
+import * as ai from './ai';
 import { showLoadingSpinner, showErrorMessage } from './utils';
 import { ShoppingPlan, AdCopy } from './types';
 import { GoogleGenAI, Type } from "@google/genai";
@@ -67,7 +67,7 @@ async function handleGeneratePlan() {
     showLoadingSpinner(resultsContainer);
 
     try {
-        const data = await generateShoppingPlan(description);
+        const data = await ai.generateShoppingPlan(description);
         renderShoppingPlan(data, resultsContainer);
     } catch (err) {
         console.error("Error generating shopping plan:", err);
@@ -267,7 +267,11 @@ export function setupDashboardPage() {
                 config: { responseMimeType: "application/json", responseSchema: reportSchema },
             });
             
-            const data = JSON.parse(response.text);
+            const responseText = response.text?.trim();
+            if (!responseText) {
+                throw new Error("AI returned empty dashboard data.");
+            }
+            const data = JSON.parse(responseText);
 
             const totalSpentEl = document.getElementById('totalSpent');
             const avgDailySpendEl = document.getElementById('avgDailySpend');
@@ -333,8 +337,8 @@ async function handleGenerateAd() {
     try {
         // Generate both copy and image in parallel
         const [copy, imageBytes] = await Promise.all([
-            generateAdCopy(description),
-            generateAdImage(description)
+            ai.generateAdCopy(description),
+            ai.generateAdImage(description)
         ]);
         renderCombinedAdResult(copy, imageBytes, resultsContainer);
     } catch (err) {
