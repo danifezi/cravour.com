@@ -1,0 +1,125 @@
+
+.ad-results-container {
+    margin-top: 30px;
+    position: relative;
+    min-height: 150px;
+}
+
+.ad-result-card {
+    background-color: var(--color-surface);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-soft);
+    animation: resultFadeIn 0.5s;
+    position: relative;
+    text-align: left;
+}
+
+@keyframes resultFadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.ad-result-card > h3 {
+    font-size: 1.5em;
+    margin-bottom: 25px;
+    color: var(--color-accent);
+    text-align: center;
+}
+
+.ad-result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.ad-image-column, .ad-copy-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.ad-image-column h4, .ad-copy-column h4 {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-bottom: 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.ad-image-column img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+}
+
+.ad-image-column .btn {
+    width: 100%;
+}
+
+.ad-copy-section {
+    margin-bottom: 0;
+}
+
+.ad-copy-section h5 {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ad-copy-section p {
+    font-size: 1.05em;
+    line-height: 1.6;
+    background-color: var(--color-background);
+    padding: 15px;
+    border-radius: 8px;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.ad-copy-section p.cta {
+    font-weight: bold;
+    color: var(--color-accent);
+}
+
+.ad-hashtags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px;
+    background-color: var(--color-background);
+    border-radius: 8px;
+}
+
+.ad-hashtags span {
+    background-color: var(--color-border);
+    color: var(--color-text-primary);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.ad-copy-column .btn-primary-outline {
+    margin-top: 10px;
+    background-color: transparent;
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+}
+
+.ad-copy-column .btn-primary-outline:hover {
+    background-color: var(--color-primary);
+    color: var(--color-surface);
+}
+
+
+@media(max-width: 900px) {
+    .ad-result-grid {
+        grid-template-columns: 1fr;
+    }
+}
