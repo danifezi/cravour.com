@@ -11,8 +11,7 @@
         "forceConsistentCasingInFileNames": true,
         "sourceMap": true,
         "allowJs": true,
-        "declaration": false,
-        "rootDir": "./src"
+        "declaration": false
     },
     "include": [
         "src/**/*"

@@ -1,4 +1,3 @@
-
 export interface BudgetAnalysis {
     userBudget: number;
     estimatedCost: number;
@@ -36,4 +35,12 @@ export interface AdCopy {
     body: string;
     callToAction: string;
     hashtags: string[];
+}
+
+export interface DashboardReport {
+    totalSpent: number;
+    avgDailySpend: number;
+    topCategory: string;
+    spendingByCategory: { category: string; amount: number; }[];
+    transactions: { date: string; item: string; category: string; amount: number; type: 'in' | 'out' }[];
 }

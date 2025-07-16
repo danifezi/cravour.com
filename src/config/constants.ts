@@ -84,3 +84,34 @@ export const adCopySchema = {
     },
     required: ["headline", "body", "callToAction", "hashtags"]
 };
+
+/**
+ * Defines the JSON structure for the AI's dashboard report response.
+ */
+export const dashboardReportSchema = {
+    type: Type.OBJECT,
+    properties: {
+        totalSpent: { type: Type.NUMBER },
+        avgDailySpend: { type: Type.NUMBER },
+        topCategory: { type: Type.STRING },
+        spendingByCategory: {
+            type: Type.ARRAY,
+            items: { type: Type.OBJECT, properties: { category: { type: Type.STRING }, amount: { type: Type.NUMBER } }, required: ["category", "amount"] }
+        },
+        transactions: {
+            type: Type.ARRAY,
+            items: {
+                type: Type.OBJECT,
+                properties: {
+                    date: { type: Type.STRING, description: "e.g., Aug 20" },
+                    item: { type: Type.STRING },
+                    category: { type: Type.STRING },
+                    amount: { type: Type.NUMBER },
+                    type: { type: Type.STRING, description: "'in' for income, 'out' for expense" }
+                },
+                required: ["date", "item", "category", "amount", "type"]
+            }
+        }
+    },
+    required: ["totalSpent", "avgDailySpend", "topCategory", "spendingByCategory", "transactions"]
+};

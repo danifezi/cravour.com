@@ -1,13 +1,27 @@
-
-import { GoogleGenAI } from "@google/genai";
-import { shoppingPlanSchema, adCopySchema } from "./config/constants";
-import { ShoppingPlan, AdCopy } from "./types";
+import { GoogleGenAI, Type } from "@google/genai";
+import { shoppingPlanSchema, adCopySchema, dashboardReportSchema } from "./config/constants";
+import { ShoppingPlan, AdCopy, DashboardReport } from "./types";
 
 const apiKey = process.env.API_KEY;
-if (!apiKey) {
-    throw new Error("API key is missing. Please set the API_KEY environment variable. AI features will not work.");
+
+// Conditionally initialize `ai` only if a valid API key is provided.
+// This prevents the constructor from throwing an error and crashing the script on load.
+const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
+
+// If no API key is found at startup, log a warning for the developer.
+if (!ai) {
+    console.warn("API key is missing or invalid. AI features will not be available. Please set the API_KEY environment variable.");
 }
-const ai = new GoogleGenAI({ apiKey });
+
+/**
+ * A helper function to ensure the AI instance is ready before making a call.
+ * Throws a specific, catchable error if the AI is not available.
+ */
+function ensureApiIsReady() {
+    if (!ai) {
+        throw new Error("AI service is not available due to a missing API key.");
+    }
+}
 
 /**
  * Generates a comprehensive shopping plan from a single user description.
@@ -16,6 +30,7 @@ const ai = new GoogleGenAI({ apiKey });
  * @throws An error if the AI call fails or returns an invalid response.
  */
 export async function generateShoppingPlan(description: string): Promise<ShoppingPlan> {
+    ensureApiIsReady();
     const prompt = `A user in Nigeria provides the following shopping goal: "${description}". 
     From this text, you must extract the items, the user's total budget, and their location (e.g., city/area).
     Then, generate a complete shopping plan based on current, realistic Nigerian market prices (in NGN).
@@ -57,6 +72,7 @@ export async function generateShoppingPlan(description: string): Promise<Shoppin
  * @returns A promise resolving to an AdCopy object.
  */
 export async function generateAdCopy(description: string): Promise<AdCopy> {
+    ensureApiIsReady();
     const prompt = `Based on this description: "${description}", generate professional, engaging social media ad copy for a business in Nigeria. The copy should be exciting and clear. Return a JSON object with a 'headline' (a short, catchy title), a 'body' (2-3 sentences of descriptive text), a short, punchy 'callToAction' (e.g., 'Shop Now!', 'Learn More'), and an array of 5-7 relevant 'hashtags'.`;
     try {
         const response = await ai.models.generateContent({
@@ -90,6 +106,7 @@ export async function generateAdCopy(description: string): Promise<AdCopy> {
  * @returns A promise resolving to the Base64 encoded string of the generated image.
  */
 export async function generateAdImage(description: string): Promise<string> {
+    ensureApiIsReady();
     const prompt = `Create a visually stunning, professional promotional flier suitable for social media in Nigeria. The flier is for: ${description}. The design should be modern, clean, and vibrant, using brand colors of gold (#FFC107) and dark charcoal grey. It should prominently feature the product or offer. It should look like a polished piece of graphic design, not a raw photograph. Feel free to incorporate abstract design elements that match the product's feel. Do not include any placeholder text like 'Your text here'. The image must feel like a finished advertisement.`;
     try {
         const response = await ai.models.generateImages({
@@ -112,5 +129,35 @@ export async function generateAdImage(description: string): Promise<string> {
     } catch (err) {
         console.error("AI Generation Error (Ad Image):", err);
         throw new Error("Failed to generate ad image.");
+    }
+}
+
+/**
+ * Generates a dashboard report with sample data.
+ * @returns A promise resolving to a DashboardReport object.
+ */
+export async function generateDashboardReport(): Promise<DashboardReport> {
+    ensureApiIsReady();
+    const prompt = "Generate a sample monthly expense report dashboard in Nigerian Naira (NGN) for a young professional in Lagos. Include total spending, average daily spend, the top spending category name, a breakdown of spending by 4-5 categories (like Food, Transport, Utilities), and a list of 4 sample transactions (include one 'in' type transaction like 'Wallet Top-up').";
+    try {
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: prompt,
+            config: { responseMimeType: "application/json", responseSchema: dashboardReportSchema },
+        });
+
+        const responseText = response.text?.trim();
+        if (!responseText) {
+            throw new Error("AI returned empty dashboard data.");
+        }
+        const data: DashboardReport = JSON.parse(responseText);
+        
+        if (!data.totalSpent || !data.spendingByCategory || !data.transactions) {
+            throw new Error("AI returned incomplete dashboard data.");
+        }
+        return data;
+    } catch (err) {
+        console.error("AI Generation Error (Dashboard Report):", err);
+        throw new Error("Failed to generate the dashboard report from the AI service.");
     }
 }

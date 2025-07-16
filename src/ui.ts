@@ -2,11 +2,6 @@
 import * as ai from './ai';
 import { showLoadingSpinner, showErrorMessage } from './utils';
 import { ShoppingPlan, AdCopy } from './types';
-import { GoogleGenAI, Type } from "@google/genai";
-
-// AI instance for app-specific tasks (like the dashboard)
-const appAi = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
-
 
 // ==================================================================
 // LANDING PAGE UI LOGIC
@@ -46,17 +41,32 @@ function setupHamburgerMenu() {
 }
 
 function setupCravourAI() {
-    const generatePlanBtn = document.getElementById('generatePlanBtn');
+    const generatePlanBtn = document.getElementById('generatePlanBtn') as HTMLButtonElement;
     if (generatePlanBtn) {
+        // Check for API Key and update UI accordingly for better developer feedback.
+        if (!process.env.API_KEY) {
+            generatePlanBtn.disabled = true;
+            generatePlanBtn.innerHTML = '<i class="fas fa-exclamation-circle"></i> AI Offline: API Key Missing';
+            generatePlanBtn.title = 'The AI service is unavailable. An API_KEY environment variable must be configured for this feature to work.';
+            generatePlanBtn.style.cursor = 'not-allowed';
+            generatePlanBtn.style.opacity = '0.7';
+            return; // Stop further setup for this feature
+        }
         generatePlanBtn.addEventListener('click', handleGeneratePlan);
+    } else {
+        console.error("Cravour AI 'Generate Plan' button not found. AI planner will not function.");
     }
 }
 
 async function handleGeneratePlan() {
     const descriptionEl = document.getElementById('planDescription') as HTMLTextAreaElement;
     const resultsContainer = document.getElementById('shopping-plan-results');
+    const generateBtn = document.getElementById('generatePlanBtn') as HTMLButtonElement;
 
-    if (!descriptionEl || !resultsContainer) return;
+    if (!descriptionEl || !resultsContainer || !generateBtn) {
+        console.error("One or more essential UI elements for the AI planner are missing.");
+        return;
+    }
 
     const description = descriptionEl.value;
     if (description.trim().length < 10) {
@@ -65,13 +75,21 @@ async function handleGeneratePlan() {
     }
 
     showLoadingSpinner(resultsContainer);
+    generateBtn.disabled = true;
+    generateBtn.innerHTML = 'Generating... <i class="fas fa-spinner fa-spin"></i>';
 
     try {
         const data = await ai.generateShoppingPlan(description);
         renderShoppingPlan(data, resultsContainer);
     } catch (err) {
         console.error("Error generating shopping plan:", err);
-        showErrorMessage(resultsContainer, "The AI couldn't generate a shopping plan. Please try rephrasing your goal to be more specific about items, budget, and your location.");
+        const errorMessage = (err as Error).message.includes("API key") 
+            ? "The AI service is not configured. Please contact support."
+            : "The AI couldn't generate a plan. Please try rephrasing your goal to be more specific.";
+        showErrorMessage(resultsContainer, errorMessage);
+    } finally {
+        generateBtn.disabled = false;
+        generateBtn.innerHTML = 'Generate My AI Plan <i class="fas fa-cogs" aria-hidden="true"></i>';
     }
 }
 
@@ -237,41 +255,8 @@ export function setupDashboardPage() {
         showLoadingSpinner(barChartContainer);
         transactionTableBody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Loading...</td></tr>';
 
-        const reportSchema = {
-            type: Type.OBJECT,
-            properties: {
-                totalSpent: { type: Type.NUMBER }, avgDailySpend: { type: Type.NUMBER }, topCategory: { type: Type.STRING },
-                spendingByCategory: {
-                    type: Type.ARRAY,
-                    items: { type: Type.OBJECT, properties: { category: { type: Type.STRING }, amount: { type: Type.NUMBER } }, required: ["category", "amount"] }
-                },
-                transactions: {
-                    type: Type.ARRAY,
-                    items: {
-                        type: Type.OBJECT,
-                        properties: {
-                            date: { type: Type.STRING, description: "e.g., Aug 20" }, item: { type: Type.STRING }, category: { type: Type.STRING }, amount: { type: Type.NUMBER },
-                            type: { type: Type.STRING, description: "'in' for income, 'out' for expense" }
-                        },
-                        required: ["date", "item", "category", "amount", "type"]
-                    }
-                }
-            },
-            required: ["totalSpent", "avgDailySpend", "topCategory", "spendingByCategory", "transactions"]
-        };
-
         try {
-            const response = await appAi.models.generateContent({
-                model: "gemini-2.5-flash",
-                contents: "Generate a sample monthly expense report dashboard in Nigerian Naira (NGN) for a young professional in Lagos. Include total spending, average daily spend, the top spending category name, a breakdown of spending by 4-5 categories (like Food, Transport, Utilities), and a list of 4 sample transactions (include one 'in' type transaction like 'Wallet Top-up').",
-                config: { responseMimeType: "application/json", responseSchema: reportSchema },
-            });
-            
-            const responseText = response.text?.trim();
-            if (!responseText) {
-                throw new Error("AI returned empty dashboard data.");
-            }
-            const data = JSON.parse(responseText);
+            const data = await ai.generateDashboardReport();
 
             const totalSpentEl = document.getElementById('totalSpent');
             const avgDailySpendEl = document.getElementById('avgDailySpend');
@@ -306,16 +291,25 @@ export function setupDashboardPage() {
 
         } catch(err) {
             console.error("Error loading dashboard data:", err);
-            showErrorMessage(barChartContainer, "Could not load AI dashboard data.");
-            transactionTableBody.innerHTML = '<tr><td colspan="4"><div class="error-message">Failed to load</div></td></tr>';
+            const errorMessage = (err as Error).message.includes("API key")
+                ? "Could not load AI dashboard data due to a configuration issue."
+                : "Failed to load dashboard data from the AI service.";
+            showErrorMessage(barChartContainer, errorMessage);
+            transactionTableBody.innerHTML = `<tr><td colspan="4"><div class="error-message">${errorMessage}</div></td></tr>`;
         }
     }
     loadDashboardData();
 }
 
 export function setupCravourAdsPage() {
-    const generateBtn = document.getElementById('generateAdBtn');
+    const generateBtn = document.getElementById('generateAdBtn') as HTMLButtonElement;
     if (generateBtn) {
+        if (!process.env.API_KEY) {
+            generateBtn.disabled = true;
+            generateBtn.innerHTML = '<i class="fas fa-exclamation-circle"></i> AI Offline: Key Missing';
+            generateBtn.title = 'An API_KEY environment variable must be configured for this feature to work.';
+            return;
+        }
         generateBtn.addEventListener('click', handleGenerateAd);
     }
 }
@@ -323,47 +317,110 @@ export function setupCravourAdsPage() {
 async function handleGenerateAd() {
     const descriptionEl = document.getElementById('adDescription') as HTMLTextAreaElement;
     const resultsContainer = document.getElementById('adResultsContainer');
+    const adTypeEl = document.querySelector('input[name="adType"]:checked') as HTMLInputElement;
+    const generateBtn = document.getElementById('generateAdBtn') as HTMLButtonElement;
 
-    if (!descriptionEl || !resultsContainer) return;
+    if (!descriptionEl || !resultsContainer || !adTypeEl || !generateBtn) return;
 
     const description = descriptionEl.value;
+    const adType = adTypeEl.value;
+
     if (description.trim().length < 15) {
         showErrorMessage(resultsContainer, "Please provide a more detailed description of your product or promotion (at least 15 characters).");
         return;
     }
 
     showLoadingSpinner(resultsContainer);
+    generateBtn.disabled = true;
+    generateBtn.innerHTML = 'Generating... <i class="fas fa-spinner fa-spin"></i>';
+
 
     try {
-        // Generate both copy and image in parallel
-        const [copy, imageBytes] = await Promise.all([
-            ai.generateAdCopy(description),
-            ai.generateAdImage(description)
-        ]);
-        renderCombinedAdResult(copy, imageBytes, resultsContainer);
+        if (adType === 'copy') {
+            const copy = await ai.generateAdCopy(description);
+            renderAdCopyResult(copy, resultsContainer);
+        } else if (adType === 'image') {
+            const [imageBytes, copy] = await Promise.all([
+                ai.generateAdImage(description),
+                ai.generateAdCopy(description)
+            ]);
+            renderAdImageAndCopyResult(imageBytes, copy, description, resultsContainer);
+        }
     } catch (err) {
         console.error("Error generating ad content:", err);
-        showErrorMessage(resultsContainer, "The AI failed to generate content. Please try rephrasing your description or try again later.");
+        const errorMessage = (err as Error).message.includes("API key")
+            ? "The AI service is not configured. Please contact support."
+            : "The AI failed to generate content. Please try rephrasing your description or try again later.";
+        showErrorMessage(resultsContainer, errorMessage);
+    } finally {
+        generateBtn.disabled = false;
+        generateBtn.innerHTML = '<i class="fas fa-magic"></i> Generate Content';
     }
 }
 
-function renderCombinedAdResult(copy: AdCopy, imageBytes: string, container: HTMLElement) {
+function attachCopyToClipboardListener(button: HTMLElement, textToCopy: string) {
+    button.addEventListener('click', (e) => {
+        navigator.clipboard.writeText(textToCopy);
+        const targetButton = e.currentTarget as HTMLButtonElement;
+        const originalText = targetButton.innerHTML;
+        targetButton.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        targetButton.disabled = true;
+        setTimeout(() => {
+             targetButton.innerHTML = originalText;
+             targetButton.disabled = false;
+        }, 2000);
+    });
+}
+
+function renderAdCopyResult(copy: AdCopy, container: HTMLElement) {
+    const fullCopyText = `Headline: ${copy.headline}\n\nBody: ${copy.body}\n\nCall to Action: ${copy.callToAction}\n\nHashtags: ${copy.hashtags.join(' ')}`;
+    container.innerHTML = `
+        <div class="ad-result-card">
+            <h3>Your Generated Ad Copy</h3>
+            <div class="ad-copy-column">
+                <div class="ad-copy-section">
+                    <h5>Headline</h5>
+                    <p>${copy.headline}</p>
+                </div>
+                <div class="ad-copy-section">
+                    <h5>Body</h5>
+                    <p>${copy.body}</p>
+                </div>
+                <div class="ad-copy-section">
+                    <h5>Call to Action</h5>
+                    <p class="cta">${copy.callToAction}</p>
+                </div>
+                <div class="ad-copy-section">
+                    <h5>Hashtags</h5>
+                    <div class="ad-hashtags">
+                        ${copy.hashtags.map(tag => `<span>${tag}</span>`).join('')}
+                    </div>
+                </div>
+                <button id="copyBtn" class="btn btn-primary-outline"><i class="fas fa-copy"></i> Copy Full Text</button>
+            </div>
+        </div>
+    `;
+    const copyBtn = document.getElementById('copyBtn');
+    if (copyBtn) {
+        attachCopyToClipboardListener(copyBtn, fullCopyText);
+    }
+}
+
+function renderAdImageAndCopyResult(imageBytes: string, copy: AdCopy, description: string, container: HTMLElement) {
     const imageUrl = `data:image/jpeg;base64,${imageBytes}`;
     const fullCopyText = `Headline: ${copy.headline}\n\nBody: ${copy.body}\n\nCall to Action: ${copy.callToAction}\n\nHashtags: ${copy.hashtags.join(' ')}`;
-
+    
     container.innerHTML = `
         <div class="ad-result-card">
             <h3>Your Generated Ad Content</h3>
             <div class="ad-result-grid">
                 <div class="ad-image-column">
-                    <h4>Promotional Flier</h4>
-                    <img src="${imageUrl}" alt="AI-generated promotional flier for '${copy.headline}'">
+                    <img src="${imageUrl}" alt="AI-generated promotional flier for '${description}'">
                     <a href="${imageUrl}" download="cravour-ad-${Date.now()}.jpg" class="btn btn-secondary">
                         <i class="fas fa-download"></i> Download Image
                     </a>
                 </div>
                 <div class="ad-copy-column">
-                    <h4>Social Media Post</h4>
                     <div class="ad-copy-section">
                         <h5>Headline</h5>
                         <p>${copy.headline}</p>
@@ -382,23 +439,16 @@ function renderCombinedAdResult(copy: AdCopy, imageBytes: string, container: HTM
                             ${copy.hashtags.map(tag => `<span>${tag}</span>`).join('')}
                         </div>
                     </div>
-                    <button id="copyBtn" class="btn btn-primary-outline"><i class="fas fa-copy"></i> Copy Full Text</button>
+                    <button id="copyBtn" class="btn btn-primary-outline"><i class="fas fa-copy"></i> Copy Ad Text</button>
                 </div>
             </div>
         </div>
     `;
 
-    document.getElementById('copyBtn')?.addEventListener('click', (e) => {
-        navigator.clipboard.writeText(fullCopyText);
-        const button = e.currentTarget as HTMLButtonElement;
-        const originalText = button.innerHTML;
-        button.innerHTML = '<i class="fas fa-check"></i> Copied!';
-        button.disabled = true;
-        setTimeout(() => {
-             button.innerHTML = originalText;
-             button.disabled = false;
-        }, 2000);
-    });
+    const copyBtn = document.getElementById('copyBtn');
+    if (copyBtn) {
+        attachCopyToClipboardListener(copyBtn, fullCopyText);
+    }
 }
 
 

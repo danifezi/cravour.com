@@ -27,22 +27,15 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin({
-            // Fallback for process.env.API_KEY to avoid breaking the build
+            // This is required for the @google/genai SDK to work correctly.
+            // It safely provides the API key from your environment to the build process.
             'process.env.API_KEY': JSON.stringify(process.env.API_KEY || ''),
         }),
         new CopyPlugin({
             patterns: [
-                // Copy all HTML files explicitly from the root to the dist folder
-                { from: 'index.html', to: 'index.html' },
-                { from: 'cravour-ads.html', to: 'cravour-ads.html' },
-                { from: 'create_plan.html', to: 'create_plan.html' },
-                { from: 'expense_report.html', to: 'expense_report.html' },
-                { from: 'fund_wallet.html', to: 'fund_wallet.html' },
-                { from: 'merchant_onboarding.html', to: 'merchant_onboarding.html' },
-                { from: 'my_plans.html', to: 'my_plans.html' },
-                
-                // Copy the entire css directory from static to dist/css
-                { from: 'static/css', to: 'css' },
+                // Copy all content from the 'public' folder directly into the 'dist' folder.
+                // This includes HTML files and the CSS directory.
+                { from: 'public', to: '.' },
             ],
         }),
     ],

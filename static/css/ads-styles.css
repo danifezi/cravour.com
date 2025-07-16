@@ -1,62 +1,4 @@
 
-.ad-type-select {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.ad-type-select input[type="radio"] {
-    display: none;
-}
-
-.ad-type-card {
-    padding: 25px;
-    border: 2px solid var(--color-border);
-    border-radius: 12px;
-    text-align: center;
-    cursor: pointer;
-    transition: all var(--transition-speed);
-    height: 100%;
-}
-
-.ad-type-card:hover {
-    border-color: var(--color-accent-light);
-    transform: translateY(-4px);
-}
-
-.ad-type-card i {
-    font-size: 2em;
-    color: var(--color-accent);
-    margin-bottom: 15px;
-    display: block;
-    transition: color var(--transition-speed);
-}
-
-.ad-type-card span {
-    font-weight: 600;
-    font-size: 1.1em;
-    color: var(--color-text-primary);
-    display: block;
-    margin-bottom: 8px;
-}
-
-.ad-type-card p {
-    font-size: 0.9em;
-    color: var(--color-text-secondary);
-    line-height: 1.5;
-    margin: 0;
-}
-
-.ad-type-select input:checked + .ad-type-card {
-    border-color: var(--color-accent);
-    box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.2);
-    background-color: #fffaf0;
-}
-
-.ad-type-select input:checked + .ad-type-card i {
-    color: var(--color-accent);
-}
-
 .ad-results-container {
     margin-top: 30px;
     position: relative;
@@ -98,11 +40,23 @@
     gap: 15px;
 }
 
+.ad-image-column h4, .ad-copy-column h4 {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-bottom: 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--color-border);
+}
+
 .ad-image-column img {
     width: 100%;
     height: auto;
     border-radius: 8px;
     border: 1px solid var(--color-border);
+}
+
+.ad-image-column .btn {
+    width: 100%;
 }
 
 .ad-copy-section {
@@ -151,12 +105,14 @@
     font-weight: 500;
 }
 
-.btn-primary-outline {
+.ad-copy-column .btn-primary-outline {
+    margin-top: 10px;
     background-color: transparent;
     border: 1px solid var(--color-primary);
     color: var(--color-primary);
 }
-.btn-primary-outline:hover {
+
+.ad-copy-column .btn-primary-outline:hover {
     background-color: var(--color-primary);
     color: var(--color-surface);
 }
@@ -164,12 +120,6 @@
 
 @media(max-width: 900px) {
     .ad-result-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media(max-width: 768px) {
-    .ad-type-select {
         grid-template-columns: 1fr;
     }
 }
