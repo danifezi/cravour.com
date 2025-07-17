@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Cravour</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <header class="dashboard-header">
+            <div class="header-left">
+                <a href="index.html" class="header-logo">Cravour</a>
+            </div>
+            <nav class="header-nav">
+                <a href="#" class="header-nav-link">Dashboard</a>
+                <a href="#" class="header-nav-link active">Products & Services</a>
+                <a href="#" class="header-nav-link">Billing</a>
+                <a href="#" class="header-nav-link">My Account</a>
+                <a href="#" class="header-nav-link">Support</a>
+            </nav>
+            <div class="header-right">
+                <button class="icon-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                    </svg>
+                </button>
+                <div class="profile-avatar">DI</div>
+            </div>
+        </header>
+        <aside class="dashboard-sidebar">
+            <nav class="sidebar-nav">
+                <a href="#" class="sidebar-link active">All product & services</a>
+                <a href="#" class="sidebar-link">Subscriptions</a>
+                <a href="#" class="sidebar-link">One-time purchases</a>
+            </nav>
+            <h4 class="sidebar-heading">Browse by category</h4>
+            <nav class="sidebar-nav">
+                <a href="#" class="sidebar-link">Domains</a>
+                <a href="#" class="sidebar-link">Hosting</a>
+            </nav>
+        </aside>
+        <main class="dashboard-main">
+            <div class="main-header">
+                <h1 class="main-title">My products & services</h1>
+                <button class="button button-primary">Place new order</button>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="tabs">
+                        <button class="tab-item active">Active</button>
+                        <button class="tab-item">Cancelled</button>
+                        <button class="tab-item">All</button>
+                    </div>
+                </div>
+                <div class="card-toolbar">
+                    <input type="text" class="search-input" placeholder="Quick search by name...">
+                    <div class="filter-controls">
+                        <div class="sort-by">
+                            <span>Sort by</span>
+                            <select class="select-input">
+                                <option>Date purchased</option>
+                                <option>Name</option>
+                                <option>Price</option>
+                            </select>
+                        </div>
+                        <div class="view-toggles">
+                            <button class="icon-button"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+                            <button class="icon-button active"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="products-list">
+                    <div class="product-card">
+                        <div class="product-info">
+                            <div class="product-icon">.com</div>
+                            <div class="product-details">
+                                <span class="product-category">Domains</span>
+                                <span class="product-name">.com (cravour.com)</span>
+                            </div>
+                        </div>
+                        <div class="product-meta">
+                            <div class="meta-item">
+                                <span class="meta-label">Plan</span>
+                                <span class="meta-value">NGN 6,000 annually</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Status</span>
+                                <span class="meta-value status-active">Active (renews in a month)</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Purchased</span>
+                                <span class="meta-value">6 years ago</span>
+                            </div>
+                        </div>
+                         <button class="icon-button product-menu">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

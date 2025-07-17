@@ -1,0 +1,247 @@
+
+:root {
+    /* New Theme for Signin Page */
+    --color-primary: #2C7A7B; /* Deep Teal/Blue */
+    --color-primary-dark: #285E61;
+    --color-text: #2D3748; /* Dark Charcoal */
+    --color-text-light: #6B7280;
+    
+    --color-bg-page: #F7FAFC;
+    --color-input-bg: #FFFFFF;
+    --color-input-border: #D1D5DB;
+
+    /* Dark theme for promo panel */
+    --color-bg-dark: #1A202C; /* Dark Slate */
+    --color-text-dark-theme: #E2E8F0; /* Light Grey Text */
+    --color-text-light-dark-theme: #A0AEC0; /* Lighter Grey Text */
+
+    --font-family: 'Inter', sans-serif;
+}
+
+/* --- Base & Reset --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--color-bg-page);
+    color: var(--color-text);
+    line-height: 1.6;
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: var(--color-primary-dark);
+}
+
+/* --- Buttons --- */
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-size: 1rem;
+}
+.button--accent {
+    background-color: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+}
+.button--accent:hover {
+    background-color: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+    box-shadow: 0 4px 20px rgba(44, 122, 123, 0.4);
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+.button--full {
+    width: 100%;
+}
+
+
+/* --- Layout --- */
+.waitlist-page {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 100vh;
+    width: 100%;
+}
+
+@media (min-width: 900px) {
+    .waitlist-page {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* --- Promo Panel (Left) --- */
+.waitlist-promo {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-dark-theme);
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.promo-content {
+    max-width: 450px;
+    width: 100%;
+}
+
+.promo-logo {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-text-dark-theme);
+    text-decoration: none;
+    margin-bottom: 3rem;
+    display: inline-block;
+}
+.promo-logo:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.promo-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--color-text-dark-theme);
+}
+
+.promo-subtitle {
+    color: var(--color-text-light-dark-theme);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.promo-graphic {
+    margin: 2rem 0;
+}
+
+.promo-graphic svg path {
+    stroke: rgba(104, 211, 151, 0.4); /* Accent Green */
+}
+.promo-graphic svg circle {
+    fill: #68D397; /* Accent Green */
+}
+
+
+.social-proof {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+.avatars {
+    display: flex;
+}
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--color-text-light-dark-theme);
+    border: 2px solid var(--color-bg-dark);
+}
+.avatar:not(:first-child) {
+    margin-left: -12px;
+}
+.social-proof p {
+    color: var(--color-text-light-dark-theme);
+    font-weight: 500;
+}
+
+
+/* --- Form Container (Right) --- */
+.waitlist-form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-color: var(--color-bg-page);
+}
+
+.signin-card {
+    width: 100%;
+    max-width: 400px;
+}
+
+/* --- Header & Typography --- */
+.signin-header {
+    text-align: left;
+    margin-bottom: 2rem;
+}
+.signin-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+}
+.signin-subtitle {
+    color: var(--color-text-light);
+}
+
+/* --- Form Elements --- */
+.signin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.signin-form label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.signin-form input {
+    background-color: var(--color-input-bg);
+    border: 1px solid var(--color-input-border);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.signin-form input::placeholder {
+    color: var(--color-text-light);
+    opacity: 0.6;
+}
+
+.signin-form input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(44, 122, 123, 0.3);
+}
+
+
+@media (max-width: 480px) {
+    .promo-title {
+        font-size: 2rem;
+    }
+    .waitlist-form-container, .waitlist-promo {
+        padding: 2rem 1.5rem;
+    }
+}
