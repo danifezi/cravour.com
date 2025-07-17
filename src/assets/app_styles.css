@@ -1,0 +1,16 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --color-primary-app: #1a202c; 
+    --color-primary-light-app: #2d3748;
+    --color-accent-app: #FFC107;
+    --color-background-app: #F7FAFC;
+    --color-surface-app: #FFFFFF;
+    --color-text-primary-app: #1a202c;
+    --color-text-secondary-app: #718096;
+    --color-border-app: #E2E8F0;
+    --color-success-app: #38A169;
+    --color-error-app: #E53E3E;
+    --font-body-app: 'Inter', sans-serif;
+    --shadow-soft-app: 0 4px 6px -1px rgba(0
