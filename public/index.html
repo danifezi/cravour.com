@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cravour: Your AI Financial Co-Pilot</title>
+    <link rel="icon" href="https://img.icons8.com/color/48/cravour-dot-com.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Webpack will inject CSS and JS links here -->
+</head>
+<body>
+    <!-- Landing Page Shell (Visible before login) -->
+    <div id="landingPageShell">
+        <header class="header" role="banner">
+            <div class="container header-container">
+                <a href="#" class="header-logo" aria-label="Cravour Home">Cravour</a>
+                <nav class="header-nav" id="main-nav">
+                    <ul class="nav-list">
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#unleash-ai">Cravour AI</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                    <div class="header-actions">
+                         <button id="goToAppBtnLanding" class="btn btn-primary">Go to App</button>
+                    </div>
+                </nav>
+                <button class="hamburger" aria-label="Open navigation menu" aria-controls="main-nav" aria-expanded="false">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <section id="hero" class="hero-section" role="region" aria-labelledby="hero-heading">
+                <div class="container">
+                    <div class="hero-content">
+                        <h1 id="hero-heading">Your Money, Mastered. Instantly.</h1>
+                        <p class="lead">Stop overpaying and stressing over budgets. Cravour AI leverages next-generation technology to analyze market prices, build you a perfect budget, and connect you directly with the best-priced local merchants. Take absolute control of your finances, today.</p>
+                        <div class="hero-cta">
+                            <a href="#unleash-ai" class="btn btn-primary btn-primary-lg">Build Your AI Shopping Plan</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="features" class="features-section">
+                <div class="container">
+                    <h2 class="section-title">The Unfair Advantage for Your Wallet</h2>
+                    <p class="section-subtitle">Cravour isn't just an app; it's your personal financial strategist. Here’s how we guarantee you win.</p>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-magic"></i></div>
+                            <h3>Precision AI Budgeting</h3>
+                            <p>Describe your goal, and our AI instantly crafts a flawless, actionable budget. Ditch the spreadsheets for strategic results.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-bullseye"></i></div>
+                            <h3>Live Price Intelligence</h3>
+                            <p>Never overpay again. Our system scans market prices 24/7, pinpointing the perfect moment and place to buy, complete with insider saving tips.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-map-marked-alt"></i></div>
+                            <h3>AI Vendor Matching</h3>
+                            <p>Leverage our AI to scan your local area, instantly identifying top-rated merchants with the best prices for everything on your list. Save time, save money.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+             <div class="container">
+                <section id="unleash-ai" class="feature-panel" role="region" aria-labelledby="unleash-ai-heading">
+                    <h2 id="unleash-ai-heading" class="section-title">Unleash Cravour AI</h2>
+                    <p class="section-subtitle">Just tell us what you need, your budget, and your location. In seconds, Cravour AI delivers a comprehensive, strategic plan to get you the best value for your money. This is smart shopping, redefined.</p>
+
+                    <form id="shoppingPlanFormLanding" class="planner-form">
+                        <div class="form-group">
+                            <label for="shoppingGoalLanding">Describe your shopping goal:</label>
+                            <textarea id="shoppingGoalLanding" name="shoppingGoal" rows="4" placeholder="e.g., I need a 50kg bag of rice and 25L of vegetable oil in Ikeja, Lagos. I have a budget of ₦95,000."></textarea>
+                        </div>
+                        <button id="generatePlanBtnLanding" class="btn btn-primary" type="submit" aria-label="Generate AI Plan">
+                            Generate My AI Plan <i class="fas fa-cogs" aria-hidden="true"></i>
+                        </button>
+                    </form>
+                    <div id="landingStatusArea" class="status-area"></div>
+                    <div id="shoppingPlanResultsLanding" class="results-wrapper" role="region" aria-live="polite"></div>
+                </section>
+            </div>
+        </main>
+
+        <footer id="contact" class="footer" role="contentinfo">
+             <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col about">
+                        <h3 class="footer-logo">Cravour</h3>
+                        <p>Cravour Technologies Limited provides intelligent financial tools and AI-powered business solutions to help you thrive in a digital world.</p>
+                    </div>
+                    <div class="footer-col links">
+                        <h3 class="footer-title">Quick Links</h3>
+                        <ul>
+                            <li><a href="#features">Features</a></li>
+                            <li><a href="#unleash-ai">Cravour AI</a></li>
+                            <li><button class="link-button" id="footerGoToAppBtn">App Dashboard</button></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col contact">
+                        <h3 class="footer-title">Contact Us</h3>
+                        <ul>
+                            <li><i class="fas fa-map-marker-alt"></i> Lagos, Nigeria</li>
+                            <li><i class="fas fa-phone"></i> <a href="tel:08146393655">08146393655</a></li>
+                            <li><i class="fas fa-envelope"></i> <a href="mailto:contact@cravour.com">contact@cravour.com</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                     <p>&copy; <span id="year"></span> Cravour Technologies Limited. All Rights Reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Authentication Modals -->
+    <section id="loginModal" class="modal-backdrop hidden">
+        <div class="modal-content">
+            <h2 class="modal-title">Welcome Back!</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input class="input-field" type="email" id="loginEmail" value="test@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input class="input-field" type="password" id="loginPassword" value="password123" required>
+                </div>
+                <div id="loginMessage" class="status-area"></div>
+                <button type="submit" class="btn btn-primary w-full">Login</button>
+            </form>
+            <p class="modal-switch-text">Don't have an account? <button id="showOnboardingBtn">Create One</button></p>
+        </div>
+    </section>
+
+    <section id="onboardingModal" class="modal-backdrop hidden">
+        <div class="modal-content">
+            <h2 class="modal-title">Start Your Journey</h2>
+            <form id="onboardingForm">
+                <input type="email" name="email" class="input-field" placeholder="Email Address" required>
+                <input type="password" name="password" class="input-field" placeholder="Password" required>
+                <input type="text" name="incomeSource" class="input-field" placeholder="Primary Income Source (e.g., Salary)">
+                <input type="number" name="monthlyIncome" class="input-field" placeholder="Monthly Income (₦)">
+                <input type="text" name="goals" class="input-field" placeholder="Your Main Financial Goal">
+                <div id="onboardingMessage" class="status-area"></div>
+                <button type="submit" class="btn btn-primary w-full">Create Account</button>
+            </form>
+            <p class="modal-switch-text">Already have an account? <button id="backToLoginBtn">Login</button></p>
+        </div>
+    </section>
+
+    <!-- Main Application Shell (hidden until authenticated) -->
+    <div id="appShell" class="hidden">
+        <div class="app-layout">
+            <aside class="app-sidebar">
+                <div class="sidebar-header"><a href="#" class="logo">C</a></div>
+                <nav class="sidebar-nav">
+                    <a href="#dashboard" class="nav-item active" data-section="dashboardSection"><i class="fas fa-chart-pie"></i><span>Dashboard</span></a>
+                    <a href="#my-plans" class="nav-item" data-section="myPlansSection"><i class="fas fa-tasks"></i><span>Plans</span></a>
+                    <a href="#add-expense" class="nav-item" data-section="addExpenseSection"><i class="fas fa-money-bill-wave"></i><span>Add Expense</span></a>
+                    <a href="#fund-wallet" class="nav-item" data-section="fundWalletSection"><i class="fas fa-wallet"></i><span>Fund Wallet</span></a>
+                    <a href="#cravour-ads" class="nav-item" data-section="cravourAdsSection"><i class="fas fa-bullhorn"></i><span>Cravour Ads</span></a>
+                </nav>
+                <div class="sidebar-footer">
+                    <button id="logoutBtn" class="nav-item"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button>
+                </div>
+            </aside>
+
+            <main class="app-main-content">
+                <header class="app-header">
+                    <div id="appHeaderTitle" class="header-title"><h1>Dashboard</h1><p>Your AI-powered financial overview.</p></div>
+                    <div class="user-info">
+                        <span id="walletBalance" class="balance-display">Balance: <strong>₦0.00</strong></span>
+                        <div id="userAvatar" class="user-avatar"></div>
+                    </div>
+                </header>
+
+                <!-- Dashboard Section -->
+                <section id="dashboardSection" class="app-section active-section">
+                    <div id="dashboardStats" class="dashboard-grid"></div>
+                    <div class="content-panel-grid">
+                        <div class="content-panel"><h2 class="panel-title">AI Financial Insights</h2><div id="aiInsights" class="ai-insights-container"></div></div>
+                        <div class="content-panel"><h2 class="panel-title">Spending by Category</h2><div class="chart-container"><canvas id="spendingChart"></canvas></div></div>
+                    </div>
+                    <div class="content-panel transactions-panel full-width-panel"><h2 class="panel-title">Recent Transactions</h2><div class="table-wrapper"><table class="data-table"><thead><tr><th>Date</th><th>Description</th><th>Category</th><th>Amount</th></tr></thead><tbody id="transactionTableBody"></tbody></table></div></div>
+                </section>
+                
+                <!-- My Plans Section (Create + View) -->
+                <section id="myPlansSection" class="app-section">
+                     <div class="card-base" style="margin-bottom: 30px;">
+                        <h2 class="section-heading">Create a New Financial Plan</h2>
+                         <form id="createPlanForm">
+                            <div class="form-group">
+                                <label for="itemInput">What's your next financial goal? Let the AI build a plan for you.</label>
+                                <input class="input-field" id="itemInput" name="description" placeholder="e.g., I want to buy a new iPhone, my budget is ₦750,000" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-cogs"></i> Generate & Save AI Plan</button>
+                        </form>
+                        <div id="planStatus" class="status-area"></div>
+                        <div id="planResults" class="results-wrapper"></div>
+                     </div>
+                     <h2 class="section-heading">Your Active Plans</h2>
+                     <div id="plansGrid" class="plans-grid"></div>
+                </section>
+                
+                <!-- Add Expense Section -->
+                <section id="addExpenseSection" class="app-section">
+                    <div class="content-panel half-width">
+                        <form id="addExpenseForm">
+                             <div class="form-group">
+                                <label for="expenseDescription">Description</label>
+                                <input class="input-field" id="expenseDescription" name="description" placeholder="e.g., Bought foodstuff, Paid NEPA" required>
+                            </div>
+                             <div class="form-group">
+                                <label for="expenseAmount">Amount (₦)</label>
+                                <input class="input-field" id="expenseAmount" type="number" name="amount" min="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="expenseCategory">Category (AI will suggest)</label>
+                                <select class="input-field" id="expenseCategory" name="category" required>
+                                    <option value="">-- Select Category --</option>
+                                    <option value="Groceries">Groceries</option><option value="Transport">Transport</option><option value="Utilities">Utilities</option><option value="Food & Dining">Food & Dining</option><option value="Health">Health</option><option value="Education">Education</option><option value="Rent">Rent</option><option value="Salary">Salary</option><option value="Freelance Income">Freelance Income</option><option value="Bills">Bills</option><option value="Airtime & Data">Airtime & Data</option><option value="Savings">Savings</option><option value="Miscellaneous">Miscellaneous</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="expensePlanSelectorContainer">
+                                <!-- Dynamically populated with a plan selector by ui.ts -->
+                            </div>
+                            <div id="addExpenseMessage" class="status-area"></div>
+                            <button type="submit" class="btn btn-primary w-full">Add Transaction</button>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Fund Wallet Section -->
+                <section id="fundWalletSection" class="app-section">
+                    <div class="content-panel half-width">
+                        <form id="fundWalletForm">
+                            <div class="form-group">
+                                <label for="amount">Amount to Add (₦)</label>
+                                <input type="number" id="amount" class="input-field" placeholder="e.g., 10000" min="100" required>
+                            </div>
+                            <div id="paymentStatus" class="status-area"></div>
+                            <button type="submit" class="btn btn-primary w-full">Fund with Paystack</button>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Cravour Ads Section -->
+                <section id="cravourAdsSection" class="app-section">
+                    <div class="content-panel">
+                        <form id="cravourAdsForm">
+                            <h2 class="section-heading">AI Ad Copy Generator</h2>
+                            <div class="form-group">
+                                <label for="adDescription">Describe your product, offer, and audience</label>
+                                <textarea class="input-field" id="adDescription" name="adDescription" rows="4" placeholder="e.g., A 50% discount on all leather shoes for the weekend at our store in Lekki. Targetting young professionals." required></textarea>
+                            </div>
+                            <div style="text-align: center;">
+                                <button id="generateAdBtn" type="submit" class="btn btn-primary">
+                                    <i class="fas fa-magic"></i> Generate Ad Copy
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="adResultsContainer" class="ad-results-container mt-4" aria-live="polite"></div>
+                </section>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

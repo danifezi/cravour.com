@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cravour: Your AI Financial Co-Pilot</title>
+    <link rel="icon" href="https://img.icons8.com/color/48/cravour-dot-com.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css">
+    <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^0.12.0",
+    "zod": "https://esm.sh/zod@^4.0.5",
+    "axios": "https://esm.sh/axios@^1.10.0",
+    "firebase/": "https://esm.sh/firebase@^11.10.0/",
+    "chart.js/": "https://esm.sh/chart.js@^4.5.0/",
+    "@tensorflow/tfjs": "https://esm.sh/@tensorflow/tfjs@^4.22.0",
+    "@paystack/inline-js": "https://esm.sh/@paystack/inline-js@^2.22.6"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <header class="header" role="banner">
+        <div class="container header-container">
+            <a href="#hero" class="header-logo" aria-label="Cravour Home">Cravour</a>
+            <nav class="header-nav" id="main-nav">
+                <ul class="nav-list">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#cravour-ai">Cravour AI</a></li>
+                </ul>
+                <div class="header-actions">
+                    <a href="cravour-ads.html" class="btn btn-secondary-outline">Cravour Ads</a>
+                    <a href="expense_report.html" class="btn btn-primary">Go to App</a>
+                </div>
+            </nav>
+            <button class="hamburger" aria-label="Open navigation menu" aria-controls="main-nav" aria-expanded="false">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="hero-section" role="region" aria-labelledby="hero-heading">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 id="hero-heading">Your Money, Mastered. Instantly.</h1>
+                    <p class="lead">Stop overpaying and stressing over budgets. Cravour AI leverages next-generation technology to analyze market prices, build you a perfect budget, and connect you directly with the best-priced local merchants. Take absolute control of your finances, today.</p>
+                    <div class="hero-cta">
+                        <a href="#cravour-ai" class="btn btn-primary">Build Your AI Shopping Plan</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features-section">
+            <div class="container">
+                <h2 class="section-title">The Unfair Advantage for Your Wallet</h2>
+                <p class="section-subtitle">Cravour isn't just an app; it's your personal financial strategist. Here’s how we guarantee you win.</p>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-magic"></i></div>
+                        <h3>Precision AI Budgeting</h3>
+                        <p>Describe your goal, and our AI instantly crafts a flawless, actionable budget. Ditch the spreadsheets for strategic results.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-bullseye"></i></div>
+                        <h3>Live Price Intelligence</h3>
+                        <p>Never overpay again. Our system scans market prices 24/7, pinpointing the perfect moment and place to buy, complete with insider saving tips.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-map-marked-alt"></i></div>
+                        <h3>AI Vendor Matching</h3>
+                        <p>Leverage our AI to scan your local area, instantly identifying top-rated merchants with the best prices for everything on your list. Save time, save money.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <section id="cravour-ai" class="feature-panel" role="region" aria-labelledby="cravour-ai-heading">
+                <h2 id="cravour-ai-heading" class="section-title">Unleash Cravour AI</h2>
+                <p class="section-subtitle">Just tell us what you need, your budget, and your location. In seconds, Cravour AI delivers a comprehensive, strategic plan to get you the best value for your money. This is smart shopping, redefined.</p>
+
+                <form id="shoppingPlanForm" class="planner-form">
+                    <div class="form-group">
+                        <label for="shoppingGoal">Describe your shopping goal:</label>
+                        <textarea id="shoppingGoal" name="shoppingGoal" rows="4" placeholder="e.g., I need a 50kg bag of rice and 25L of vegetable oil in Ikeja, Lagos. I have a budget of ₦95,000."></textarea>
+                    </div>
+                    <button id="generatePlanBtn" class="btn btn-primary" type="submit" aria-label="Generate AI Plan">
+                        Generate My AI Plan <i class="fas fa-cogs" aria-hidden="true"></i>
+                    </button>
+                </form>
+
+                <div id="shoppingPlanStatus" class="status-area" style="margin-top: 20px;"></div>
+                
+                <div id="shoppingPlanResults" class="results-wrapper" role="region" aria-live="polite">
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer id="contact" class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col about">
+                    <h3 class="footer-logo">Cravour</h3>
+                    <p>Cravour Technologies Limited provides intelligent financial tools and AI-powered business solutions to help you thrive in a digital world.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col links">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#cravour-ai">Cravour AI</a></li>
+                        <li><a href="expense_report.html">App Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col contact">
+                    <h3 class="footer-title">Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Lagos, Nigeria</li>
+                        <li><i class="fas fa-phone"></i> <a href="tel:08146393655">08146393655</a></li>
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:contact@cravour.com">contact@cravour.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                 <p>&copy; <span id="year"></span> Cravour Technologies Limited. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script type="module" src="js/index.js"></script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
