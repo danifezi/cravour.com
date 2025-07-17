@@ -6,24 +6,7 @@
     <title>Cravour: Your AI Financial Co-Pilot</title>
     <link rel="icon" href="https://img.icons8.com/color/48/cravour-dot-com.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="index.css">
-    <script type="importmap">
-{
-  "imports": {
-    "axios": "https://esm.sh/axios@^1.7.2",
-    "firebase/app": "https://esm.sh/firebase@9.23.0/app",
-    "firebase/auth": "https://esm.sh/firebase@9.23.0/auth",
-    "firebase/firestore": "https://esm.sh/firebase@9.23.0/firestore",
-    "chart.js/auto": "https://esm.sh/chart.js@^4.4.3/auto",
-    "@paystack/inline-js": "https://esm.sh/@paystack/inline-js@^2.13.0",
-    "@google/genai": "https://esm.sh/@google/genai@^1.10.0",
-    "firebase/": "https://esm.sh/firebase@^11.10.0/",
-    "chart.js/": "https://esm.sh/chart.js@^4.5.0/"
-  }
-}
-</script>
-    <script type="module" src="index.tsx"></script>
-<link rel="stylesheet" href="/index.css">
+    <!-- Webpack will inject CSS and JS links here -->
 </head>
 <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -107,13 +90,12 @@
             <header class="app-header"><div class="header-title" id="appHeaderTitle"><h1>Dashboard</h1><p>Your AI-powered financial overview.</p></div><div class="user-info"><span id="walletBalance" class="balance-display">Balance: <strong>...</strong></span><div id="userAvatar" class="user-avatar">U</div></div></header>
             
             <!-- Section Content Holders -->
-            <section id="dashboardSection" class="app-section"><div id="dashboardStats" class="dashboard-grid"></div><div class="content-panel-grid"><div class="content-panel"><h2 class="panel-title">AI-Powered Insights</h2><div id="aiInsights" class="ai-insights-container"></div></div><div class="content-panel"><h2 class="panel-title">Spending by Category</h2><div class="chart-container"><canvas id="spendingChart"></canvas></div></div></div><div class="content-panel transactions-panel full-width-panel"><h2 class="panel-title">Recent Transactions</h2><div class="table-wrapper"><table class="data-table"><thead><tr><th>Date</th><th>Description</th><th>Category</th><th>Amount</th></tr></thead><tbody id="transactionTableBody"></tbody></table></div></div></section>
+            <section id="dashboardSection" class="app-section"><div id="dashboardStats" class="dashboard-grid dashboard-grid-four-cols"></div><div class="content-panel-grid"><div class="content-panel"><h2 class="panel-title">AI-Powered Insights</h2><div id="aiInsights" class="ai-insights-container"></div></div><div class="content-panel"><h2 class="panel-title">Spending by Category</h2><div class="chart-container"><canvas id="spendingChart"></canvas></div></div></div><div class="content-panel transactions-panel full-width-panel"><h2 class="panel-title">Recent Transactions</h2><div class="table-wrapper"><table class="data-table"><thead><tr><th>Date</th><th>Description</th><th>Category</th><th>Amount</th></tr></thead><tbody id="transactionTableBody"></tbody></table></div></div></section>
             <section id="myPlansSection" class="app-section"><div class="content-panel"><h2 class="panel-title">Create a New Plan with AI</h2><form id="createPlanForm"><div class="form-group"><label for="itemInput">Describe what you want to budget for:</label><textarea id="itemInput" class="input-field" rows="3" placeholder="e.g., A new phone and a new laptop for my office setup, I have a budget of N550,000"></textarea></div><button type="submit" class="btn btn-primary">Generate & Save Plan</button></form><div id="planResults" class="results-wrapper"></div></div><div class="content-panel" style="margin-top: 30px;"><h2 class="panel-title">Your Saved Plans</h2><div id="plansGrid" class="plans-grid"></div></div></section>
             <section id="addExpenseSection" class="app-section"><div class="content-panel half-width"><form id="addExpenseForm"><div id="addExpenseMessage" class="status-area hidden"></div><div class="form-group"><label for="expenseDescription">Description</label><input type="text" id="expenseDescription" name="description" class="input-field" required></div><div class="form-group"><label for="expenseAmount">Amount (₦)</label><input type="number" id="expenseAmount" name="amount" class="input-field" required></div><div class="form-group"><label for="expenseCategory">Category (AI will suggest one)</label><select id="expenseCategory" name="category" class="input-field" required><option value="Groceries">Groceries</option><option value="Transport">Transport</option><option value="Utilities">Utilities</option><option value="Food & Dining">Food & Dining</option><option value="Health">Health</option><option value="Education">Education</option><option value="Rent">Rent</option><option value="Bills">Bills</option><option value="Airtime & Data">Airtime & Data</option><option value="Savings">Savings</option><option value="Miscellaneous">Miscellaneous</option></select></div><div class="form-group" id="expensePlanSelectorContainer"></div><button type="submit" class="btn btn-primary">Add Expense</button></form></div></section>
             <section id="fundWalletSection" class="app-section"><div class="content-panel half-width"><form id="fundWalletForm"><div id="paymentStatus" class="status-area hidden"></div><div class="form-group"><label for="amount">Amount to Add (₦)</label><input type="number" id="amount" class="input-field" placeholder="e.g., 10000" min="100" required></div><button type="submit" class="btn btn-primary">Proceed to Pay</button></form></div></section>
             <section id="cravourAdsSection" class="app-section"><div class="content-panel"><form id="cravourAdsForm"><div class="form-group"><label for="adDescription">Describe your product, offer, and audience:</label><textarea id="adDescription" name="adDescription" class="input-field" rows="4" placeholder="e.g., A 50% discount on all leather shoes for the weekend at our store in Lekki. Targetting young professionals." required></textarea></div><button type="submit" class="btn btn-primary"><i class="fas fa-magic"></i> Generate Creative</button></form></div><div id="adResultsContainer" class="results-wrapper" style="margin-top: 30px;"></div></section>
         </main>
     </div>
-<script type="module" src="/index.tsx"></script>
 </body>
 </html>

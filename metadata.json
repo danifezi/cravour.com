@@ -1,6 +1,6 @@
 {
-  "name": "Cravour | The Future of Smart Budgeting",
-  "description": "A futuristic landing page for Cravour, showcasing AI-powered savings calculations and smart financial insights with a modern, interactive design.",
+  "name": "Cravour: AI Financial Co-Pilot v2.5",
+  "description": "A modern, secure, and performant Single Page Application that provides intelligent financial tools. It features a secure backend, user authentication, persistent financial plans, and AI-powered insights.",
   "requestFramePermissions": [],
   "prompt": ""
 }

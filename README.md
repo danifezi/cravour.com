@@ -1,81 +1,85 @@
-# Cravour - Smart Budgeting Website
+# Cravour: AI Financial Co-Pilot (Webpack SPA Edition)
 
-This repository contains the source code for the Cravour marketing website, a responsive, multi-page static site designed to showcase the features of the Cravour financial app and encourage users to join the waitlist.
+A responsive, secure, and AI-powered Single-Page Application that provides personalized budgeting, expense reporting, and an AI creative suite for ad generation. This version uses a modern TypeScript and Webpack build process for optimal performance and maintainability.
 
-## Overview
+## Features
 
-Cravour is a fictional smart budgeting application. This website serves as its online presence, featuring a modern design, interactive elements, and integration with the Google Gemini API for an AI-powered savings calculator.
+-   **Authenticated Single-Page App**: Secure user registration and login backed by Firebase and JWT. The entire application runs within a single, fast-loading shell after authentication.
+-   **Live AI-Powered Dashboard**: On-demand generation of a full financial report, including spending analysis, financial health scores, and actionable recommendations from the Gemini API.
+-   **AI-Assisted Transactions**: When adding expenses, the AI instantly suggests the correct category based on the transaction description.
+-   **AI Financial Plan Generation**: Users describe a shopping goal, and the AI generates a detailed budget plan, price analysis, and recommended local merchants, which is then saved to their profile.
+-   **Secure Payments**: Integration with Paystack for funding wallets, with secure backend verification of every transaction.
+-   **AI Ad Creative Suite**: Merchants can describe a promotion to instantly receive professional ad headlines, body text, hashtags, and a context-aware, AI-generated image for their campaign.
+-   **Modern UI/UX**: Fully responsive design with a sleek dark-themed landing page and a clean, light-themed app interface.
 
-## Pages & Features
+## Project Structure
 
-*   **Home Page (`index.html`):** The main landing page with a hero section, feature overview, an interactive AI savings calculator, and a testimonial slider.
-*   **Features Page (`features.html`):** A dedicated page detailing the core features of the Cravour app.
-*   **Pricing Page (`pricing.html`):** A page outlining the different subscription tiers.
-*   **Testimonials Page (`testimonials.html`):** A grid-style page showcasing user testimonials.
-*   **Waitlist Signup (`signin.html`):** A stylish two-panel page for users to sign up for the waitlist.
-*   **Success Page (`success.html`):** A confirmation page shown after a user successfully joins the waitlist.
-*   **Dashboard (`dashboard.html`):** A sample design of a logged-in user's product dashboard.
+The project follows a modern SPA structure, with all source code managed by Webpack.
 
-### Key Technical Features
+```
+cravour/
+├── dist/                 # Build output directory
+├── node_modules/         # Dependencies
+├── public/               # Static assets & the main HTML template
+│   └── index.html        # The single HTML shell for the SPA
+├── src/                  # All TypeScript & CSS source code
+│   ├── assets/           # CSS files
+│   ├── config/           # AI model schemas & validation schemas
+│   ├── types/            # Custom type declarations
+│   ├── ai.ts             # Frontend API client (axios)
+│   ├── index.ts          # Main entry point, dispatches UI setup
+│   ├── ui.ts             # All DOM manipulation and event handlers
+│   └── utils.ts          # Helper functions
+├── services/             # Backend services (AI, DB, Payments)
+├── routes/               # Backend API route definitions
+├── controllers/          # Backend route logic
+├── middleware/           # Backend middleware (auth, error handling)
+├── .env                  # For API keys (add to .gitignore)
+├── package.json
+├── server.js             # Express backend server
+├── tsconfig.json
+└── webpack.config.js
+```
 
-*   **Responsive Design:** The entire website is fully responsive and optimized for various screen sizes, from mobile phones to desktop monitors.
-*   **AI Savings Calculator:** The calculator on the homepage takes user input about an expense and uses the **Google Gemini API** to:
-    1.  Calculate potential yearly and 5-year savings.
-    2.  Generate personalized, aspirational financial goals that could be achieved with the saved amount.
-*   **Modern UI/UX:** The site features smooth scroll animations, a particle-effect hero background, and a clean, consistent design language.
-*   **Robust Interactivity:** All interactive elements, like the mobile menu and testimonial slider, are built with pure TypeScript for performance and reliability.
+## How to Run
 
-## Tech Stack
-
-*   **HTML5**
-*   **CSS3:** For styling and responsive design.
-*   **TypeScript:** For all interactive logic.
-*   **Vite:** As a modern frontend build tool.
-*   **Google Gemini API:** Used to power the AI-driven insights in the savings calculator.
-
-## Getting Started
-
-### Prerequisites
-
-*   Node.js and npm (or a compatible package manager).
-*   A Google Gemini API key.
-
-### Running Locally
-
-1.  **Clone the repository:**
-    ```bash
-    git clone <repository-url>
-    cd <repository-directory>
-    ```
-2.  **Install dependencies:**
+1.  **Install Dependencies**:
     ```bash
     npm install
     ```
-3.  **Set up your environment variables:**
-    Create a `.env.local` file in the root of the project and add your API key:
-    ```
-    GEMINI_API_KEY=your_api_key_here
-    ```
-4.  **Run the development server:**
+
+2.  **Configure API Keys**:
+    *   Create a `.env` file in the root of the project.
+    *   Add your keys to this file. The server uses `GEMINI_API_KEY` and the frontend will receive `PAYSTACK_PUBLIC_KEY` and Firebase keys via `Dotenv-webpack`.
+        ```
+        # For Node.js Server
+        GEMINI_API_KEY=YOUR_GEMINI_API_KEY
+        JWT_SECRET=YOUR_RANDOM_JWT_SECRET
+        PAYSTACK_SECRET_KEY=YOUR_PAYSTACK_SECRET
+        FIREBASE_SERVICE_ACCOUNT_KEY={"type":"service_account",...}
+
+        # For Frontend (loaded by Webpack)
+        PAYSTACK_PUBLIC_KEY=YOUR_PAYSTACK_PUBLIC_KEY
+        FIREBASE_API_KEY=YOUR_FIREBASE_KEY
+        FIREBASE_AUTH_DOMAIN=YOUR_FIREBASE_DOMAIN
+        FIREBASE_PROJECT_ID=YOUR_FIREBASE_PROJECT_ID
+        ```
+
+3.  **Start the Development Server**:
+    *   This command will start the Node.js backend and the Webpack dev server concurrently.
     ```bash
     npm run dev
     ```
-    This will start a local server, and you can view the site in your browser at the provided URL (usually `http://localhost:5173`).
+    *   Open your browser to `http://localhost:8080` (or the port specified in the output).
 
-### Building for Production
+4.  **Build for Production**:
+    *   This command will create an optimized, minified build in the `dist/` directory, ready for deployment.
+    ```bash
+    npm run build
+    ```
 
-To create a production-ready build of the site:
-```bash
-npm run build
-```
-The optimized static files will be generated in the `dist` directory.
-
-### Deploying
-
-The application is configured for easy deployment on static hosting providers like Netlify, Vercel, or GitHub Pages.
-
-1.  Push your code to a Git repository.
-2.  Connect your repository to the hosting provider.
-3.  Set the build command to `npm run build`.
-4.  Set the publish directory to `dist`.
-5.  Set the `GEMINI_API_KEY` environment variable in your hosting provider's project settings.
+5.  **Start in Production**:
+    * This command runs the optimized application using the built files.
+    ```bash
+    npm start
+    ```

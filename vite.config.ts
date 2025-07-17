@@ -1,32 +1,17 @@
-import { defineConfig } from 'vite'
-import { resolve } from 'path'
+import path from 'path';
+import { defineConfig, loadEnv } from 'vite';
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  // This makes the environment variable available in client-side code
-  // as `process.env.API_KEY`. The hosting provider (e.g., Netlify) must
-  // be configured to set `GEMINI_API_KEY`.
-  define: {
-    'process.env.API_KEY': JSON.stringify(process.env.GEMINI_API_KEY)
-  },
-  build: {
-    outDir: 'dist', 
-    rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'index.html'),
-        features: resolve(__dirname, 'features.html'),
-        pricing: resolve(__dirname, 'pricing.html'),
-        testimonials: resolve(__dirname, 'testimonials.html'),
-        signin: resolve(__dirname, 'signin.html'),
-        success: resolve(__dirname, 'success.html'),
-        dashboard: resolve(__dirname, 'dashboard.html'),
+export default defineConfig(({ mode }) => {
+    const env = loadEnv(mode, '.', '');
+    return {
+      define: {
+        'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
+        'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
+      },
+      resolve: {
+        alias: {
+          '@': path.resolve(__dirname, '.'),
+        }
       }
-    }
-  },
-  server: {
-    fs: {
-      // Allow serving files from one level up to the project root
-      allow: ['..']
-    }
-  }
-})
+    };
+});
