@@ -3,10 +3,7 @@ import * as api from './ai';
 import { showStatusMessage, hideStatusMessage, showToast } from './utils';
 import { initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged, User, signOut } from 'firebase/auth';
-import { getFirestore, doc, onSnapshot, Unsubscribe } from 'firebase/firestore';
-import { renderGeneratedPlan } from './rendering';
-
-// --- STATE MANAGEMENT ---
+import { getFirestore, doc, onSnapshot, Unsubscribe, Firestore } from 'firebase/firestore';
 let currentUser: User | null = null;
 let walletUnsubscribe: Unsubscribe | null = null;
 const initializedSections = new Set<string>();
@@ -17,15 +14,9 @@ const firebaseConfig = {
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,
     projectId: process.env.FIREBASE_PROJECT_ID,
 };
-console.log('Firebase Config:', firebaseConfig);
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-// --- INITIALIZATION ---
-export function initAuthAndApp() {
-    onAuthStateChanged(auth, (user) => {
+export function initAuthAndApp(app: any, auth: any, db: Firestore) {
+    onAuthStateChanged(auth, (user: User | null) => {
         if (user) {
             currentUser = user;
             showApp();
@@ -39,7 +30,7 @@ export function initAuthAndApp() {
     setupLandingPageHandlers();
 }
 
-function setupAuthenticatedApp() {
+function setupAuthenticatedApp(auth: any, db: Firestore) {
     if (!currentUser) return;
     document.getElementById('userAvatar')!.innerText = (currentUser.email || 'U').charAt(0).toUpperCase();
     setupNavigation();
@@ -54,7 +45,7 @@ function setupAuthenticatedApp() {
 }
 
 // --- UI VISIBILITY ---
-function showApp() {
+function showApp(auth: any, db: Firestore) {
     document.getElementById('landingPageShell')?.classList.add('hidden');
     document.getElementById('appShell')?.classList.remove('hidden');
     document.querySelectorAll('.modal-backdrop').forEach(m => m.classList.add('hidden'));
@@ -153,7 +144,7 @@ function setupLogout() {
 }
 
 // --- NAVIGATION & DYNAMIC LOADING ---
-function setupNavigation() {
+function setupNavigation(db: Firestore) {
     const navItems = document.querySelectorAll('.sidebar-nav .nav-item');
     const headerTitleEl = document.querySelector('#appHeaderTitle h1');
     const headerP = document.querySelector('#appHeaderTitle p');
