@@ -3,17 +3,10 @@ import * as api from './ai';
 import { showStatusMessage, hideStatusMessage, showToast } from './utils';
 import { initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged, User, signOut } from 'firebase/auth';
-import { getFirestore, doc, onSnapshot, Unsubscribe, Firestore } from 'firebase/firestore';
+import { getFirestore, doc, onSnapshot, Unsubscribe, Firestore, DocumentSnapshot } from 'firebase/firestore';
 let currentUser: User | null = null;
 let walletUnsubscribe: Unsubscribe | null = null;
 const initializedSections = new Set<string>();
-
-// --- FIREBASE INITIALIZATION ---
-const firebaseConfig = {
-    apiKey: process.env.FIREBASE_API_KEY,
-    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.FIREBASE_PROJECT_ID,
-};
 
 export function initAuthAndApp(app: any, auth: any, db: Firestore) {
     onAuthStateChanged(auth, (user: User | null) => {
@@ -29,10 +22,10 @@ export function initAuthAndApp(app: any, auth: any, db: Firestore) {
     setupAuthModals();
     setupLandingPageHandlers();
 }
-
+// Function to set up UI elements for authenticated users
 function setupAuthenticatedApp(auth: any, db: Firestore) {
     if (!currentUser) return;
-    document.getElementById('userAvatar')!.innerText = (currentUser.email || 'U').charAt(0).toUpperCase();
+    document.getElementById('userAvatar')!.innerText = (currentUser.email || 'U').charAt(0).toUpperCase(); // Set user avatar initial
     setupNavigation();
     setupLogout();
     listenToWalletBalance();
@@ -45,7 +38,7 @@ function setupAuthenticatedApp(auth: any, db: Firestore) {
 }
 
 // --- UI VISIBILITY ---
-function showApp(auth: any, db: Firestore) {
+function showApp() {
     document.getElementById('landingPageShell')?.classList.add('hidden');
     document.getElementById('appShell')?.classList.remove('hidden');
     document.querySelectorAll('.modal-backdrop').forEach(m => m.classList.add('hidden'));
@@ -58,6 +51,7 @@ function showLandingPage() {
 }
 
 function setupLandingPageHandlers() {
+    // Toggle mobile navigation
     const hamburger = document.querySelector('.hamburger');
     const nav = document.querySelector('.header-nav');
 
@@ -68,11 +62,14 @@ function setupLandingPageHandlers() {
             hamburger.setAttribute('aria-expanded', isActive.toString());
         });
     }
-    
+
+    // Set current year in footer
     const yearSpan = document.getElementById('year');
     if(yearSpan) yearSpan.textContent = new Date().getFullYear().toString();
 
+    // Set up landing page plan form submission
     document.getElementById('shoppingPlanFormLanding')?.addEventListener('submit', handleGeneratePlanLanding);
+
 }
 
 function setupAuthModals() {
@@ -88,13 +85,14 @@ function setupAuthModals() {
     document.getElementById('backToLoginBtn')?.addEventListener('click', () => switchAuthModal(false));
 }
 
+// Function to switch between login and onboarding modals
 function switchAuthModal(showOnboarding: boolean) {
     document.getElementById('loginModal')?.classList.toggle('hidden', showOnboarding);
     document.getElementById('onboardingModal')?.classList.toggle('hidden', !showOnboarding);
 }
 
 async function handleLogin(e: Event) {
-    e.preventDefault();
+    e.preventDefault(); // Prevent default form submission
     const form = e.target as HTMLFormElement;
     const email = (form.querySelector('#loginEmail') as HTMLInputElement).value;
     const password = (form.querySelector('#loginPassword') as HTMLInputElement).value;
@@ -104,7 +102,7 @@ async function handleLogin(e: Event) {
     showStatusMessage(statusEl, "Logging in...", 'info', true);
     button.disabled = true;
     try {
-        await api.loginUser({ email, password });
+        await api.loginUser({ email, password }); // Call API function to log in
         // onAuthStateChanged will handle hiding modal and showing the app
     } catch (error: any) {
         showStatusMessage(statusEl, error.response?.data?.error || "Login failed. Check credentials.", 'error');
@@ -115,7 +113,7 @@ async function handleLogin(e: Event) {
 }
 
 async function handleRegister(e: Event) {
-    e.preventDefault();
+    e.preventDefault(); // Prevent default form submission
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
     const data: { [key: string]: any } = {};
@@ -126,7 +124,7 @@ async function handleRegister(e: Event) {
     showStatusMessage(statusEl, "Creating account...", 'info', true);
     button.disabled = true;
     try {
-        await api.registerUser(data);
+        await api.registerUser(data); // Call API function to register
         // onAuthStateChanged will handle hiding modal and showing the app
     } catch (error: any) {
         showStatusMessage(statusEl, error.response?.data?.error || "Registration failed.", 'error');
@@ -138,12 +136,13 @@ async function handleRegister(e: Event) {
 
 function setupLogout() {
     document.getElementById('logoutBtn')?.addEventListener('click', () => {
-        signOut(auth);
+        signOut(getAuth()); // Use getAuth() to get the auth instance
         showToast("You have been logged out.", "info");
     });
 }
 
 // --- NAVIGATION & DYNAMIC LOADING ---
+// Function to set up sidebar navigation and load content dynamically
 function setupNavigation(db: Firestore) {
     const navItems = document.querySelectorAll('.sidebar-nav .nav-item');
     const headerTitleEl = document.querySelector('#appHeaderTitle h1');
@@ -159,7 +158,7 @@ function setupNavigation(db: Firestore) {
 
     navItems.forEach(item => {
         item.addEventListener('click', async (e) => {
-            e.preventDefault();
+            e.preventDefault(); // Prevent default anchor behavior
             const button = e.currentTarget as HTMLButtonElement;
             const targetId = button.dataset.section;
             if (!targetId) return;
@@ -220,22 +219,60 @@ function setupNavigation(db: Firestore) {
 
 // --- REAL-TIME WALLET ---
 function listenToWalletBalance() {
+    // Unsubscribe from previous listener if exists
     if (walletUnsubscribe) walletUnsubscribe();
     if (!currentUser?.uid) return;
 
     const walletEl = document.getElementById('walletBalance');
-    const userDocRef = doc(db, 'users', currentUser.uid);
+    const userDocRef = doc(getFirestore(), 'users', currentUser.uid); // Use getFirestore()
 
     walletUnsubscribe = onSnapshot(userDocRef, (docSnap) => {
         if (docSnap.exists() && walletEl) {
             const data = docSnap.data();
             const balance = data?.walletBalance || 0;
+            // Format and display wallet balance
             walletEl.innerHTML = `Balance: <strong>₦${balance.toLocaleString('en-NG', { minimumFractionDigits: 2 })}</strong>`;
         }
     }, (error: any) => console.error("Error listening to wallet balance:", error));
 }
+// Function to render the generated shopping plan
+function renderGeneratedPlan(plan: string, container: HTMLElement) {
+    container.innerHTML = `<h3>Generated Plan</h3><p>${plan.replace(/\\n/g, '<br>')}</p>`;
+}
 
 
+// --- LANDING PAGE DEMO AI PLAN ---
+// Function to handle the demo AI plan generation on the landing page
+async function handleGeneratePlanLanding(e: Event) {
+    e.preventDefault(); // Prevent default form submission
+    const input = document.getElementById('shoppingGoalLanding') as HTMLTextAreaElement;
+    const description = input.value;
+    const statusContainer = document.getElementById('landingStatusArea')!;
+    const resultsContainer = document.getElementById('shoppingPlanResultsLanding')!;
+    const button = document.getElementById('generatePlanBtnLanding') as HTMLButtonElement;
+
+    // Basic input validation
+    if (description.trim().length < 10) {
+        showStatusMessage(statusContainer, "Please provide a more detailed shopping goal.", 'error');
+        return hideStatusMessage(statusContainer, 3000);
+    }
+
+    showStatusMessage(statusContainer, "Generating your intelligent plan...", 'info', true);
+    resultsContainer.innerHTML = ''; // Clear previous results
+    button.disabled = true;
+    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...'; // Show loading indicator
+
+    try {
+        const plan = await api.generateShoppingPlanDemo(description); // Call API to generate plan
+        hideStatusMessage(statusContainer);
+        renderGeneratedPlan(plan, resultsContainer); // Render the generated plan
+    } catch (error: any) {
+        showStatusMessage(statusContainer, error.response?.data?.error || "Failed to generate plan. Please try again.", 'error');
+    } finally {
+        button.disabled = false;
+        button.innerHTML = 'Generate My AI Plan <i class="fas fa-cogs" aria-hidden="true"></i>'; // Restore button text
+    }
+}
 // --- LANDING PAGE DEMO AI PLAN ---
 async function handleGeneratePlanLanding(e: Event) {
     e.preventDefault();
