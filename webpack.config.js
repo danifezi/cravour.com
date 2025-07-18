@@ -45,7 +45,12 @@ module.exports = (env, argv) => {
             }),
             new Dotenv({
                 systemvars: true,
-                silent: true,
+                silent: false, // Set to false to see which variables are loaded
+                // Explicitly expose variables needed on the client-side
+                // This is an alternative to relying solely on systemvars or auto-detection
+                defaults: true, // Load default .env variables if .env is missing some
+                // populate the keys from the .env file if they are not system variables
+                allowEmptyValues: true
             })
         ],
         module: {
