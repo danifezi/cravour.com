@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +7,20 @@
     <title>Cravour: AI-Powered Web Solutions for Nigerian Businesses</title>
     <link rel="icon" href="https://img.icons8.com/color/48/cravour-dot-com.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Webpack will inject CSS and JS links here -->
+    <link rel="stylesheet" href="index.css">
+    <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^0.13.0",
+    "axios": "https://esm.sh/axios@^1.10.0",
+    "firebase/": "https://esm.sh/firebase@^12.0.0/",
+    "chart.js/": "https://esm.sh/chart.js@^4.5.0/",
+    "@paystack/inline-js": "https://esm.sh/@paystack/inline-js@^2.22.6"
+  }
+}
+</script>
+    <script type="module" src="index.tsx"></script>
+<link rel="stylesheet" href="/index.css">
 </head>
 <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -48,15 +62,15 @@
                     <h2 class="section-title">Our Services</h2>
                     <p class="section-subtitle">We combine cutting-edge technology with beautiful design to build solutions that solve real-world problems.</p>
                     <div class="features-grid">
-                        <div class="feature-card"><div class="feature-icon"><i class="fas fa-laptop-code"></i></div><h3>Custom Web Development</h3><p>From stunning landing pages to complex enterprise applications, we build fast, secure, and scalable web solutions tailored to your exact needs.</p></div>
-                        <div class="feature-card"><div class="feature-icon"><i class="fas fa-robot"></i></div><h3>AI & Automation</h3><p>We integrate intelligent AI models into your workflow to automate processes, generate insights, and create unique, interactive experiences for your users.</p></div>
-                        <div class="feature-card"><div class="feature-icon"><i class="fas fa-shopping-cart"></i></div><h3>E-commerce Platforms</h3><p>We build powerful, easy-to-manage online stores that drive sales, with features like smart recommendations and automated inventory management.</p></div>
+                        <div class="feature-card" data-animate="fade-up"><div class="feature-icon"><i class="fas fa-laptop-code"></i></div><h3>Custom Web Development</h3><p>From stunning landing pages to complex enterprise applications, we build fast, secure, and scalable web solutions tailored to your exact needs.</p></div>
+                        <div class="feature-card" data-animate="fade-up"><div class="feature-icon"><i class="fas fa-robot"></i></div><h3>AI & Automation</h3><p>We integrate intelligent AI models into your workflow to automate processes, generate insights, and create unique, interactive experiences for your users.</p></div>
+                        <div class="feature-card" data-animate="fade-up"><div class="feature-icon"><i class="fas fa-shopping-cart"></i></div><h3>E-commerce Platforms</h3><p>We build powerful, easy-to-manage online stores that drive sales, with features like smart recommendations and automated inventory management.</p></div>
                     </div>
                 </div>
             </section>
 
              <div class="container">
-                <section id="cravour-ai" class="feature-panel" role="region" aria-labelledby="cravour-ai-heading">
+                <section id="cravour-ai" class="feature-panel" role="region" aria-labelledby="cravour-ai-heading" data-animate="fade-up">
                     <h2 id="cravour-ai-heading" class="section-title">Cravour AI Demo</h2>
                     <p class="section-subtitle">See a simple example of how our AI can create value. Describe a shopping goal, and our AI will analyze the market, find the best prices, and recommend local merchants.</p>
                     <form id="shoppingPlanForm" class="planner-form">
@@ -78,7 +92,15 @@
 
         <footer id="contact" class="footer" role="contentinfo">
             <div class="container footer-grid">
-                <div class="footer-col about"><h3 class="footer-logo">Cravour</h3><p>Intelligent web solutions for Nigerian MSMEs and enterprises.</p></div>
+                <div class="footer-col about">
+                    <h3 class="footer-logo">Cravour</h3>
+                    <p>Intelligent web solutions for Nigerian MSMEs and enterprises.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Follow us on X"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Connect with us on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
                 <div class="footer-col links"><h3 class="footer-title">Quick Links</h3><ul><li><a href="#services">Services</a></li><li><a href="#cravour-ai">Cravour AI</a></li><li><a href="#about">About Us</a></li></ul></div>
                 <div class="footer-col contact"><h3 class="footer-title">Get in Touch</h3><ul><li><i class="fas fa-map-marker-alt"></i> Lagos, Nigeria</li><li><i class="fas fa-envelope"></i> <a href="mailto:contact@cravour.com">contact@cravour.com</a></li></ul></div>
             </div>
@@ -102,5 +124,6 @@
             </form>
         </div>
     </div>
+<script type="module" src="/index.tsx"></script>
 </body>
 </html>
