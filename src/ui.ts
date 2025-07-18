@@ -17,6 +17,7 @@ const firebaseConfig = {
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,
     projectId: process.env.FIREBASE_PROJECT_ID,
 };
+console.log('Firebase Config:', firebaseConfig);
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
