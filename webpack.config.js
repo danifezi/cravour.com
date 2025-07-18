@@ -28,29 +28,77 @@ module.exports = (env, argv) => {
             }
         },
         plugins: [
-            new HtmlWebpackPlugin({
-                template: './public/index.html',
-                filename: 'index.html',
-                // Minify the HTML only in production builds
-                minify: isProduction ? {
-                    removeComments: true,
-                    collapseWhitespace: true,
-                    removeRedundantAttributes: true,
-                    useShortDoctype: true,
-                    removeEmptyAttributes: true,
-                    removeStyleLinkTypeAttributes: true,
-                    keepClosingSlash: true,
-                    minifyJS: true,
-                    minifyCSS: true,
-                    minifyURLs: true,
-                } : false,
+ new HtmlWebpackPlugin({
+ template: './public/index.html',
+ filename: 'index.html',
+ // Minify the HTML only in production builds
+ minify: isProduction ? {
+ removeComments: true,
+ collapseWhitespace: true,
+ removeRedundantAttributes: true,
+ useShortDoctype: true,
+ removeEmptyAttributes: true,
+ removeStyleLinkTypeAttributes: true,
+ keepClosingSlash: true,
+ minifyJS: true,
+ minifyCSS: true,
+ minifyURLs: true,
+ } : false,
+ }),
+ new HtmlWebpackPlugin({
+ template: './public/cravour-ads.html',
+ filename: 'cravour-ads.html',
+ // Minify the HTML only in production builds
+ minify: isProduction ? {
+ removeComments: true,
+ collapseWhitespace: true,
+ removeRedundantAttributes: true,
+ useShortDoctype: true,
+ removeEmptyAttributes: true,
+ removeStyleLinkTypeAttributes: true,
+ keepClosingSlash: true,
+ minifyJS: true,
+ minifyCSS: true,
+ minifyURLs: true,
+ } : false,
+ }),
+ new HtmlWebpackPlugin({
+ template: './public/create_plan.html',
+ filename: 'create_plan.html',
+ // Minify the HTML only in production builds
+ minify: isProduction ? {
+ removeComments: true,
+ collapseWhitespace: true,
+ removeRedundantAttributes: true,
+ useShortDoctype: true,
+ removeEmptyAttributes: true,
+ removeStyleLinkTypeAttributes: true,
+ keepClosingSlash: true,
+ minifyJS: true,
+ minifyCSS: true,
+ minifyURLs: true,
+ } : false,
+ }),
+ new HtmlWebpackPlugin({
+ template: './public/fund_wallet.html',
+ filename: 'fund_wallet.html',
+ // Minify the HTML only in production builds
+ minify: isProduction ? {
+ removeComments: true,
+ collapseWhitespace: true,
+ removeRedundantAttributes: true,
+ useShortDoctype: true,
+ removeEmptyAttributes: true,
+ removeStyleLinkTypeAttributes: true,
+ keepClosingSlash: true,
+ minifyJS: true,
+ minifyCSS: true,
+ minifyURLs: true,
+ } : false,
             }),
             new Dotenv({
                 systemvars: true,
                 silent: false, // Set to false to see which variables are loaded
-                // Explicitly expose variables needed on the client-side
-                // This is an alternative to relying solely on systemvars or auto-detection
-                defaults: true, // Load default .env variables if .env is missing some
                 // populate the keys from the .env file if they are not system variables
                 allowEmptyValues: true
             })
