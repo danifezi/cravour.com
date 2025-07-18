@@ -1,7 +1,9 @@
 
 const path = require('path');
+ // Ensure path module is imported if not already
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+ // ... other imports like HtmlWebpackPlugin
 
 module.exports = (env, argv) => {
     const isProduction = argv.mode === 'production';
