@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cravour | AI Solutions for Nigerian Businesses</title>
+    <link rel="icon" href="https://img.icons8.com/color/48/cravour-dot-com.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./index.css">
+
+    <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai?v=0.13.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    
+    <header class="header" role="banner">
+        <div class="container header-container">
+            <a href="#" class="header-logo" aria-label="Cravour Home">Cravour</a>
+             <nav class="header-nav" id="main-nav">
+                <ul class="nav-list" id="nav-list-links">
+                    <li><a href="#services">Our Capabilities</a></li>
+                    <li><a href="#demo">AI Demo</a></li>
+                    <li><a href="#about">About Us</a></li>
+                     <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="header-actions" id="header-actions-container">
+                     <button id="loginBtn" class="btn btn-secondary-outline">Login</button>
+                     <button id="registerBtn" class="btn btn-primary">Book Consultation</button>
+                </div>
+            </nav>
+            <button class="hamburger" aria-label="Open navigation menu" aria-controls="main-nav" aria-expanded="false">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </button>
+        </div>
+    </header>
+
+    <main id="landing-page">
+        <section id="hero" class="hero-section" role="region" aria-labelledby="hero-heading">
+            <div class="container hero-content">
+                <h1 id="hero-heading">AI-Powered Growth for Nigerian Businesses.</h1>
+                <p class="lead">We design and build custom AI solutions—from intelligent financial dashboards to automated workflows—that help you cut costs, boost efficiency, and scale faster in the Nigerian market.</p>
+                <button id="ctaConsultationBtn" class="btn btn-primary btn-primary-lg">Book a Free Consultation</button>
+            </div>
+        </section>
+
+        <section id="services" class="features-section">
+            <div class="container">
+                <h2 class="section-title">Our AI Capabilities</h2>
+                <p class="section-subtitle">We don't offer one-size-fits-all software. We build bespoke AI integrations tailored to your specific business needs. Here's a glimpse of what we can create for you.</p>
+                <div class="features-grid">
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-chart-pie"></i></div><h3>Custom Financial Dashboards</h3><p>Go beyond basic accounting. We create intelligent dashboards that analyze your cash flow, forecast revenue, and pinpoint savings opportunities, all tuned to the nuances of the Nigerian economy.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-cogs"></i></div><h3>Intelligent Workflow Automation</h3><p>Stop wasting time on repetitive tasks. We can automate everything from customer service with AI chatbots to inventory management and recurring supplier payments with merchant tagging.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-bullhorn"></i></div><h3>Creative & Marketing AI</h3><p>Generate high-converting ad copy, social media content, and marketing materials in seconds. We build in-house creative AI suites to elevate your brand and slash agency costs.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="demo" class="feature-panel">
+            <div class="container">
+                <h2 class="section-title">See Our AI in Action</h2>
+                <p class="section-subtitle">Curious about our technology? Use this free tool to give our AI a real-world task. Get a glimpse of the data-driven intelligence we can build for your business. No sign-up required.</p>
+                <form id="aiDemoForm" class="planner-form">
+                    <div class="form-group">
+                        <label for="planDescription" class="sr-only">Your Shopping Goal</label>
+                        <textarea id="planDescription" class="input-field" rows="3" placeholder="e.g., I run a small restaurant in Surulere. I need to restock on a 50kg bag of rice, 25 litres of vegetable oil, and 5 chickens. My budget is ₦150,000. Find the best deals for me."></textarea>
+                    </div>
+                    <button type="submit" id="generateDemoPlanBtn" class="btn btn-primary"><i class="fas fa-cogs"></i> Generate AI Plan</button>
+                </form>
+                <div id="demoStatus" class="status-area hidden"></div>
+                <div id="demo-results-wrapper" class="results-wrapper">
+                    <div class="empty-state">Your intelligent financial plan will appear here.</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="about" class="about-section">
+            <div class="container">
+                 <h2 class="section-title">Why Cravour?</h2>
+                 <p class="section-subtitle">We are a team of Nigerian developers, designers, and AI specialists dedicated to one mission: building practical technology that gives local businesses a competitive advantage. We understand the market, we speak your language, and we build solutions that deliver real-world results.</p>
+            </div>
+        </section>
+    </main>
+
+    <main id="app-dashboard" class="hidden">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1 id="welcome-message">Welcome Back!</h1>
+                 <div id="dashboard-overview" class="dashboard-overview hidden"></div>
+            </div>
+
+            <nav class="dashboard-stepper">
+                <div id="step-nav-1" class="step" data-step="1"><div class="step-icon">1</div><div class="step-label">Create Budget</div></div>
+                <div class="step-connector"></div>
+                <div id="step-nav-2" class="step" data-step="2"><div class="step-icon">2</div><div class="step-label">Track Expenses</div></div>
+                <div class="step-connector"></div>
+                <div id="step-nav-3" class="step" data-step="3"><div class="step-icon">3</div><div class="step-label">Review & Automate</div></div>
+            </nav>
+
+            <div class="dashboard-workflow-container">
+                <!-- Step 1: Budget Planner -->
+                <div id="step-content-1" class="dashboard-step-content">
+                    <h2><i class="fas fa-tasks"></i> AI-Powered Budget Creation</h2>
+                    <p class="section-subtitle">Describe your business goals, monthly income, and fixed costs. Our AI will craft a detailed budget to help you succeed.</p>
+                    <div class="content-grid">
+                        <form id="budgetPlannerForm" class="form-card">
+                            <div class="form-group">
+                                <label for="budgetDescription">Describe Your Financial Goals</label>
+                                <textarea id="budgetDescription" class="input-field" rows="6" placeholder="e.g., I want to launch a new marketing campaign for my fashion brand. My monthly revenue is N500,000, and my fixed costs (rent, salaries) are N200,000. I want to allocate funds for social media ads, influencers, and a photoshoot."></textarea>
+                            </div>
+                            <button type="submit" id="generateBudgetBtn" class="btn btn-primary"><i class="fas fa-magic"></i> Create My Budget</button>
+                            <div id="budgetStatus" class="status-area hidden"></div>
+                        </form>
+                        <div class="result-card">
+                            <div id="budget-results-wrapper" class="results-wrapper">
+                                 <div class="empty-state">Your new budget will appear here.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Expense Analyzer -->
+                <div id="step-content-2" class="dashboard-step-content">
+                    <div class="step-lock-overlay"><i class="fas fa-lock"></i><span>Complete Step 1 to unlock</span></div>
+                    <h2><i class="fas fa-search-dollar"></i> Intelligent Expense Analysis</h2>
+                    <p class="section-subtitle">Paste your list of expenses for the month. Our AI will categorize them, identify potential savings, and find opportunities to automate.</p>
+                     <div class="content-grid">
+                        <form id="expenseAnalyzerForm" class="form-card">
+                            <div class="form-group">
+                                <label for="expenseData">Paste Your Monthly Expenses</label>
+                                <textarea id="expenseData" class="input-field" rows="8" placeholder="e.g., NEPA Bill - N25,000, Generator Fuel - N40,000, Internet Subscription - N25,000, Staff Lunch - N50,000, Delivery Logistics - N85,000, Packaging Supplies - N35,000"></textarea>
+                            </div>
+                            <button type="submit" id="analyzeExpensesBtn" class="btn btn-primary"><i class="fas fa-chart-line"></i> Generate Report</button>
+                             <div id="expenseStatus" class="status-area hidden"></div>
+                        </form>
+                        <div class="result-card">
+                            <div id="expense-results-wrapper" class="results-wrapper">
+                                 <div class="empty-state">Your expense report will appear here.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Review & Automate -->
+                <div id="step-content-3" class="dashboard-step-content">
+                    <div class="step-lock-overlay"><i class="fas fa-lock"></i><span>Complete Step 2 to unlock</span></div>
+                    <h2><i class="fas fa-balance-scale-right"></i> Performance Review & Automation</h2>
+                    <p class="section-subtitle">Analyze your budget against your spending, get key insights, and automate recurring payments to save time.</p>
+                    <div class="content-grid-large">
+                        <div class="result-card">
+                             <h3 class="result-heading">Performance Review</h3>
+                             <div class="form-card" style="max-width: 500px; margin: 0 auto 30px auto; text-align: center; padding: 20px;">
+                                <button id="generateReviewBtn" class="btn btn-primary"><i class="fas fa-sync-alt"></i> Generate Performance Review</button>
+                                <div id="reviewStatus" class="status-area hidden"></div>
+                            </div>
+                            <div id="review-results-wrapper" class="results-wrapper">
+                                <div class="empty-state">Your performance review will appear here.</div>
+                            </div>
+                        </div>
+                         <div class="result-card">
+                             <h3 class="result-heading">Scheduled Payments</h3>
+                             <div id="paymentList" class="empty-state">No automated payments scheduled.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer id="contact" class="footer" role="contentinfo">
+        <div class="container footer-grid">
+            <div class="footer-col about"><h3 class="footer-logo">Cravour</h3><p>Intelligent financial tools and AI integrations for Nigerian businesses.</p></div>
+            <div class="footer-col links"><h3 class="footer-title">Quick Links</h3><ul><li><a href="#services">Our Capabilities</a></li><li><a href="#demo">AI Demo</a></li><li><a href="#about">About Us</a></li></ul></div>
+             <div class="footer-col contact"><h3 class="footer-title">Get in Touch</h3><ul><li><i class="fas fa-map-marker-alt"></i> Lagos, Nigeria</li><li><i class="fas fa-envelope"></i> <a href="mailto:contact@cravour.com">contact@cravour.com</a></li></ul></div>
+            <div class="footer-col waitlist">
+                <h3 class="footer-title">Book Your Free Consultation</h3>
+                <p>Ready to see how AI can transform your business? Fill out the form below, and our team will be in touch.</p>
+                <form id="consultationForm">
+                    <div id="consultationMessage" class="status-area hidden"></div>
+                    <div class="form-group"><label for="consultationName" class="sr-only">Your Name</label><input type="text" id="consultationName" class="input-field" placeholder="Your Name" required></div>
+                    <div class="form-group"><label for="consultationCompany" class="sr-only">Company Name</label><input type="text" id="consultationCompany" class="input-field" placeholder="Company Name" required></div>
+                    <div class="form-group"><label for="consultationEmail" class="sr-only">Email Address</label><input type="email" id="consultationEmail" class="input-field" placeholder="your@email.com" required></div>
+                    <button type="submit" class="btn btn-primary">Request Consultation</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom"><p>© <span id="year"></span> Cravour Technologies. All Rights Reserved.</p></div>
+    </footer>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="auth-heading-login">
+        <div class="modal-content">
+            <button id="closeAuth" class="modal-close-btn" aria-label="Close modal">×</button>
+            <div id="loginView">
+                <form id="loginForm" class="auth-form" novalidate>
+                    <h2 id="auth-heading-login">Welcome Back</h2>
+                     <p style="text-align: center; margin-bottom: 20px; font-size: 0.9em;">Login to access the full Financial Co-Pilot dashboard.</p>
+                    <div id="loginMessage" class="status-area hidden"></div>
+                    <div class="form-group"><label for="loginEmail">Email</label><input type="email" id="loginEmail" class="input-field" required autocomplete="email"></div>
+                    <div class="form-group"><label for="loginPassword">Password</label><input type="password" id="loginPassword" class="input-field" required autocomplete="current-password"></div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <p class="form-switch">No account? <button type="button" class="link-button" id="showRegister">Sign Up Free</button></p>
+                </form>
+            </div>
+            <div id="registerView" class="hidden">
+                <form id="registerForm" class="auth-form" novalidate>
+                     <h2 id="auth-heading-register">Create Your Free Account</h2>
+                     <p style="text-align: center; margin-bottom: 20px; font-size: 0.9em;">Get free access to the Financial Co-Pilot dashboard.</p>
+                    <div id="registerMessage" class="status-area hidden"></div>
+                     <div class="form-group"><label for="registerName">Full Name</label><input type="text" id="registerName" class="input-field" required autocomplete="name"></div>
+                    <div class="form-group"><label for="registerEmail">Email</label><input type="email" id="registerEmail" class="input-field" required autocomplete="email"></div>
+                    <div class="form-group"><label for="registerPassword">Password</label><input type="password" id="registerPassword" class="input-field" required minlength="6" autocomplete="new-password"></div>
+                    <button type="submit" class="btn btn-primary">Create Account</button>
+                    <p class="form-switch">Have an account? <button type="button" class="link-button" id="showLogin">Login</button></p>
+                </form>
+            </div>
+            <div id="verificationView" class="hidden">
+                <div class="auth-form">
+                    <h2>Check Your Email</h2>
+                    <p>We've sent a verification link to your email address. Please click the link to continue.</p>
+                    <div class="form-group" style="margin-top: 20px;">
+                        <p style="font-size: 0.9em; margin-bottom: 10px;">(This is a demo. No email was actually sent.)</p>
+                        <button id="verifyEmailBtn" class="btn btn-primary">Click to Verify</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Gateway Modal -->
+    <div id="paymentGatewayModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="payment-gateway-heading">
+        <div class="modal-content payment-gateway-modal">
+             <button id="closePaymentGateway" class="modal-close-btn" aria-label="Close payment modal">×</button>
+             <h2 id="payment-gateway-heading">Schedule Automated Payment</h2>
+             <form id="paymentForm" novalidate>
+                 <div class="form-group">
+                     <label for="merchantName">Merchant/Supplier</label>
+                     <input type="text" id="merchantName" class="input-field" readonly>
+                 </div>
+                 <div class="form-group">
+                     <label for="paymentAmount">Amount (NGN)</label>
+                     <input type="number" id="paymentAmount" class="input-field" readonly>
+                 </div>
+                 <div class="form-group">
+                     <label for="paymentCard">Card Number</label>
+                     <div class="input-with-icon">
+                        <input type="text" id="paymentCard" class="input-field" placeholder="4012 8888 8888 1881" required>
+                        <i class="fab fa-cc-visa"></i>
+                     </div>
+                 </div>
+                 <div class="form-row">
+                     <div class="form-group">
+                         <label for="paymentExpiry">Expiry Date</label>
+                         <input type="text" id="paymentExpiry" class="input-field" placeholder="MM / YY" required>
+                     </div>
+                     <div class="form-group">
+                         <label for="paymentCVC">CVC</label>
+                         <input type="text" id="paymentCVC" class="input-field" placeholder="123" required>
+                     </div>
+                 </div>
+                  <div class="form-group">
+                    <label for="paymentFrequency">Frequency</label>
+                    <select id="paymentFrequency" class="input-field">
+                        <option>Monthly</option>
+                        <option>Weekly</option>
+                        <option>Quarterly</option>
+                    </select>
+                </div>
+                 <button type="submit" class="btn btn-primary" style="width: 100%;"><i class="fas fa-shield-alt"></i> Schedule Secure Payment</button>
+                 <div id="paymentStatus" class="status-area hidden"></div>
+             </form>
+        </div>
+    </div>
+    
+    <script type="module" src="./index.tsx"></script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
