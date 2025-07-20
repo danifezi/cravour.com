@@ -1,5 +1,3 @@
-
-
 :root {
     --color-gold-accent: #FFC107;
     --color-primary: #0D0D0D; 
@@ -241,9 +239,9 @@ h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 600; color: var(
 .form-card, .result-card { padding: 35px; border-radius: 12px; }
 .result-card { min-height: 400px; }
 .form-card h3 { margin-bottom: 20px; font-size: 1.4em; }
-.payment-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: var(--color-dark-grey); border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--color-border); }
-.payment-item p { margin: 0; }
-.payment-item .amount { font-weight: 700; color: var(--color-white); }
+.payment-item, .merchant-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: var(--color-primary); border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--color-border); }
+.payment-item p, .merchant-item p { margin: 0; }
+.payment-item .amount, .merchant-item .amount { font-weight: 700; color: var(--color-white); }
 .chart-container { background: transparent; padding: 25px; border-radius: 8px; margin-bottom: 30px; }
 .chart-segment { margin-bottom: 15px; }
 .chart-segment:last-child { margin-bottom: 0; }
@@ -253,14 +251,50 @@ h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 600; color: var(
 .dashboard-view:not(.hidden) .chart-bar { width: var(--bar-width, 0); } /* Use variable for width */
 
 /* Wallet specific additions */
-#transactionList, #merchantList { padding: 10px; background-color: var(--color-dark-grey); border-radius: 8px; }
-#transactionList::-webkit-scrollbar, #merchantList::-webkit-scrollbar { width: 8px; }
-#transactionList::-webkit-scrollbar-track, #merchantList::-webkit-scrollbar-track { background: var(--color-dark-grey); }
-#transactionList::-webkit-scrollbar-thumb, #merchantList::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 4px; }
-#transactionList::-webkit-scrollbar-thumb:hover, #merchantList::-webkit-scrollbar-thumb:hover { background: var(--color-gold-accent); }
-#transactionList .payment-item, #merchantList .payment-item { background: var(--color-primary); }
-#transactionList .amount.success { color: var(--color-success); }
-#transactionList .amount.error { color: var(--color-error); }
+#all-merchants-list {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: var(--color-primary);
+    border-radius: 8px;
+}
+#all-merchants-list::-webkit-scrollbar { width: 8px; }
+#all-merchants-list::-webkit-scrollbar-track { background: var(--color-dark-grey); }
+#all-merchants-list::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 4px; }
+#all-merchants-list::-webkit-scrollbar-thumb:hover { background: var(--color-gold-accent); }
+
+/* Trend Chart Styles */
+#dashboard-trend-chart-container { height: 300px; }
+.trend-chart-svg {
+    width: 100%;
+    height: 100%;
+}
+.trend-chart-svg .grid {
+    stroke: var(--color-border);
+    stroke-opacity: 0.7;
+    stroke-width: 1px;
+}
+.trend-chart-svg .axis-label {
+    fill: var(--color-text-secondary);
+    font-size: 12px;
+}
+.trend-chart-svg .line {
+    fill: none;
+    stroke-width: 3px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.trend-chart-svg .line-budget { stroke: var(--color-success); }
+.trend-chart-svg .line-expenses { stroke: var(--color-error); }
+.trend-chart-svg .dot {
+    stroke-width: 3;
+    stroke: var(--color-primary);
+}
+.trend-chart-svg .dot-budget { fill: var(--color-success); }
+.trend-chart-svg .dot-expenses { fill: var(--color-error); }
+.trend-chart-legend { margin-top: 15px; display: flex; justify-content: center; gap: 20px; font-size: 0.9em; }
+.legend-item { display: flex; align-items: center; gap: 8px; }
+.legend-color-box { width: 15px; height: 15px; border-radius: 3px; }
 
 
 /* Opportunities Section */

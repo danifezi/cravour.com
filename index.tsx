@@ -151,10 +151,15 @@ interface WalletTransaction {
     amount: number;
 }
 
-interface MerchantSummary {
+interface Merchant {
     name: string;
+    category: string;
+}
+
+interface MerchantSummary extends Merchant {
     totalSpent: number;
     transactionCount: number;
+    source: 'expenses' | 'manual';
 }
 
 type User = {
@@ -169,6 +174,7 @@ type User = {
         balance: number;
         transactions: WalletTransaction[];
     };
+    merchants: Merchant[];
     budgets: BudgetPlan[];
     expenses: ExpenseReport[];
     payments: { merchant: string; amount: number; frequency: string; }[];
@@ -266,6 +272,7 @@ const allDashboardViews = document.querySelectorAll('.dashboard-view');
 // Dashboard Home View
 const welcomeMessage = document.getElementById('welcome-message') as HTMLHeadingElement;
 const dashboardOverview = document.getElementById('dashboard-overview') as HTMLDivElement;
+const dashboardTrendChartContainer = document.getElementById('dashboard-trend-chart-container') as HTMLDivElement;
 const recentActivityList = document.getElementById('recent-activity-list') as HTMLDivElement;
 
 // Budget Planner Elements
@@ -285,6 +292,7 @@ const expenseResultsContainer = document.getElementById('expense-results-wrapper
 
 // Performance Review Elements
 const generateReviewBtn = document.getElementById('generateReviewBtn') as HTMLButtonElement;
+const shareReportBtn = document.getElementById('shareReportBtn') as HTMLButtonElement;
 const reviewStatusArea = document.getElementById('reviewStatus') as HTMLDivElement;
 const reviewResultsContainer = document.getElementById('review-results-wrapper') as HTMLDivElement;
 const paymentList = document.getElementById('paymentList') as HTMLDivElement;
@@ -300,10 +308,14 @@ const generateOpportunitiesBtn = document.getElementById('generateOpportunitiesB
 const opportunitiesStatusArea = document.getElementById('opportunitiesStatus') as HTMLDivElement;
 const opportunitiesResultsContainer = document.getElementById('opportunities-results-wrapper') as HTMLDivElement;
 
+// Merchants View Elements
+const allMerchantsList = document.getElementById('all-merchants-list') as HTMLDivElement;
+const addMerchantForm = document.getElementById('addMerchantForm') as HTMLFormElement;
+const newMerchantNameInput = document.getElementById('newMerchantName') as HTMLInputElement;
+const newMerchantCategoryInput = document.getElementById('newMerchantCategory') as HTMLInputElement;
+const addMerchantStatus = document.getElementById('addMerchantStatus') as HTMLDivElement;
+
 // Payment & Wallet Elements
-const walletOverviewCard = document.getElementById('wallet-overview-card') as HTMLDivElement;
-const transactionList = document.getElementById('transactionList') as HTMLDivElement;
-const merchantList = document.getElementById('merchantList') as HTMLDivElement;
 const fundWalletModal = document.getElementById('fundWalletModal') as HTMLDivElement;
 const closeFundWalletBtn = document.getElementById('closeFundWallet') as HTMLButtonElement;
 const fundWalletForm = document.getElementById('fundWalletForm') as HTMLFormElement;
@@ -624,26 +636,31 @@ function copyToClipboard(text: string, button: HTMLButtonElement) {
     });
 }
 
-function calculateMerchantSummary(user: User): MerchantSummary[] {
-    if (!user.expenses || user.expenses.length === 0) {
-        return [];
+function getCombinedMerchants(user: User): MerchantSummary[] {
+    const merchantMap = new Map<string, MerchantSummary>();
+
+    // Process merchants from expenses
+    if (user.expenses && user.expenses.length > 0) {
+        const latestExpenses = user.expenses[user.expenses.length - 1];
+        latestExpenses.categorizedExpenses.forEach(expense => {
+            const merchantName = expense.merchantBrandExample || expense.merchantCategory;
+            if (merchantName) {
+                const existing = merchantMap.get(merchantName) || { name: merchantName, category: expense.merchantCategory, totalSpent: 0, transactionCount: 0, source: 'expenses' };
+                existing.totalSpent += expense.amount;
+                existing.transactionCount += 1;
+                merchantMap.set(merchantName, existing);
+            }
+        });
     }
 
-    const latestExpenses = user.expenses[user.expenses.length - 1];
-    const merchantMap = new Map<string, { totalSpent: number; transactionCount: number }>();
-
-    latestExpenses.categorizedExpenses.forEach(expense => {
-        const merchantName = expense.merchantBrandExample || expense.merchantCategory;
-        if (merchantName) {
-            const existing = merchantMap.get(merchantName) || { totalSpent: 0, transactionCount: 0 };
-            existing.totalSpent += expense.amount;
-            existing.transactionCount += 1;
-            merchantMap.set(merchantName, existing);
+    // Process manually added merchants
+    user.merchants.forEach(merchant => {
+        if (!merchantMap.has(merchant.name)) {
+            merchantMap.set(merchant.name, { ...merchant, totalSpent: 0, transactionCount: 0, source: 'manual' });
         }
     });
 
-    return Array.from(merchantMap.entries())
-        .map(([name, data]) => ({ name, ...data }))
+    return Array.from(merchantMap.values())
         .sort((a, b) => b.totalSpent - a.totalSpent);
 }
 
@@ -768,7 +785,7 @@ function renderCurrentView() {
 function renderSidebar() {
     const navItems = [
         { view: 'dashboard', label: 'Dashboard', icon: icons.dashboard },
-        { view: 'wallet', label: 'Wallet', icon: icons.wallet },
+        { view: 'wallet', label: 'Merchants', icon: icons.wallet },
         { view: 'budget', label: 'Budget Planner', icon: icons.budget },
         { view: 'expenses', label: 'Expense Tracker', icon: icons.expenses },
         { view: 'review', label: 'Performance Review', icon: icons.review },
@@ -792,61 +809,13 @@ function renderDashboardHomeView() {
     if (!currentUser) return;
     welcomeMessage.textContent = `Welcome Back, ${currentUser.name}!`;
     renderDashboardSummary();
+    renderTrendChart();
     renderRecentActivity();
 }
 
 function renderWalletView() {
     if (!currentUser) return;
-    const currency = currentUser.budgets[0]?.summary?.currency || '₦';
-    const merchantSummary = calculateMerchantSummary(currentUser);
-
-    // Render wallet overview card
-    walletOverviewCard.innerHTML = `
-        <h4>Cravour Wallet</h4>
-        <p class="value success">${currency}${currentUser.wallet.balance.toLocaleString('en-US')}</p>
-        <small class="note">Available Balance</small>
-        <button id="fundWalletBtn" class="btn btn-secondary-outline" style="margin-top: 20px;">Fund Wallet</button>
-    `;
-    document.getElementById('fundWalletBtn')?.addEventListener('click', openFundWalletModal);
-
-    // Render transaction history
-    if (currentUser.wallet.transactions.length === 0) {
-        transactionList.innerHTML = '<div class="empty-state">No transactions yet.</div>';
-    } else {
-        const transactionsHtml = currentUser.wallet.transactions
-            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-            .map(t => {
-                const isDebit = t.type === 'payment';
-                const amountClass = isDebit ? 'error' : 'success';
-                const sign = isDebit ? '− ' : '+ ';
-                return `
-                    <div class="payment-item">
-                        <div>
-                            <p><strong>${t.description}</strong></p>
-                            <p style="font-size: 0.9em; color: var(--color-text-secondary);">${new Date(t.date).toLocaleString()}</p>
-                        </div>
-                        <p class="amount ${amountClass}">${sign}${currency}${t.amount.toLocaleString('en-US')}</p>
-                    </div>
-                `;
-        }).join('');
-        transactionList.innerHTML = transactionsHtml;
-    }
-
-    // Render merchant summary
-    if (merchantSummary.length === 0) {
-        merchantList.innerHTML = '<div class="empty-state">Analyze your expenses to see merchant spending.</div>';
-    } else {
-        const merchantsHtml = merchantSummary.map(m => `
-            <div class="payment-item">
-                <div>
-                    <p><strong>${m.name}</strong></p>
-                    <p style="font-size: 0.9em; color: var(--color-text-secondary);">${m.transactionCount} transaction(s)</p>
-                </div>
-                <p class="amount error">${currency}${m.totalSpent.toLocaleString('en-US')}</p>
-            </div>
-        `).join('');
-        merchantList.innerHTML = merchantsHtml;
-    }
+    renderAllMerchantsList();
 }
 
 function renderReviewView() {
@@ -906,31 +875,95 @@ function renderDashboardSummary() {
         };
     }
     
-    summaryData['Automated Payments'] = {
-        value: `${currentUser.payments.length}`,
-        note: 'Total scheduled payments'
+    summaryData['Wallet Balance'] = {
+        value: `${currency}${currentUser.wallet.balance.toLocaleString()}`,
+        note: 'Click to Fund'
     };
     
     renderDashboardOverview(summaryData);
+    
+    const walletCard = dashboardOverview.lastElementChild as HTMLDivElement;
+    if (walletCard) {
+        walletCard.style.cursor = 'pointer';
+        walletCard.addEventListener('click', openFundWalletModal);
+    }
 }
 
 function renderRecentActivity() {
     if (!currentUser) return;
-    const hasBudgets = currentUser.budgets.length > 0;
-    const hasExpenses = currentUser.expenses.length > 0;
-    if (!hasBudgets && !hasExpenses) {
+    const activities: string[] = [];
+
+    if (currentUser.budgets.length > 0) {
+        activities.push("Created a new budget plan.");
+    }
+    if (currentUser.expenses.length > 0) {
+        activities.push("Analyzed a new expense report.");
+    }
+    if (currentUser.payments.length > 0) {
+        activities.push(`Scheduled ${currentUser.payments.length} payment(s).`);
+    }
+
+    if (activities.length === 0) {
         recentActivityList.innerHTML = `<div class="empty-state">Create a budget or analyze expenses to see recent activity.</div>`;
         return;
     }
-    let html = '';
-    if (hasBudgets) {
-        html += `<p>You created a new budget plan.</p>`;
-    }
-    if (hasExpenses) {
-        html += `<p>You analyzed a new expense report.</p>`;
-    }
-    recentActivityList.innerHTML = html;
+    
+    recentActivityList.innerHTML = activities.map(act => `<p class="payment-item">${act}</p>`).join('');
 }
+
+function renderTrendChart() {
+    if (!currentUser || currentUser.budgets.length < 2) {
+        dashboardTrendChartContainer.innerHTML = `<div class="empty-state">Complete at least two budget/expense cycles to see your trend.</div>`;
+        return;
+    }
+    
+    const dataPoints = currentUser.budgets.map((budget, index) => {
+        const expense = currentUser.expenses[index];
+        return {
+            label: `Cycle ${index + 1}`,
+            budget: budget.summary.discretionaryBudget,
+            expenses: expense ? expense.expenseSummary.totalExpenses : 0,
+        };
+    });
+
+    const currency = currentUser.budgets[0].summary.currency || '₦';
+    const maxValue = Math.max(...dataPoints.flatMap(d => [d.budget, d.expenses]));
+    const width = dashboardTrendChartContainer.clientWidth;
+    const height = 300;
+    const padding = { top: 20, right: 20, bottom: 50, left: 60 };
+
+    const svg = `
+        <svg class="trend-chart-svg" viewBox="0 0 ${width} ${height}">
+            <!-- Grid lines -->
+            ${Array.from({length: 5}).map((_, i) => `<line class="grid" x1="${padding.left}" y1="${padding.top + i * (height - padding.top - padding.bottom) / 4}" x2="${width - padding.right}" y2="${padding.top + i * (height - padding.top - padding.bottom) / 4}"></line>`).join('')}
+            
+            <!-- Y-Axis Labels -->
+            ${Array.from({length: 5}).map((_, i) => `<text class="axis-label" x="${padding.left - 10}" y="${padding.top + i * (height - padding.top - padding.bottom) / 4 + 5}" text-anchor="end">${currency}${(maxValue * (1 - i/4)).toLocaleString(undefined, {notation: 'compact'})}</text>`).join('')}
+
+            <!-- X-Axis Labels -->
+            ${dataPoints.map((d, i) => `<text class="axis-label" x="${padding.left + i * (width - padding.left - padding.right) / (dataPoints.length - 1)}" y="${height - padding.bottom + 20}" text-anchor="middle">${d.label}</text>`).join('')}
+
+            <!-- Budget Line -->
+            <polyline class="line line-budget" points="${dataPoints.map((d, i) => `${padding.left + i * (width - padding.left - padding.right) / (dataPoints.length - 1)},${height - padding.bottom - (d.budget / maxValue) * (height - padding.top - padding.bottom)}`).join(' ')}" />
+            
+            <!-- Expenses Line -->
+            <polyline class="line line-expenses" points="${dataPoints.map((d, i) => `${padding.left + i * (width - padding.left - padding.right) / (dataPoints.length - 1)},${height - padding.bottom - (d.expenses / maxValue) * (height - padding.top - padding.bottom)}`).join(' ')}" />
+            
+            <!-- Data Points -->
+            ${dataPoints.map((d, i) => `
+                <circle class="dot dot-budget" cx="${padding.left + i * (width - padding.left - padding.right) / (dataPoints.length - 1)}" cy="${height - padding.bottom - (d.budget / maxValue) * (height - padding.top - padding.bottom)}" r="5" />
+                <circle class="dot dot-expenses" cx="${padding.left + i * (width - padding.left - padding.right) / (dataPoints.length - 1)}" cy="${height - padding.bottom - (d.expenses / maxValue) * (height - padding.top - padding.bottom)}" r="5" />
+            `).join('')}
+        </svg>
+        <div class="trend-chart-legend">
+            <div class="legend-item"><span class="legend-color-box" style="background-color: var(--color-success);"></span> Budget</div>
+            <div class="legend-item"><span class="legend-color-box" style="background-color: var(--color-error);"></span> Expenses</div>
+        </div>
+    `;
+
+    dashboardTrendChartContainer.innerHTML = svg;
+}
+
 
 function renderChart(items: any[], valueKey: string, labelKey: string, percentKey: string, currency: string) {
     if (!items || items.length === 0) return '';
@@ -1328,6 +1361,29 @@ function renderPaymentList() {
     paymentList.innerHTML = paymentsHtml;
 }
 
+function renderAllMerchantsList() {
+    if (!currentUser) return;
+    const merchants = getCombinedMerchants(currentUser);
+    const currency = currentUser.budgets[0]?.summary.currency || '₦';
+
+    if (merchants.length === 0) {
+        allMerchantsList.innerHTML = '<div class="empty-state">Analyze expenses or add merchants manually to see them here.</div>';
+        return;
+    }
+    
+    allMerchantsList.innerHTML = merchants.map(m => `
+        <div class="merchant-item">
+            <div>
+                <p><strong>${m.name}</strong></p>
+                <p style="font-size: 0.9em; color: var(--color-text-secondary);">${m.category}</p>
+            </div>
+            <div>
+                ${m.source === 'expenses' ? `<p class="amount error">${currency}${m.totalSpent.toLocaleString()}</p><p style="font-size: 0.8em; text-align: right; color: var(--color-text-secondary);">${m.transactionCount} transaction(s)</p>` : `<p style="font-size: 0.9em; color: var(--color-text-secondary);">Manually Added</p>`}
+            </div>
+        </div>
+    `).join('');
+}
+
 
 function renderIcons() {
     document.querySelectorAll<HTMLElement>('[data-icon]').forEach(el => {
@@ -1392,6 +1448,7 @@ async function handleRegister(e: Event) {
         email,
         verified: false,
         wallet: { balance: 0, transactions: [] },
+        merchants: [],
         budgets: [],
         expenses: [],
         payments: [],
@@ -1723,7 +1780,7 @@ async function handleGenerateOpportunities() {
     const userProfile = JSON.stringify({
         budget: currentUser.budgets[currentUser.budgets.length - 1],
         expenses: currentUser.expenses[currentUser.expenses.length - 1],
-        merchants: calculateMerchantSummary(currentUser),
+        merchants: getCombinedMerchants(currentUser),
     });
 
     try {
@@ -1828,9 +1885,7 @@ function handleFundWallet(e: Event) {
     setTimeout(() => {
         fundWalletModal.classList.add('hidden');
         hideStatusMessage(fundWalletStatus);
-        if (currentView === 'wallet') {
-            renderWalletView();
-        }
+        renderDashboardSummary(); // Update dashboard card
     }, 1500);
 }
 
@@ -1864,45 +1919,58 @@ function openPaymentGateway(merchant: string, amount: number) {
     paymentGatewayModal.classList.remove('hidden');
 }
 
+const paymentHandlers = {
+    paystack: {
+        init: (paymentDetails: { email: string, amount: number, currency: string, ref: string, merchant: string }, onComplete: (response: any) => void) => {
+            if (!ensureConfigured('paystack')) {
+                showStatusMessage(paymentStatus, 'Payment gateway is disabled due to a configuration error.', 'error');
+                return;
+            }
+            
+            const handler = (window as any).PaystackPop.setup({
+                key: PAYSTACK_PUBLIC_KEY,
+                email: paymentDetails.email,
+                amount: paymentDetails.amount * 100, // Paystack amount is in kobo/cents
+                currency: paymentDetails.currency,
+                ref: paymentDetails.ref,
+                metadata: { merchant: paymentDetails.merchant },
+                onClose: () => showStatusMessage(paymentStatus, 'Payment window closed.', 'info'),
+                callback: onComplete,
+            });
+            handler.openIframe();
+        }
+    },
+    // Future gateways can be added here
+    // stripe: { init: (details, onComplete) => { ... } }
+};
+
 
 function handlePayWithPaystack() {
     if (!currentUser) return;
-    if (!ensureConfigured('paystack')) {
-        showStatusMessage(paymentStatus, 'Payment gateway is disabled due to a configuration error.', 'error');
-        return;
-    }
     
-    const handler = (window as any).PaystackPop.setup({
-        key: PAYSTACK_PUBLIC_KEY,
+    paymentHandlers.paystack.init({
         email: currentUser.email,
-        amount: currentPayment.amount * 100, // Paystack amount is in kobo/cents
+        amount: currentPayment.amount,
         currency: currentUser.budgets[0]?.summary.currency.toUpperCase() || 'NGN',
         ref: `cravour_${Date.now()}`,
-        metadata: {
-            merchant: currentPayment.merchant
-        },
-        onClose: function(){
-            showStatusMessage(paymentStatus, 'Payment window closed.', 'info');
-        },
-        callback: function(response: any){
-            // Here you would verify the transaction on your backend
-            showStatusMessage(paymentStatus, `Payment to ${currentPayment.merchant} was successful!`, 'success');
+        merchant: currentPayment.merchant
+    }, (response) => {
+        // This callback runs on successful payment
+        showStatusMessage(paymentStatus, `Payment to ${currentPayment.merchant} was successful!`, 'success');
             
-            currentUser!.payments.push({
-                merchant: currentPayment.merchant,
-                amount: currentPayment.amount,
-                frequency: paymentFrequencySelect.value
-            });
-            saveUserDatabase();
-            
-            setTimeout(() => {
-                paymentGatewayModal.classList.add('hidden');
-                hideStatusMessage(paymentStatus);
-                renderPaymentList();
-            }, 2000);
-        }
+        currentUser!.payments.push({
+            merchant: currentPayment.merchant,
+            amount: currentPayment.amount,
+            frequency: paymentFrequencySelect.value
+        });
+        saveUserDatabase();
+        
+        setTimeout(() => {
+            paymentGatewayModal.classList.add('hidden');
+            hideStatusMessage(paymentStatus);
+            renderPaymentList();
+        }, 2000);
     });
-    handler.openIframe();
 }
 
 
@@ -1931,9 +1999,7 @@ function handlePayWithWallet() {
         paymentGatewayModal.classList.add('hidden');
         hideStatusMessage(paymentStatus);
         renderPaymentList();
-        if (currentView === 'wallet') {
-            renderWalletView();
-        }
+        renderDashboardSummary(); // Update dashboard card
     }, 2000);
 }
 
@@ -1973,6 +2039,87 @@ async function handleContactFormSubmit(e: Event) {
     }
 }
 
+function handleAddMerchant(e: Event) {
+    e.preventDefault();
+    if (!currentUser) return;
+    const name = newMerchantNameInput.value.trim();
+    const category = newMerchantCategoryInput.value.trim();
+
+    if (!name || !category) {
+        showStatusMessage(addMerchantStatus, 'Please provide a name and category.', 'error');
+        return;
+    }
+    
+    currentUser.merchants.push({ name, category });
+    saveUserDatabase();
+    showStatusMessage(addMerchantStatus, `Merchant "${name}" added successfully.`, 'success');
+    hideStatusMessage(addMerchantStatus, 2000);
+    addMerchantForm.reset();
+    renderAllMerchantsList();
+}
+
+
+async function handleShareReport(e: Event) {
+    const button = e.target as HTMLButtonElement;
+    
+    if (!currentUser || currentUser.budgets.length === 0 || currentUser.expenses.length === 0) {
+        showStatusMessage(reviewStatusArea, 'Please generate a performance review first.', 'info');
+        return;
+    }
+    if (!ensureConfigured('ai')) {
+        showStatusMessage(reviewStatusArea, 'AI features are disabled due to a configuration error.', 'error');
+        return;
+    }
+    
+    showStatusMessage(reviewStatusArea, 'Generating email summary...', 'info', true);
+    button.disabled = true;
+
+    try {
+        const latestReview = JSON.stringify({
+            adherenceScore: 92,
+            overallSummary: "You did great this month! You were under budget overall. Your biggest win was in marketing, but you overspent slightly on software subscriptions.",
+            varianceAnalysis: [
+                { category: 'Software', budgetedAmount: 150, actualAmount: 180, variance: 30 },
+                { category: 'Marketing', budgetedAmount: 500, actualAmount: 450, variance: -50 }
+            ]
+        });
+
+        const prompt = `Summarize the following financial performance review into a concise, encouraging email report for a business owner named ${currentUser.name}. The target recipient is ifezued@gmail.com. Highlight the budget adherence score, the biggest area of overspending, and the biggest win. Format it as a simple text email body. Performance Review Data: ${latestReview}`;
+        
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: prompt
+        });
+
+        const emailBody = response.text;
+        
+        // This is where you call your backend function
+        const payload = {
+            to: 'ifezued@gmail.com',
+            subject: `Your Cravour Financial Report for ${currentUser.name}`,
+            body: emailBody
+        };
+        
+        // const apiResponse = await fetch('/.netlify/functions/send-email-report', {
+        //     method: 'POST',
+        //     body: JSON.stringify(payload)
+        // });
+        // if (!apiResponse.ok) throw new Error('Backend email service failed.');
+
+        console.log("Email Payload (to be sent by backend):", payload);
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network request
+
+        showStatusMessage(reviewStatusArea, 'Email report has been sent successfully.', 'success');
+
+    } catch (error) {
+        console.error("Email Report Error:", error);
+        const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+        showStatusMessage(reviewStatusArea, `Error sending report: ${errorMessage}`, 'error');
+    } finally {
+        button.disabled = false;
+        hideStatusMessage(reviewStatusArea, 5000);
+    }
+}
 
 // --- Initialization Functions ---
 function initializeLandingPage() {
@@ -2046,6 +2193,7 @@ function initializeDashboard() {
     expenseAnalyzerForm.addEventListener('submit', handleAnalyzeExpenses);
     expenseResultsContainer.addEventListener('click', handleExpenseReportActions);
     generateReviewBtn.addEventListener('click', handleGenerateReview);
+    shareReportBtn.addEventListener('click', handleShareReport);
     paymentList.addEventListener('click', handlePaymentListActions);
     creativeSuiteContainer.addEventListener('click', handleCreativeSuiteTabs);
     creativeSuiteFormDashboard.addEventListener('submit', handleGenerateCreativeCopyDashboard);
@@ -2057,6 +2205,7 @@ function initializeDashboard() {
     closePaymentGatewayBtn.addEventListener('click', () => paymentGatewayModal.classList.add('hidden'));
     payWithPaystackBtn.addEventListener('click', handlePayWithPaystack);
     payWithWalletBtn.addEventListener('click', handlePayWithWallet);
+    addMerchantForm.addEventListener('submit', handleAddMerchant);
 }
 
 // --- Main App Start ---

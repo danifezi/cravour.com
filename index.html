@@ -162,33 +162,44 @@
                         <h1 id="welcome-message">Welcome Back!</h1>
                     </div>
                     <div id="dashboard-overview" class="dashboard-overview"></div>
-                    <div id="recent-activity" class="feature-panel">
-                        <h2>Recent Activity</h2>
-                        <div id="recent-activity-list" class="empty-state">Your recent activities will appear here.</div>
+                    <div class="content-grid-large" style="margin-top: 20px;">
+                        <div id="dashboard-trend-chart-card" class="result-card glass-effect">
+                            <h3 class="result-heading">Historical Performance</h3>
+                            <div id="dashboard-trend-chart-container" class="empty-state">Complete a few budget/expense cycles to see your trend.</div>
+                        </div>
+                        <div id="recent-activity" class="result-card glass-effect">
+                            <h3 class="result-heading">Recent Activity</h3>
+                            <div id="recent-activity-list" class="empty-state">Your recent activities will appear here.</div>
+                        </div>
                     </div>
                 </div>
-
+                
                 <!-- Wallet View -->
                 <div id="view-wallet" class="dashboard-view hidden">
                     <div class="view-header">
-                        <h1>Cravour Wallet</h1>
-                        <p>Manage your balance, transactions, and merchant spending.</p>
+                        <h1>Cravour Wallet & Merchants</h1>
+                        <p>Manage your balance, transactions, and a centralized list of your merchants.</p>
                     </div>
+
                     <div class="content-grid-large">
-                        <div id="wallet-overview-card" class="overview-card glass-effect">
-                            <!-- Populated by JS -->
-                        </div>
                         <div class="result-card glass-effect">
-                            <div class="creative-suite-tabs">
-                                <button class="tab-link active" data-tab="wallet-transactions">Transactions</button>
-                                <button class="tab-link" data-tab="wallet-merchants">Merchants</button>
-                            </div>
-                            <div id="wallet-transactions" class="tab-content active" style="max-height: 250px; overflow-y: auto;">
-                                <div id="transactionList" class="empty-state">No transactions yet.</div>
-                            </div>
-                            <div id="wallet-merchants" class="tab-content" style="max-height: 250px; overflow-y: auto;">
-                                <div id="merchantList" class="empty-state">Analyze expenses to see merchant data.</div>
-                            </div>
+                             <h3 class="result-heading">Your Merchants</h3>
+                             <div id="all-merchants-list" class="empty-state">Merchants from expense reports and manual entries will appear here.</div>
+                        </div>
+                        <div class="form-card">
+                             <h3 class="result-heading">Add a New Merchant</h3>
+                            <form id="addMerchantForm">
+                                <div class="form-group">
+                                    <label for="newMerchantName">Merchant Name</label>
+                                    <input type="text" id="newMerchantName" class="input-field" placeholder="e.g., Google Workspace" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newMerchantCategory">Category</label>
+                                    <input type="text" id="newMerchantCategory" class="input-field" placeholder="e.g., Software, Office Supplies" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary"><span class="btn-icon" data-icon="cogs"></span> Add Merchant</button>
+                                <div id="addMerchantStatus" class="status-area hidden"></div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -256,7 +267,10 @@
                     </div>
                     <div class="content-grid-large">
                         <div class="result-card">
-                             <h3 class="result-heading">Performance Review</h3>
+                             <div class="view-header" style="margin-bottom: 20px; display:flex; justify-content: space-between; align-items: center;">
+                                <h3 class="result-heading" style="margin: 0; padding: 0; border: none;">Performance Review</h3>
+                                <button id="shareReportBtn" class="btn btn-secondary-outline"><span class="btn-icon" data-icon="envelope"></span> Share Report via Email</button>
+                            </div>
                              <div class="form-card" style="max-width: 500px; margin: 0 auto 30px auto; text-align: center; padding: 20px;">
                                 <button id="generateReviewBtn" class="btn btn-primary"><span class="btn-icon" data-icon="review"></span> Generate Performance Review</button>
                                 <div id="reviewStatus" class="status-area hidden"></div>
