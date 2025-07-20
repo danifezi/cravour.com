@@ -23,6 +23,10 @@ const icons = {
     phone: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 0 1-.694 1.955l-1.293.97c-.135.101-.164.292-.088.442A15.428 15.428 0 0 0 10.5 15.5a15.428 15.428 0 0 0 5.43-3.664c.15-.15.341-.127.442-.088l.97-1.293a1.875 1.875 0 0 1 1.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 0 1-3 3h-1.372c-5.496 0-10.536-2.502-13.88-6.839C1.17 12.87.5 9.074.5 5.872V4.5h1Z" clip-rule="evenodd" fill="currentColor"/></svg>`,
     arrowUp: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M11.47 2.47a.75.75 0 0 1 1.06 0l7.5 7.5a.75.75 0 1 1-1.06 1.06L12 3.56 4.53 11.03a.75.75 0 0 1-1.06-1.06l7.5-7.5Z" clip-rule="evenodd" /></svg>`,
     arrowDown: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12.53 21.53a.75.75 0 0 1-1.06 0l-7.5-7.5a.75.75 0 0 1 1.06-1.06L12 19.94l6.97-6.97a.75.75 0 1 1 1.06 1.06l-7.5 7.5Z" clip-rule="evenodd" /></svg>`,
+    trash: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1-3.878.512.75.75 0 1 1-.256-1.478l3.585-1.005A1.875 1.875 0 0 1 21.5 4.5v13.5A1.875 1.875 0 0 1 19.625 20h-15A1.875 1.875 0 0 1 2.75 18V4.5c0-.654.34-1.254.872-1.571l3.585-1.005a.75.75 0 0 1 1.06.256A48.815 48.815 0 0 1 12 4.705v-.227c0-1.564 1.258-2.833 2.81-2.833h.063c1.552 0 2.81 1.27 2.81 2.833ZM12 6.25a.75.75 0 0 1 .75.75v8.5a.75.75 0 0 1-1.5 0v-8.5a.75.75 0 0 1 .75-.75Z M9 7a.75.75 0 0 0-1.5 0v8.5a.75.75 0 0 0 1.5 0V7Zm6 0a.75.75 0 0 0-1.5 0v8.5a.75.75 0 0 0 1.5 0V7Z" clip-rule="evenodd" /></svg>`,
+    twitter: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`,
+    instagram: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12.315 2c-2.43 0-2.714.01-3.66.052-1.4.06-2.31.28-3.11.583a5.55 5.55 0 0 0-1.99 1.99c-.303.8-.523 1.71-.583 3.11C2.01 8.586 2 8.87 2 11.315s.01 2.73.052 3.66c.06 1.4.28 2.31.583 3.11a5.55 5.55 0 0 0 1.99 1.99c.8.303 1.71.523 3.11.583 1-.04 1.23-.05 3.67-.05s2.73.01 3.67.05c1.4.06 2.31.28 3.11.583a5.55 5.55 0 0 0 1.99-1.99c.303-.8.523-1.71.583-3.11.04-1 .05-1.23.05-3.67s-.01-2.73-.05-3.67c-.06-1.4-.28-2.31-.583-3.11a5.55 5.55 0 0 0-1.99-1.99c-.8-.303-1.71-.523-3.11-.583C15.045 2.01 14.76 2 12.315 2zM8.47 11.315a3.845 3.845 0 1 0 7.69 0a3.845 3.845 0 0 0-7.69 0zM17.5 7.155a1.35 1.35 0 1 0 0-2.7 1.35 1.35 0 0 0 0 2.7z" clip-rule="evenodd"/><path d="M12.315 5.865a5.45 5.45 0 1 0 0 10.9 5.45 5.45 0 0 0 0-10.9zM8.47 11.315a3.845 3.845 0 1 1 7.69 0a3.845 3.845 0 0 1-7.69 0z"/></svg>`,
+    facebook: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.04c-5.52 0-10 4.48-10 10s4.48 10 10 10s10-4.48 10-10S17.52 2.04 12 2.04zM13.6 19.95V14h2l.3-2.3h-2.3v-1.45c0-.66.18-1.11 1.13-1.11h1.2V7.12c-.21-.03-.92-.09-1.75-.09c-1.73 0-2.91 1.06-2.91 2.99V11.7H9.4v2.3h1.8v5.95h2.4z"/></svg>`,
 };
 
 // --- AI Schema Type Definitions ---
@@ -153,7 +157,7 @@ interface OpportunitiesData {
 interface WalletTransaction {
     id: string;
     date: string;
-    type: 'fund' | 'payment' | 'transfer' | 'savings' | 'investment';
+    type: 'fund' | 'payment' | 'transfer' | 'savings' | 'investment' | 'liquidation';
     description: string;
     amount: number; // Always positive
 }
@@ -254,6 +258,7 @@ const PAYSTACK_PUBLIC_KEY = 'pk_test_0a4c8a2e0c3a2f8d1d2b7c6a0e1f3d4b9a8c7d6e'; 
 
 // --- DOM Elements ---
 const yearSpan = document.getElementById('year') as HTMLSpanElement;
+const headerLogo = document.getElementById('headerLogo') as HTMLAnchorElement;
 const hamburger = document.querySelector('.hamburger') as HTMLButtonElement;
 const mainNav = document.getElementById('main-nav') as HTMLElement;
 const navListLinks = document.getElementById('nav-list-links') as HTMLUListElement;
@@ -296,6 +301,7 @@ const mainDashboardContent = document.getElementById('main-dashboard-content') a
 const gettingStartedChecklist = document.getElementById('getting-started-checklist') as HTMLDivElement;
 const dashboardOverview = document.getElementById('dashboard-overview') as HTMLDivElement;
 const dashboardTrendChartContainer = document.getElementById('dashboard-trend-chart-container') as HTMLDivElement;
+const chartTooltip = document.getElementById('chart-tooltip') as HTMLDivElement;
 const recentActivityList = document.getElementById('recent-activity-list') as HTMLDivElement;
 
 // Budget Planner Elements
@@ -305,6 +311,8 @@ const budgetCurrencySelect = document.getElementById('budgetCurrency') as HTMLSe
 const generateBudgetBtn = document.getElementById('generateBudgetBtn') as HTMLButtonElement;
 const budgetStatusArea = document.getElementById('budgetStatus') as HTMLDivElement;
 const budgetResultsContainer = document.getElementById('budget-results-wrapper') as HTMLDivElement;
+const budgetHistoryList = document.getElementById('budget-history-list') as HTMLDivElement;
+
 
 // Expense Analyzer Elements
 const expenseAnalyzerForm = document.getElementById('expenseAnalyzerForm') as HTMLFormElement;
@@ -312,6 +320,11 @@ const expenseDataInput = document.getElementById('expenseData') as HTMLTextAreaE
 const analyzeExpensesBtn = document.getElementById('analyzeExpensesBtn') as HTMLButtonElement;
 const expenseStatusArea = document.getElementById('expenseStatus') as HTMLDivElement;
 const expenseResultsContainer = document.getElementById('expense-results-wrapper') as HTMLDivElement;
+const expensePeriodSelector = document.getElementById('expense-period-selector') as HTMLDivElement;
+const customDateRangeContainer = document.getElementById('custom-date-range-container') as HTMLDivElement;
+const startDateInput = document.getElementById('startDate') as HTMLInputElement;
+const endDateInput = document.getElementById('endDate') as HTMLInputElement;
+
 
 // Performance Review Elements
 const generateReviewBtn = document.getElementById('generateReviewBtn') as HTMLButtonElement;
@@ -327,6 +340,7 @@ const savedAdCopyLibraryContainer = document.getElementById('saved-ad-copy-libra
 
 // Opportunities Elements
 const generateOpportunitiesBtn = document.getElementById('generateOpportunitiesBtn') as HTMLButtonElement;
+const deleteOpportunitiesBtn = document.getElementById('deleteOpportunitiesBtn') as HTMLButtonElement;
 const opportunitiesStatusArea = document.getElementById('opportunitiesStatus') as HTMLDivElement;
 const opportunitiesResultsContainer = document.getElementById('opportunities-results-wrapper') as HTMLDivElement;
 
@@ -342,10 +356,7 @@ const newMerchantNameInput = document.getElementById('newMerchantName') as HTMLI
 const newMerchantCategoryInput = document.getElementById('newMerchantCategory') as HTMLInputElement;
 const addMerchantStatus = document.getElementById('addMerchantStatus') as HTMLDivElement;
 const paymentList = document.getElementById('paymentList') as HTMLDivElement;
-const transferForm = document.getElementById('transferForm') as HTMLFormElement;
-const transferStatusArea = document.getElementById('transferStatus') as HTMLDivElement;
-const transferAmountInput = document.getElementById('transferAmount') as HTMLInputElement;
-const transferRecipientInput = document.getElementById('transferRecipient') as HTMLInputElement;
+const investmentList = document.getElementById('investment-list') as HTMLDivElement;
 
 
 // Payment & Wallet Modals
@@ -354,6 +365,14 @@ const closeFundWalletBtn = document.getElementById('closeFundWallet') as HTMLBut
 const fundWalletForm = document.getElementById('fundWalletForm') as HTMLFormElement;
 const fundAmountInput = document.getElementById('fundAmount') as HTMLInputElement;
 const fundWalletStatus = document.getElementById('fundWalletStatus') as HTMLDivElement;
+
+const transferModal = document.getElementById('transferModal') as HTMLDivElement;
+const closeTransferModalBtn = document.getElementById('closeTransferModal') as HTMLButtonElement;
+const transferForm = document.getElementById('transferForm') as HTMLFormElement;
+const transferStatusArea = document.getElementById('transferStatus') as HTMLDivElement;
+const transferAmountInput = document.getElementById('transferAmount') as HTMLInputElement;
+const transferRecipientInput = document.getElementById('transferRecipient') as HTMLInputElement;
+
 
 const paymentGatewayModal = document.getElementById('paymentGatewayModal') as HTMLDivElement;
 const closePaymentGatewayBtn = document.getElementById('closePaymentGateway') as HTMLButtonElement;
@@ -509,8 +528,8 @@ const expenseReportSchema = {
             type: Type.OBJECT,
             description: "Analysis of user's spending patterns and habits.",
             properties: {
-                dailyAverage: { type: Type.NUMBER, description: "The average daily spending calculated from the total expenses over the period (assume 30 days if not specified)." },
-                weeklyAverage: { type: Type.NUMBER, description: "The average weekly spending (dailyAverage * 7)." },
+                dailyAverage: { type: Type.NUMBER, description: "The average daily spending calculated from the total expenses over the specified period." },
+                weeklyAverage: { type: Type.NUMBER, description: "The average weekly spending." },
                 peakSpendingDay: { type: Type.STRING, description: "The day of the week with the highest spending (e.g., 'Friday'). If unable to determine, return 'Not Available'." },
                 spendingTrend: { type: Type.STRING, description: "A one-word summary of the spending trend, e.g., 'Consistent', 'High on Weekends', 'Varies'." },
                 trendSummary: { type: Type.STRING, description: "A short, actionable summary of the user's spending habits. e.g., 'Your spending is highest on Fridays, mainly on dining out.'" }
@@ -537,7 +556,7 @@ const expenseReportSchema = {
                 properties: {
                     area: { type: Type.STRING, description: "The expense area to target." },
                     suggestion: { type: Type.STRING, description: "A specific, actionable cost-cutting tip." },
-                    potentialSavings: { type: Type.STRING, description: "Estimated monthly savings, e.g., '₦5000 - ₦10000'" },
+                    potentialSavings: { type: Type.STRING, description: "Estimated savings for the period, e.g., '₦5000 - ₦10000'" },
                 }
             }
         },
@@ -649,16 +668,18 @@ const opportunitiesSchema = {
 
 
 // --- Helper Functions ---
-function showStatusMessage(container: HTMLElement, message: string, type: 'success' | 'error' | 'info', withSpinner = false) {
+function showStatusMessage(container: HTMLElement, message: string, type: 'success' | 'error' | 'info', withSpinner = false, actions: { text: string, view: AppView }[] = []) {
     if (!container) return;
     container.classList.remove('hidden');
     container.className = 'status-area'; // Reset classes
     
     const spinnerHtml = withSpinner ? '<div class="loading-spinner"></div>' : '';
+    const actionsHtml = actions.map(action => `<button class="btn btn-small-action status-action-btn" data-view="${action.view}">${action.text}</button>`).join('');
     
     container.className = `status-area ${type}-message`;
-    container.innerHTML = `<div class="loading-state">${spinnerHtml}<p>${message}</p></div>`;
+    container.innerHTML = `<div class="loading-state">${spinnerHtml}<p>${message}</p></div> ${actionsHtml ? `<div class="status-actions">${actionsHtml}</div>` : ''}`;
 }
+
 
 function hideStatusMessage(container: HTMLElement, delay?: number) {
     if (!container) return;
@@ -695,15 +716,16 @@ function getCombinedMerchants(user: User): MerchantSummary[] {
 
     // Process merchants from expenses
     if (user.expenses && user.expenses.length > 0) {
-        const latestExpenses = user.expenses[user.expenses.length - 1];
-        latestExpenses.categorizedExpenses.forEach(expense => {
-            const merchantName = expense.merchantBrandExample || expense.merchantCategory;
-            if (merchantName) {
-                const existing = merchantMap.get(merchantName) || { name: merchantName, category: expense.merchantCategory, totalSpent: 0, transactionCount: 0, source: 'expenses' };
-                existing.totalSpent += expense.amount;
-                existing.transactionCount += 1;
-                merchantMap.set(merchantName, existing);
-            }
+        user.expenses.forEach(report => {
+            report.categorizedExpenses.forEach(expense => {
+                const merchantName = expense.merchantBrandExample || expense.merchantCategory;
+                if (merchantName) {
+                    const existing = merchantMap.get(merchantName) || { name: merchantName, category: expense.merchantCategory, totalSpent: 0, transactionCount: 0, source: 'expenses' };
+                    existing.totalSpent += expense.amount;
+                    existing.transactionCount += 1;
+                    merchantMap.set(merchantName, existing);
+                }
+            });
         });
     }
 
@@ -717,6 +739,7 @@ function getCombinedMerchants(user: User): MerchantSummary[] {
     return Array.from(merchantMap.values())
         .sort((a, b) => b.totalSpent - a.totalSpent);
 }
+
 
 function renderSkeletonLoader(container: HTMLElement, type: 'cards' | 'list' = 'cards') {
     if (!container) return;
@@ -827,7 +850,7 @@ function renderCurrentView() {
             renderWalletView();
             break;
         case 'budget':
-            // The view is static, but if it had dynamic parts, they'd be rendered here
+            renderBudgetHistory();
             break;
         case 'expenses':
             // Check if user has budget to derive currency
@@ -1033,8 +1056,10 @@ function renderTrendChart() {
             
             <!-- Data Points -->
             ${dataPoints.map((d, i) => `
-                <circle class="dot dot-budget" cx="${padding.left + i * (width - padding.left - padding.right) / (dataPoints.length - 1)}" cy="${height - padding.bottom - (d.budget / maxValue) * (height - padding.top - padding.bottom)}" r="5" />
-                <circle class="dot dot-expenses" cx="${padding.left + i * (width - padding.left - padding.right) / (dataPoints.length - 1)}" cy="${height - padding.bottom - (d.expenses / maxValue) * (height - padding.top - padding.bottom)}" r="5" />
+                <g class="chart-dot-group">
+                    <circle class="dot dot-budget" cx="${padding.left + i * (width - padding.left - padding.right) / (dataPoints.length - 1)}" cy="${height - padding.bottom - (d.budget / maxValue) * (height - padding.top - padding.bottom)}" r="8" data-label="${d.label}" data-value="${d.budget}" data-type="Budget"/>
+                    <circle class="dot dot-expenses" cx="${padding.left + i * (width - padding.left - padding.right) / (dataPoints.length - 1)}" cy="${height - padding.bottom - (d.expenses / maxValue) * (height - padding.top - padding.bottom)}" r="8" data-label="${d.label}" data-value="${d.expenses}" data-type="Expenses"/>
+                </g>
             `).join('')}
         </svg>
         <div class="trend-chart-legend">
@@ -1044,6 +1069,31 @@ function renderTrendChart() {
     `;
 
     dashboardTrendChartContainer.innerHTML = svg;
+    addChartTooltipListeners();
+}
+
+function addChartTooltipListeners() {
+    const dots = document.querySelectorAll('.chart-dot-group .dot');
+    dots.forEach(dot => {
+        dot.addEventListener('mouseover', (e: MouseEvent) => {
+            const target = e.target as SVGCircleElement;
+            const label = target.dataset.label;
+            const value = parseFloat(target.dataset.value || '0');
+            const type = target.dataset.type;
+            const currency = currentUser?.budgets[0]?.summary.currency || '₦';
+
+            chartTooltip.innerHTML = `<strong>${label}</strong><br>${type}: ${currency}${value.toLocaleString()}`;
+            chartTooltip.classList.remove('hidden');
+        });
+        dot.addEventListener('mousemove', (e: MouseEvent) => {
+            const chartRect = dashboardTrendChartContainer.getBoundingClientRect();
+            chartTooltip.style.left = `${e.clientX - chartRect.left + 15}px`;
+            chartTooltip.style.top = `${e.clientY - chartRect.top - 15}px`;
+        });
+        dot.addEventListener('mouseout', () => {
+            chartTooltip.classList.add('hidden');
+        });
+    });
 }
 
 
@@ -1155,6 +1205,30 @@ function renderBudgetPlan(plan: BudgetPlan, container: HTMLElement) {
 
     container.innerHTML = summaryHtml + chartHtml + allocationsHtml + recommendationsHtml;
     renderIcons();
+}
+
+function renderBudgetHistory() {
+    if (!currentUser || !budgetHistoryList) return;
+
+    if (currentUser.budgets.length === 0) {
+        budgetHistoryList.innerHTML = `<div class="empty-state">Your past budgets will appear here.</div>`;
+        return;
+    }
+
+    const historyHtml = currentUser.budgets.map((budget, index) => {
+        const currency = budget.summary.currency || '₦';
+        return `
+            <div class="history-item">
+                <div>
+                    <p><strong>Budget for ${currency}${budget.summary.totalIncome.toLocaleString()} Income</strong></p>
+                    <p class="history-item-subtext">Created on ${new Date().toLocaleDateString()}</p>
+                </div>
+                <button class="delete-btn" data-budget-index="${index}" aria-label="Delete budget at index ${index}">${icons.trash}</button>
+            </div>
+        `;
+    }).reverse().join(''); // Show most recent first
+
+    budgetHistoryList.innerHTML = historyHtml;
 }
 
 function renderExpenseReport(report: ExpenseReport, container: HTMLElement) {
@@ -1346,10 +1420,10 @@ function renderSavedAdCopyLibrary() {
         return;
     }
 
-    const allCopiesHtml = currentUser.creativeCopies.flatMap(dataSet => 
-        dataSet.adCopies.map((copy) => `
+    const allSetsHtml = currentUser.creativeCopies.map((dataSet, index) => {
+        const copiesHtml = dataSet.adCopies.map((copy) => `
             <div class="ad-copy-card">
-                 <div class="ad-copy-part">
+                <div class="ad-copy-part">
                     <div class="ad-copy-part-header">
                         <span>Headline</span>
                         <button class="copy-btn" data-copy-text="${copy.headline}">${icons.copy} Copy</button>
@@ -1371,16 +1445,28 @@ function renderSavedAdCopyLibrary() {
                     <div class="ad-cta">${copy.callToAction}</div>
                 </div>
             </div>
-        `)
-    ).join('');
+        `).join('');
 
-    savedAdCopyLibraryContainer.innerHTML = `<div class="ad-copy-grid">${allCopiesHtml || '<div class="empty-state">No ad copy generated yet.</div>'}</div>`;
+        return `
+            <div class="saved-item-container">
+                <div class="history-item">
+                    <p><strong>Ad Set ${index + 1}</strong></p>
+                    <button class="delete-btn" data-creative-index="${index}" aria-label="Delete ad copy set ${index + 1}">${icons.trash}</button>
+                </div>
+                <div class="ad-copy-grid">${copiesHtml}</div>
+            </div>
+        `;
+    }).reverse().join('');
+
+
+    savedAdCopyLibraryContainer.innerHTML = allSetsHtml;
     renderIcons();
 }
 
 function renderOpportunities(data: OpportunitiesData, container: HTMLElement) {
     if (!data?.opportunities || data.opportunities.length === 0) {
         container.innerHTML = '<div class="empty-state">No specific opportunities found at this time. Try updating your budget or expenses.</div>';
+        deleteOpportunitiesBtn.classList.add('hidden');
         return;
     }
 
@@ -1419,6 +1505,7 @@ function renderOpportunities(data: OpportunitiesData, container: HTMLElement) {
     `).join('');
 
     container.innerHTML = `<div class="opportunities-grid">${opportunitiesHtml}</div>`;
+    deleteOpportunitiesBtn.classList.remove('hidden');
     renderIcons();
 }
 
@@ -1426,6 +1513,7 @@ function renderSavedOpportunities() {
     if (!opportunitiesResultsContainer) return;
     if (!currentUser || !currentUser.opportunities || currentUser.opportunities.length === 0) {
         opportunitiesResultsContainer.innerHTML = '<div class="empty-state">Generate opportunities to see them here.</div>';
+        deleteOpportunitiesBtn.classList.add('hidden');
         return;
     }
     const latestOpportunities = currentUser.opportunities[currentUser.opportunities.length - 1];
@@ -1467,16 +1555,42 @@ function renderAllMerchantsList() {
     }
     
     allMerchantsListWallet.innerHTML = merchants.map(m => `
-        <div class="merchant-item clickable" data-merchant-name="${m.name}">
-            <div>
+        <div class="merchant-item" data-merchant-name="${m.name}">
+            <div class="clickable-area">
                 <p><strong>${m.name}</strong></p>
                 <p style="font-size: 0.9em; color: var(--color-text-secondary);">${m.category}</p>
             </div>
-            <div>
-                ${m.source === 'expenses' ? `<p class="amount error">${currency}${m.totalSpent.toLocaleString()}</p><p style="font-size: 0.8em; text-align: right; color: var(--color-text-secondary);">${m.transactionCount} transaction(s)</p>` : `<p style="font-size: 0.9em; color: var(--color-text-secondary);">Manually Added</p>`}
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="text-align: right;">
+                    ${m.source === 'expenses' ? `<p class="amount error">${currency}${m.totalSpent.toLocaleString()}</p><p style="font-size: 0.8em; text-align: right; color: var(--color-text-secondary);">${m.transactionCount} transaction(s)</p>` : `<p style="font-size: 0.9em; color: var(--color-text-secondary);">Manually Added</p>`}
+                </div>
+                ${m.source === 'manual' ? `<button class="delete-btn" data-merchant-delete-name="${m.name}" aria-label="Delete merchant ${m.name}">${icons.trash}</button>` : ''}
             </div>
         </div>
     `).join('');
+}
+
+function renderInvestments() {
+    if (!currentUser || !investmentList) return;
+    if (currentUser.investments.length === 0) {
+        investmentList.innerHTML = `<div class="empty-state">Act on investment opportunities to see your portfolio here.</div>`;
+        return;
+    }
+
+    const currency = currentUser.budgets[0]?.summary?.currency || '₦';
+    const investmentsHtml = currentUser.investments.map(inv => `
+        <div class="history-item">
+            <div>
+                <p><strong>${inv.name}</strong></p>
+                <p class="history-item-subtext">Invested on ${new Date(inv.date).toLocaleDateString()}</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                 <p class="amount success">${currency}${inv.amount.toLocaleString()}</p>
+                <button class="btn btn-small-action" data-investment-id="${inv.id}">Liquidate</button>
+            </div>
+        </div>
+    `).join('');
+    investmentList.innerHTML = investmentsHtml;
 }
 
 
@@ -1485,7 +1599,7 @@ function renderIcons() {
         const kebabKey = el.dataset.icon;
         if (kebabKey) {
             const camelCaseKey = kebabKey.replace(/-([a-z])/g, g => g[1].toUpperCase()) as keyof typeof icons;
-            if (icons[camelCaseKey] && el.innerHTML === '') { // Only render if empty
+            if (icons[camelCaseKey] && (el.innerHTML === '' || el.classList.contains('social-icon'))) { // Only render if empty or a social icon
                 el.innerHTML = icons[camelCaseKey];
             }
         }
@@ -1514,6 +1628,7 @@ function handleWalletTabs(e: Event) {
             case 'overview': renderWalletOverview(); break;
             case 'merchants': renderAllMerchantsList(); break;
             case 'payments': renderPaymentList(); break;
+            case 'investments': renderInvestments(); break;
         }
     }
 }
@@ -1555,6 +1670,10 @@ function renderWalletTransactions() {
             icon = icons.chartLine;
             amountClass = 'error';
             sign = '-';
+        } else if (t.type === 'liquidation') {
+            icon = icons.wallet;
+            amountClass = 'success';
+            sign = '+';
         } else {
             icon = isDebit ? icons.arrowUp : icons.arrowDown;
             amountClass = isDebit ? 'error' : 'success';
@@ -1797,8 +1916,11 @@ async function handleGenerateBudgetPlan(e: Event) {
         currentUser.budgets.push(budgetPlan);
         currentUser.onboarding.budget = true; // Onboarding Step
         saveUserDatabase();
-        hideStatusMessage(budgetStatusArea, 500);
+        
+        showStatusMessage(budgetStatusArea, 'Budget created! What\'s next?', 'success', false, [{text: 'Analyze My Expenses', view: 'expenses'}]);
+
         renderDashboardHomeView();
+        renderBudgetHistory();
     } catch (error) {
         console.error(error);
         const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
@@ -1822,6 +1944,24 @@ async function handleAnalyzeExpenses(e: Event) {
         showStatusMessage(expenseStatusArea, 'Please paste your expense data.', 'error');
         return;
     }
+
+    const selectedPeriod = (expensePeriodSelector.querySelector('.active') as HTMLElement)?.dataset.period || 'monthly';
+    let periodContext = "for a month";
+    if (selectedPeriod === 'custom') {
+        const start = startDateInput.value;
+        const end = endDateInput.value;
+        if (!start || !end) {
+            showStatusMessage(expenseStatusArea, 'Please select a start and end date for the custom range.', 'error');
+            return;
+        }
+        if (new Date(start) > new Date(end)) {
+            showStatusMessage(expenseStatusArea, 'Start date cannot be after the end date.', 'error');
+            return;
+        }
+        periodContext = `for the period between ${start} and ${end}`;
+    } else {
+        periodContext = `for a ${selectedPeriod} period`;
+    }
     
     const currency = currentUser.budgets[currentUser.budgets.length - 1]?.summary?.currency || 'NGN';
     
@@ -1830,7 +1970,7 @@ async function handleAnalyzeExpenses(e: Event) {
     renderSkeletonLoader(expenseResultsContainer, 'cards');
 
     try {
-        let prompt = `Analyze the following expense data for a month. The user's primary currency is ${currency}. Provide a detailed report, including spending habits (daily/weekly average, peak day, trend), categorization, cost-cutting tips, and investment opportunities. Data: "${data}"`;
+        let prompt = `Analyze the following expense data ${periodContext}. The user's primary currency is ${currency}. Provide a detailed report, including spending habits (daily/weekly average, peak day, trend), categorization, cost-cutting tips, and investment opportunities. Data: "${data}"`;
 
         if (currentUser.location) {
             prompt += ` The user is located at latitude ${currentUser.location.latitude} and longitude ${currentUser.location.longitude} in Nigeria. Please also provide a list of 3-5 real, local Nigerian merchants relevant to their spending categories. For each merchant, provide their name, category, and a brief reason for the recommendation (e.g., 'offers bulk discounts on supplies').`;
@@ -1850,7 +1990,9 @@ async function handleAnalyzeExpenses(e: Event) {
         currentUser.expenses.push(expenseReport);
         currentUser.onboarding.expenses = true; // Onboarding Step
         saveUserDatabase();
-        hideStatusMessage(expenseStatusArea, 500);
+        
+        showStatusMessage(expenseStatusArea, 'Analysis complete! Ready to see how you performed?', 'success', false, [{ text: 'Review My Performance', view: 'review' }]);
+
         renderDashboardHomeView();
     } catch (error) {
         console.error(error);
@@ -2071,6 +2213,11 @@ function openFundWalletModal() {
     fundAmountInput.focus();
 }
 
+function openTransferModal() {
+    transferModal.classList.remove('hidden');
+    transferAmountInput.focus();
+}
+
 function handleFundWallet(e: Event) {
     e.preventDefault();
     if (!currentUser) return;
@@ -2285,9 +2432,13 @@ function handleDirectTransfer(e: Event) {
     saveUserDatabase();
     showStatusMessage(transferStatusArea, `Successfully sent ${amount.toLocaleString()} to ${recipient}.`, 'success');
     transferForm.reset();
-    hideStatusMessage(transferStatusArea, 3000);
-    renderWalletOverview();
-    renderDashboardSummary();
+    
+    setTimeout(() => {
+        transferModal.classList.add('hidden');
+        hideStatusMessage(transferStatusArea);
+        renderWalletOverview();
+        renderDashboardSummary();
+    }, 2000);
 }
 
 
@@ -2410,9 +2561,17 @@ async function handleShareReport(e: Event) {
 
 function handleWalletClick(e: Event) {
     const target = e.target as HTMLElement;
-    const merchantItem = target.closest('.merchant-item.clickable') as HTMLDivElement;
-    if (merchantItem) {
-        const merchantName = merchantItem.dataset.merchantName;
+    const clickableArea = target.closest('.clickable-area');
+    const deleteButton = target.closest('.delete-btn');
+
+    if (deleteButton) {
+        const merchantName = deleteButton.getAttribute('data-merchant-delete-name');
+        if (merchantName) {
+            handleDeleteMerchant(merchantName);
+        }
+    } else if (clickableArea) {
+        const merchantItem = clickableArea.closest('.merchant-item') as HTMLDivElement;
+        const merchantName = merchantItem?.dataset.merchantName;
         if (merchantName) {
             openMerchantHistoryModal(merchantName);
         }
@@ -2506,12 +2665,14 @@ function handleSimulateInvestment(e: Event) {
 
     // Update user state
     currentUser.savingsVault -= amount;
-    currentUser.investments.push({
+    const newInvestment: Investment = {
         id: `invest_${Date.now()}`,
         date: new Date().toISOString(),
         name: currentInvestmentOpportunity.action.target,
         amount: amount,
-    });
+    };
+    currentUser.investments.push(newInvestment);
+
     currentUser.wallet.transactions.push({
         id: `investment_${Date.now()}`,
         date: new Date().toISOString(),
@@ -2531,11 +2692,90 @@ function handleSimulateInvestment(e: Event) {
     }, 2000);
 }
 
+// --- Data Deletion Handlers ---
+
+function handleDeleteBudget(index: number) {
+    if (!currentUser) return;
+    if (confirm("Are you sure you want to delete this budget? This will also delete the associated expense report.")) {
+        currentUser.budgets.splice(index, 1);
+        if (currentUser.expenses[index]) {
+            currentUser.expenses.splice(index, 1);
+        }
+        saveUserDatabase();
+        renderBudgetHistory();
+        // Potentially re-render other parts of the dashboard
+        renderDashboardHomeView();
+    }
+}
+
+function handleDeleteCreativeCopy(index: number) {
+    if (!currentUser) return;
+    if (confirm("Are you sure you want to delete this set of ad copies?")) {
+        currentUser.creativeCopies.splice(index, 1);
+        saveUserDatabase();
+        renderSavedAdCopyLibrary();
+    }
+}
+
+function handleDeleteOpportunities() {
+    if (!currentUser || currentUser.opportunities.length === 0) return;
+    if (confirm("Are you sure you want to clear the latest opportunities report?")) {
+        currentUser.opportunities.pop();
+        saveUserDatabase();
+        renderSavedOpportunities();
+    }
+}
+
+function handleDeleteMerchant(merchantName: string) {
+    if (!currentUser) return;
+    if (confirm(`Are you sure you want to delete the manually added merchant "${merchantName}"?`)) {
+        currentUser.merchants = currentUser.merchants.filter(m => m.name !== merchantName);
+        saveUserDatabase();
+        renderAllMerchantsList();
+    }
+}
+
+function handleLiquidateInvestment(investmentId: string) {
+    if (!currentUser) return;
+    const investmentIndex = currentUser.investments.findIndex(inv => inv.id === investmentId);
+    if (investmentIndex === -1) return;
+
+    const investment = currentUser.investments[investmentIndex];
+    if (confirm(`Are you sure you want to liquidate your investment in ${investment.name}? This will return ₦${investment.amount.toLocaleString()} to your main wallet.`)) {
+        // Return funds to wallet
+        currentUser.wallet.balance += investment.amount;
+        
+        // Add a transaction record
+        currentUser.wallet.transactions.push({
+            id: `liquidate_${Date.now()}`,
+            date: new Date().toISOString(),
+            type: 'liquidation',
+            description: `Liquidation of ${investment.name}`,
+            amount: investment.amount
+        });
+        
+        // Remove from investments
+        currentUser.investments.splice(investmentIndex, 1);
+
+        saveUserDatabase();
+        renderInvestments();
+        renderWalletOverview(); // Update wallet balance and transaction list
+        renderDashboardSummary();
+    }
+}
 
 // --- Initialization Functions ---
 function initializeLandingPage() {
     if (yearSpan) yearSpan.textContent = new Date().getFullYear().toString();
     hamburger.addEventListener('click', handleMobileMenu);
+    headerLogo.addEventListener('click', (e) => {
+        e.preventDefault();
+        // If not logged in, it acts as a normal anchor to the top
+        if (!currentUser) {
+            window.location.hash = '';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    });
     
     document.body.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
@@ -2572,6 +2812,13 @@ function initializeDashboard() {
         navigateToView('dashboard');
     });
 
+    headerLogo.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (currentUser) {
+            navigateToView('dashboard');
+        }
+    });
+
     sidebarMenu.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
         const link = target.closest('a[data-view]');
@@ -2592,7 +2839,30 @@ function initializeDashboard() {
     logoutBtn.addEventListener('click', handleLogout);
     appOverlay.addEventListener('click', handleMobileMenu);
     budgetPlannerForm.addEventListener('submit', handleGenerateBudgetPlan);
+    budgetStatusArea.addEventListener('click', (e) => {
+        const target = (e.target as HTMLElement).closest('[data-view]');
+        if (target) navigateToView(target.getAttribute('data-view') as AppView);
+    });
+    budgetHistoryList.addEventListener('click', (e) => {
+        const target = (e.target as HTMLElement).closest('[data-budget-index]');
+        if (target) {
+            const index = parseInt(target.getAttribute('data-budget-index')!, 10);
+            handleDeleteBudget(index);
+        }
+    });
     expenseAnalyzerForm.addEventListener('submit', handleAnalyzeExpenses);
+    expenseStatusArea.addEventListener('click', (e) => {
+        const target = (e.target as HTMLElement).closest('[data-view]');
+        if (target) navigateToView(target.getAttribute('data-view') as AppView);
+    });
+    expensePeriodSelector.addEventListener('click', (e) => {
+        const target = e.target as HTMLButtonElement;
+        if (target.matches('.segmented-control-item')) {
+            expensePeriodSelector.querySelectorAll('.active').forEach(el => el.classList.remove('active'));
+            target.classList.add('active');
+            customDateRangeContainer.classList.toggle('hidden', target.dataset.period !== 'custom');
+        }
+    });
     expenseResultsContainer.addEventListener('click', handleExpenseReportActions);
     generateReviewBtn.addEventListener('click', handleGenerateReview);
     shareReportBtn.addEventListener('click', handleShareReport);
@@ -2600,8 +2870,16 @@ function initializeDashboard() {
     creativeSuiteContainer.addEventListener('click', handleCreativeSuiteTabs);
     creativeSuiteFormDashboard.addEventListener('submit', handleGenerateCreativeCopyDashboard);
     adCopyResultsContainerDashboard.addEventListener('click', handleCopyActions);
-    savedAdCopyLibraryContainer.addEventListener('click', handleCopyActions);
+    savedAdCopyLibraryContainer.addEventListener('click', (e) => {
+        handleCopyActions(e);
+        const target = (e.target as HTMLElement).closest('[data-creative-index]');
+        if(target) {
+            const index = parseInt(target.getAttribute('data-creative-index')!, 10);
+            handleDeleteCreativeCopy(index);
+        }
+    });
     generateOpportunitiesBtn.addEventListener('click', handleGenerateOpportunities);
+    deleteOpportunitiesBtn.addEventListener('click', handleDeleteOpportunities);
     opportunitiesResultsContainer.addEventListener('click', handleOpportunityActions);
 
     // Onboarding checklist actions
@@ -2620,19 +2898,28 @@ function initializeDashboard() {
     // Wallet & Pay Listeners
     walletTabsContainer?.addEventListener('click', handleWalletTabs);
     fundWalletBtn?.addEventListener('click', openFundWalletModal);
-    transferMoneyBtn?.addEventListener('click', () => {
-        const transferTab = walletTabsContainer.querySelector('[data-tab="transfer"]') as HTMLElement;
-        handleWalletTabs({ target: transferTab } as unknown as Event);
-    });
+    transferMoneyBtn?.addEventListener('click', openTransferModal);
+    
     fundWalletForm.addEventListener('submit', handleFundWallet);
     closeFundWalletBtn.addEventListener('click', () => fundWalletModal.classList.add('hidden'));
+    
+    transferForm.addEventListener('submit', handleDirectTransfer);
+    closeTransferModalBtn.addEventListener('click', () => transferModal.classList.add('hidden'));
+
     closePaymentGatewayBtn.addEventListener('click', () => paymentGatewayModal.classList.add('hidden'));
     payWithPaystackBtn.addEventListener('click', handlePayWithPaystack);
     payWithWalletBtn.addEventListener('click', handlePayWithWallet);
     addMerchantForm.addEventListener('submit', handleAddMerchant);
     allMerchantsListWallet.addEventListener('click', handleWalletClick);
     closeMerchantHistoryBtn.addEventListener('click', () => merchantHistoryModal.classList.add('hidden'));
-    transferForm.addEventListener('submit', handleDirectTransfer);
+    
+    investmentList.addEventListener('click', (e) => {
+        const target = (e.target as HTMLElement).closest('[data-investment-id]');
+        if (target) {
+            const id = target.getAttribute('data-investment-id')!;
+            handleLiquidateInvestment(id);
+        }
+    });
     
     // Investment Simulator listeners
     closeInvestmentSimulatorBtn.addEventListener('click', () => investmentSimulatorModal.classList.add('hidden'));

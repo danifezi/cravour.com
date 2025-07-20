@@ -35,7 +35,7 @@
 
     <header class="header" role="banner">
         <div class="container header-container">
-            <a href="/" class="header-logo" aria-label="Cravour Home">Cravour</a>
+            <a href="#" id="headerLogo" class="header-logo" aria-label="Cravour Home">Cravour</a>
              <nav class="header-nav" id="main-nav">
                 <ul class="nav-list" id="nav-list-links">
                     <li><a href="#features">Features</a></li>
@@ -188,7 +188,8 @@
                         <div class="content-grid-large" style="margin-top: 20px;">
                             <div id="dashboard-trend-chart-card" class="result-card glass-effect">
                                 <h3 class="result-heading">Historical Performance</h3>
-                                <div id="dashboard-trend-chart-container" class="empty-state">Complete a few budget/expense cycles to see your trend.</div>
+                                <div id="dashboard-trend-chart-container" class="empty-state">Complete at least two budget/expense cycles to see your trend.</div>
+                                <div id="chart-tooltip" class="chart-tooltip hidden"></div>
                             </div>
                             <div id="recent-activity" class="result-card glass-effect">
                                 <h3 class="result-heading">Recent Activity</h3>
@@ -208,9 +209,9 @@
                     <div class="creative-suite-container">
                         <div class="creative-suite-tabs" id="wallet-tabs">
                              <button class="tab-link active" data-tab="overview">Overview</button>
+                             <button class="tab-link" data-tab="investments">Investments</button>
                              <button class="tab-link" data-tab="merchants">Merchants</button>
                              <button class="tab-link" data-tab="payments">Cravour Pay</button>
-                             <button class="tab-link" data-tab="transfer">Transfer</button>
                         </div>
 
                         <!-- Overview Tab -->
@@ -236,6 +237,13 @@
                                     <div id="wallet-transaction-list" class="empty-state">Your transactions will appear here.</div>
                                 </div>
                             </div>
+                        </div>
+                        <!-- Investments Tab -->
+                        <div id="wallet-tab-investments" class="tab-content">
+                            <div class="result-card">
+                                <h3 class="result-heading">Your Investments</h3>
+                                <div id="investment-list" class="empty-state">Your simulated investments will appear here.</div>
+                           </div>
                         </div>
                         <!-- Merchants Tab -->
                         <div id="wallet-tab-merchants" class="tab-content">
@@ -268,26 +276,6 @@
                                  <div id="paymentList" class="empty-state">No automated payments scheduled. Use the Expense Tracker to schedule recurring payments.</div>
                             </div>
                         </div>
-                         <!-- Transfer Tab -->
-                        <div id="wallet-tab-transfer" class="tab-content">
-                            <div class="form-card" style="max-width: 600px; margin: auto;">
-                                <h3 class="result-heading">Send Money</h3>
-                                <p style="margin-bottom: 25px; color: var(--color-text-secondary);">Transfer funds securely from your wallet. This is a simulation for demo purposes.</p>
-                                <form id="transferForm">
-                                    <div class="form-group">
-                                        <label for="transferRecipient">Recipient's Email or Account</label>
-                                        <input type="text" id="transferRecipient" class="input-field" placeholder="e.g., user@example.com" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="transferAmount">Amount</label>
-                                        <input type="number" id="transferAmount" class="input-field" placeholder="0.00" required min="1">
-                                    </div>
-                                    <button type="submit" class="btn btn-primary"><span class="btn-icon" data-icon="arrowUp"></span> Send Funds</button>
-                                    <div id="transferStatus" class="status-area hidden"></div>
-                                </form>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
 
@@ -319,6 +307,11 @@
                             <div id="budget-results-wrapper" class="results-wrapper">
                                  <div class="empty-state">Your new budget will appear here.</div>
                             </div>
+                            <hr class="divider">
+                            <div id="budget-history-container">
+                                <h3 class="result-heading">Budget History</h3>
+                                <div id="budget-history-list" class="empty-state">Your past budgets will appear here.</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -327,13 +320,34 @@
                 <div id="view-expenses" class="dashboard-view hidden">
                     <div class="view-header">
                         <h1>Intelligent Expense Tracker</h1>
-                        <p>Paste your monthly spending. Our AI will categorize it and reveal where your money is going.</p>
+                        <p>Paste your spending for a specific period. Our AI will categorize it and reveal key insights.</p>
                     </div>
                      <div class="content-grid">
                         <form id="expenseAnalyzerForm" class="form-card">
                              <div class="form-group">
-                                <label for="expenseData">Paste Your Monthly Business Expenses</label>
-                                <textarea id="expenseData" class="input-field" rows="8" placeholder="e.g., Office Rent - $1200, Software Subscription - $50, Client Lunch - $75, Google Ads - $300, Office Supplies - $100"></textarea>
+                                <label>Select Period for Expenses</label>
+                                <div class="segmented-control" id="expense-period-selector">
+                                    <button type="button" class="segmented-control-item active" data-period="monthly">Monthly</button>
+                                    <button type="button" class="segmented-control-item" data-period="weekly">Weekly</button>
+                                    <button type="button" class="segmented-control-item" data-period="daily">Daily</button>
+                                    <button type="button" class="segmented-control-item" data-period="custom">Custom</button>
+                                </div>
+                             </div>
+                             <div class="form-group hidden" id="custom-date-range-container">
+                                 <div class="form-row">
+                                     <div class="form-group">
+                                         <label for="startDate">Start Date</label>
+                                         <input type="date" id="startDate" class="input-field">
+                                     </div>
+                                     <div class="form-group">
+                                         <label for="endDate">End Date</label>
+                                         <input type="date" id="endDate" class="input-field">
+                                     </div>
+                                 </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="expenseData">Paste Your Business Expenses</label>
+                                <textarea id="expenseData" class="input-field" rows="8" placeholder="e.g., Office Rent - ₦120000, Software Subscription - ₦15000, Client Lunch - ₦7500, Google Ads - ₦30000"></textarea>
                             </div>
                             <button type="submit" id="analyzeExpensesBtn" class="btn btn-primary"><span class="btn-icon" data-icon="expenses"></span> Analyze My Spending</button>
                              <div id="expenseStatus" class="status-area hidden"></div>
@@ -422,9 +436,12 @@
 
                 <!-- Opportunities View -->
                 <div id="view-opportunities" class="dashboard-view hidden">
-                    <div class="view-header">
-                        <h1>Growth Opportunities</h1>
-                        <p>Discover AI-powered strategies to build your wealth, tailored to your personal finances.</p>
+                    <div class="view-header" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h1>Growth Opportunities</h1>
+                            <p>Discover AI-powered strategies to build your wealth, tailored to your personal finances.</p>
+                        </div>
+                        <button id="deleteOpportunitiesBtn" class="delete-btn hidden" aria-label="Delete latest opportunities report"></button>
                     </div>
                     <div class="feature-panel">
                         <div class="form-card" style="max-width: 500px; margin: 0 auto 30px auto; text-align: center; padding: 20px;">
@@ -444,7 +461,21 @@
 
     <footer id="contact" class="footer" role="contentinfo">
         <div class="container footer-grid">
-            <div class="footer-col about"><h3 class="footer-logo">Cravour</h3><p>Intelligent financial tools for ambitious businesses and creators.</p></div>
+            <div class="footer-col about">
+                <h3 class="footer-logo">Cravour</h3>
+                <p>Intelligent financial tools for ambitious businesses and creators.</p>
+                <div class="social-links-container">
+                     <a href="https://facebook.com/cravournigeria" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                        <span class="social-icon" data-icon="facebook"></span>
+                     </a>
+                     <a href="https://twitter.com/cravournigeria" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                        <span class="social-icon" data-icon="twitter"></span>
+                     </a>
+                     <a href="https://instagram.com/cravournigeria" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <span class="social-icon" data-icon="instagram"></span>
+                     </a>
+                </div>
+            </div>
             <div class="footer-col links"><h3 class="footer-title">Quick Links</h3><ul><li><a href="#features">Features</a></li><li><a href="#demo">AI Demo</a></li><li><a href="#about">About</a></li></ul></div>
              <div class="footer-col contact"><h3 class="footer-title">Get in Touch</h3><ul><li><span class="footer-icon-placeholder" data-icon="envelope"></span> <a href="mailto:contact@cravour.com">contact@cravour.com</a></li><li><span class="footer-icon-placeholder" data-icon="phone"></span> <a href="tel:08146393655">08146393655</a></li></ul></div>
             <div class="footer-col waitlist">
@@ -569,6 +600,27 @@
                     <input type="number" id="fundAmount" class="input-field" required min="1">
                 </div>
                 <button type="submit" class="btn btn-primary">Add Funds</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Transfer Money Modal -->
+    <div id="transferModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="transfer-heading">
+        <div class="modal-content glass-effect">
+            <button id="closeTransferModal" class="modal-close-btn" aria-label="Close modal">×</button>
+            <form id="transferForm" class="auth-form" novalidate>
+                <h2 id="transfer-heading">Send Money</h2>
+                <p style="text-align: center; margin-bottom: 20px; font-size: 0.9em;">Transfer funds securely from your wallet. This is a simulation for demo purposes.</p>
+                <div id="transferStatus" class="status-area hidden"></div>
+                <div class="form-group">
+                    <label for="transferRecipient">Recipient's Email or Account</label>
+                    <input type="text" id="transferRecipient" class="input-field" placeholder="e.g., user@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="transferAmount">Amount</label>
+                    <input type="number" id="transferAmount" class="input-field" placeholder="0.00" required min="1">
+                </div>
+                <button type="submit" class="btn btn-primary"><span class="btn-icon" data-icon="arrowUp"></span> Send Funds</button>
             </form>
         </div>
     </div>
