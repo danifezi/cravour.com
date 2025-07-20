@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cravour | Your AI Financial Co-Pilot</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="https://img.icons8.com/color/48/cravour-dot-com.png" type="image/x-icon">
+    <link rel="stylesheet" href="./index.css">
+
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai?v=0.13.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    
+    <header class="header" role="banner">
+        <div class="container header-container">
+            <a href="#" class="header-logo" aria-label="Cravour Home">Cravour</a>
+             <nav class="header-nav" id="main-nav">
+                <ul class="nav-list" id="nav-list-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#demo">AI Demo</a></li>
+                    <li><a href="#about">About Us</a></li>
+                     <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="header-actions" id="header-actions-container">
+                     <button id="headerLoginBtn" class="btn btn-secondary-outline">Login</button>
+                     <button id="headerSignUpBtn" class="btn btn-primary">Get Started Free</button>
+                </div>
+            </nav>
+            <button class="hamburger" aria-label="Open navigation menu" aria-controls="main-nav" aria-expanded="false">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </button>
+        </div>
+    </header>
+
+    <main id="landing-page">
+        <section id="hero" class="hero-section" role="region" aria-labelledby="hero-heading">
+            <div class="container hero-content">
+                <h1 id="hero-heading">Achieve Your Financial Goals with an AI Co-Pilot.</h1>
+                <p class="lead">Cravour provides powerful AI tools for budgeting, expense tracking, and content creation, built for ambitious freelancers, creators, and small businesses.</p>
+                <button id="ctaSignUpBtn" class="btn btn-primary btn-primary-lg">Get Started Free</button>
+            </div>
+        </section>
+
+        <section id="features" class="features-section">
+            <div class="container">
+                <h2 class="section-title">A Smarter Way to Manage Your Money</h2>
+                <p class="section-subtitle">Our intuitive, AI-powered toolkit gives you a clear view of your finances and helps you make smarter decisions to fuel your growth.</p>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M18.5 2.25a.75.75 0 0 0-1.5 0v1.5h-9v-1.5a.75.75 0 0 0-1.5 0V6h12V2.25Z" fill-opacity="0.5" fill="var(--color-sky-blue-dark)"/>
+                                <path fill-rule="evenodd" d="M6.5 20.25a4.5 4.5 0 0 1-4.5-4.5V8.25a.75.75 0 0 1 .75-.75h18a.75.75 0 0 1 .75.75v7.5a4.5 4.5 0 0 1-4.5 4.5h-10.5Zm11.25-8.25a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3Z" clip-rule="evenodd" fill="var(--color-gold-accent)"/>
+                            </svg>
+                        </div>
+                        <h3>Integrated Cravour Wallet</h3>
+                        <p>Fund your wallet and make seamless payments to merchants directly from your financial dashboard, simplifying how you manage business expenses.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="m4.22 15.78 1.97-1.97a.75.75 0 0 1 1.06 0l3.25 3.25a.75.75 0 0 0 1.06 0L15.03 13.6a.75.75 0 0 1 1.06 0l4.72 4.72a.75.75 0 1 1-1.06 1.06l-4.19-4.19-3.47 3.47a2.25 2.25 0 0 1-3.18 0L5.28 16.84l-1.06-1.06Z" fill-rule="evenodd" clip-rule="evenodd" fill="var(--color-gold-accent)"></path>
+                                <path d="M2.25 18a.75.75 0 0 0 0 1.5H21a.75.75 0 0 0 0-1.5H2.25Z" fill-opacity="0.5" fill="var(--color-sky-blue-dark)"></path>
+                            </svg>
+                        </div>
+                        <h3>Optimize Your Spending</h3>
+                        <p>Simply paste your list of business expenses. Our AI analyzes your spending and uncovers hidden opportunities to save money and improve cash flow.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                               <path d="m15.808 3.755-2.06 2.06a.75.75 0 0 1-1.06 0l-2.06-2.06a.75.75 0 0 1 1.06-1.06l2.06 2.06 2.06-2.06a.75.75 0 1 1 1.06 1.06Z" fill-opacity="0.5" fill="var(--color-sky-blue-dark)"/>
+                               <path fill-rule="evenodd" d="M9.828 3.22a.75.75 0 0 1 1.06 0l3.89 3.89a2.25 2.25 0 0 1 0 3.182l-3.89 3.89a.75.75 0 0 1-1.06-1.06l3.89-3.89a.75.75 0 0 0 0-1.06L9.828 4.28a.75.75 0 0 1 0-1.06ZM5.293 6.728a.75.75 0 0 1 1.06 0l6 6a.75.75 0 0 1 0 1.06l-6 6a.75.75 0 0 1-1.06-1.06l5.47-5.47-5.47-5.47a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill="var(--color-gold-accent)"/>
+                            </svg>
+                        </div>
+                        <h3>Content That Converts</h3>
+                        <p>Perfect for creators and SMEs. Generate compelling ad copy for Instagram, newsletters, and more, written to connect with your target audience.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="demo" class="flubber-effect">
+            <div class="container">
+                <h2 class="section-title">See Our AI in Action</h2>
+                <p class="section-subtitle">Challenge our AI with a real-world business goal. This demo showcases how we can help you plan and budget. No sign-up required.</p>
+                <form id="aiDemoForm" class="planner-form">
+                    <div class="form-group">
+                        <label for="planDescription" class="sr-only">Your Financial Goal</label>
+                        <textarea id="planDescription" class="input-field" rows="3" placeholder="e.g., I want to start an online coffee shop. My startup budget is $5,000. Help me plan costs for beans, marketing on social media, and a simple e-commerce site."></textarea>
+                    </div>
+                    <button type="submit" id="generateDemoPlanBtn" class="btn btn-primary"><span id="icon-generate-plan" class="btn-icon"></span> Generate AI Plan</button>
+                </form>
+                <div id="demoStatus" class="status-area hidden"></div>
+                <div id="demo-results-wrapper" class="results-wrapper">
+                    <div class="empty-state">Your AI-driven business plan will appear here.</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2 class="section-title">About Cravour</h2>
+                <p class="section-subtitle">We are on a mission to empower financial independence for the next generation of builders and creators.</p>
+                <div class="about-grid">
+                    <div class="about-content">
+                        <h3>Our Mission</h3>
+                        <p>To provide accessible and intelligent financial tools that turn complex data into clear, actionable insights. We help freelancers and small businesses save money and achieve their most ambitious goals.</p>
+                        <h3>Core Values</h3>
+                        <ul class="values-list">
+                            <li><span class="value-icon-placeholder"></span> <strong>User-Centric AI:</strong> We build tools that serve people. Our AI is designed to be a helpful co-pilot, simplifying complexity and empowering our users.</li>
+                            <li><span class="value-icon-placeholder"></span> <strong>Clarity & Transparency:</strong> We are committed to providing clear data, transparent analysis, and honest recommendations so you can make decisions with confidence.</li>
+                            <li><span class="value-icon-placeholder"></span> <strong>Empowerment Through Simplicity:</strong> Powerful tools don't need to be complicated. We focus on elegant design and intuitive workflows to make financial management effortless.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+
+    <div id="app-dashboard" class="hidden">
+        <div class="app-container">
+            <aside class="app-sidebar">
+                <nav class="sidebar-nav">
+                    <a href="#" class="sidebar-logo" aria-label="Cravour Home">Cravour</a>
+                    <ul class="sidebar-menu" id="sidebar-menu">
+                        <!-- Navigation items will be inserted here by JS -->
+                    </ul>
+                </nav>
+                <div class="sidebar-footer">
+                    <button id="logoutBtn" class="btn btn-secondary-outline">Logout</button>
+                </div>
+            </aside>
+            <main class="app-main-content">
+                <!-- Dashboard Home View -->
+                <div id="view-dashboard" class="dashboard-view">
+                    <div class="view-header">
+                        <h1 id="welcome-message">Welcome Back!</h1>
+                    </div>
+                    <div id="dashboard-overview" class="dashboard-overview"></div>
+                    <div id="recent-activity" class="feature-panel">
+                        <h2>Recent Activity</h2>
+                        <div id="recent-activity-list" class="empty-state">Your recent activities will appear here.</div>
+                    </div>
+                </div>
+
+                <!-- Wallet View -->
+                <div id="view-wallet" class="dashboard-view hidden">
+                    <div class="view-header">
+                        <h1>Cravour Wallet</h1>
+                        <p>Manage your balance, transactions, and merchant spending.</p>
+                    </div>
+                    <div class="content-grid-large">
+                        <div id="wallet-overview-card" class="overview-card glass-effect">
+                            <!-- Populated by JS -->
+                        </div>
+                        <div class="result-card glass-effect">
+                            <div class="creative-suite-tabs">
+                                <button class="tab-link active" data-tab="wallet-transactions">Transactions</button>
+                                <button class="tab-link" data-tab="wallet-merchants">Merchants</button>
+                            </div>
+                            <div id="wallet-transactions" class="tab-content active" style="max-height: 250px; overflow-y: auto;">
+                                <div id="transactionList" class="empty-state">No transactions yet.</div>
+                            </div>
+                            <div id="wallet-merchants" class="tab-content" style="max-height: 250px; overflow-y: auto;">
+                                <div id="merchantList" class="empty-state">Analyze expenses to see merchant data.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Budget Planner View -->
+                <div id="view-budget" class="dashboard-view hidden">
+                    <div class="view-header">
+                        <h1>AI-Powered Business Planner</h1>
+                        <p>Describe your business, income, and recurring costs. Our AI will draft a personalized budget to help you manage your cash flow.</p>
+                    </div>
+                    <div class="content-grid">
+                        <form id="budgetPlannerForm" class="form-card">
+                            <div class="form-group">
+                                <label for="budgetDescription">Describe Your Financial Situation & Goals</label>
+                                <textarea id="budgetDescription" class="input-field" rows="6" placeholder="e.g., I run a small graphic design business. My monthly revenue is about $5,000. My software costs are $150. I want to save for a new laptop."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="budgetCurrency">Select Your Currency</label>
+                                <select id="budgetCurrency" class="input-field">
+                                    <option value="$">USD ($)</option>
+                                    <option value="€">EUR (€)</option>
+                                    <option value="£">GBP (£)</option>
+                                    <option value="₦">NGN (₦)</option>
+                                </select>
+                            </div>
+                            <button type="submit" id="generateBudgetBtn" class="btn btn-primary"><span id="icon-create-budget" class="btn-icon"></span> Create My Budget</button>
+                            <div id="budgetStatus" class="status-area hidden"></div>
+                        </form>
+                        <div class="result-card">
+                            <div id="budget-results-wrapper" class="results-wrapper">
+                                 <div class="empty-state">Your new budget will appear here.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expense Analyzer View -->
+                <div id="view-expenses" class="dashboard-view hidden">
+                    <div class="view-header">
+                        <h1>Intelligent Expense Tracker</h1>
+                        <p>Paste your monthly spending data or a simple list. Our AI will categorize it and show you where your money is going.</p>
+                    </div>
+                     <div class="content-grid">
+                        <form id="expenseAnalyzerForm" class="form-card">
+                             <div class="form-group">
+                                <label for="expenseData">Paste Your Monthly Business Expenses</label>
+                                <textarea id="expenseData" class="input-field" rows="8" placeholder="e.g., Office Rent - $1200, Software Subscription - $50, Client Lunch - $75, Google Ads - $300, Office Supplies - $100"></textarea>
+                            </div>
+                            <button type="submit" id="analyzeExpensesBtn" class="btn btn-primary"><span id="icon-analyze-spending" class="btn-icon"></span> Analyze My Spending</button>
+                             <div id="expenseStatus" class="status-area hidden"></div>
+                        </form>
+                        <div class="result-card">
+                            <div id="expense-results-wrapper" class="results-wrapper">
+                                 <div class="empty-state">Your expense analysis will appear here.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Review View -->
+                <div id="view-review" class="dashboard-view hidden">
+                    <div class="view-header">
+                        <h1>Performance Review</h1>
+                        <p>See how your spending stacks up against your budget, get insights on your business's financial health, and track your progress over time.</p>
+                    </div>
+                    <div class="content-grid-large">
+                        <div class="result-card">
+                             <h3 class="result-heading">Performance Review</h3>
+                             <div class="form-card" style="max-width: 500px; margin: 0 auto 30px auto; text-align: center; padding: 20px;">
+                                <button id="generateReviewBtn" class="btn btn-primary"><span id="icon-generate-review" class="btn-icon"></span> Generate Performance Review</button>
+                                <div id="reviewStatus" class="status-area hidden"></div>
+                            </div>
+                            <div id="review-results-wrapper" class="results-wrapper">
+                                <div class="empty-state">Your performance review will appear here.</div>
+                            </div>
+                        </div>
+                         <div class="result-card">
+                             <h3 class="result-heading">Scheduled Payments</h3>
+                             <div id="paymentList" class="empty-state">No automated payments scheduled.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Creative Suite View -->
+                <div id="view-creative" class="dashboard-view hidden">
+                    <div class="view-header">
+                        <h1>AI Creative Suite</h1>
+                        <p>Generate on-brand, high-converting copy for your products, services, or creative projects.</p>
+                    </div>
+                    <div class="creative-suite-container">
+                        <div class="creative-suite-tabs">
+                            <button class="tab-link active" data-tab="generator">Generator</button>
+                            <button class="tab-link" data-tab="library">Saved Library</button>
+                        </div>
+
+                        <div id="generator" class="tab-content active">
+                            <div class="content-grid">
+                                <form id="creativeSuiteFormDashboard" class="form-card">
+                                     <div class="form-row">
+                                         <div class="form-group">
+                                             <label for="productNameDashboard">Product/Service Name</label>
+                                             <input type="text" id="productNameDashboard" class="input-field" placeholder="e.g., 'Handcrafted Leather Wallets'" required>
+                                         </div>
+                                         <div class="form-group">
+                                             <label for="adPlatformDashboard">Target Platform</label>
+                                             <select id="adPlatformDashboard" class="input-field">
+                                                 <option>Instagram Post</option>
+                                                 <option>WhatsApp Broadcast</option>
+                                                 <option>Facebook Ad</option>
+                                                 <option>Email Newsletter</option>
+                                             </select>
+                                         </div>
+                                     </div>
+                                     <div class="form-group">
+                                         <label for="productDescriptionDashboard">Product Description & Target Audience</label>
+                                         <textarea id="productDescriptionDashboard" class="input-field" rows="3" placeholder="e.g., High-quality, minimalist leather wallets for customers who appreciate durable craftsmanship and timeless design." required></textarea>
+                                     </div>
+                                     <button type="submit" id="generateAdCopyBtnDashboard" class="btn btn-primary"><span id="icon-generate-ads" class="btn-icon"></span> Generate Ad Copy</button>
+                                     <div id="adCopyStatusDashboard" class="status-area hidden"></div>
+                                </form>
+                                <div class="result-card">
+                                    <div id="ad-copy-results-wrapper-dashboard" class="results-wrapper">
+                                        <div class="empty-state">Your generated ad copy will appear here.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="library" class="tab-content">
+                            <div id="saved-ad-copy-library" class="results-wrapper">
+                                <div class="empty-state">Your saved ad copy will appear here.</div>
+                            </div>
+                        </div>
+                     </div>
+                </div>
+
+                <!-- Opportunities View -->
+                <div id="view-opportunities" class="dashboard-view hidden">
+                    <div class="view-header">
+                        <h1>Personalized Insights</h1>
+                        <p>Let our AI analyze your complete financial profile to uncover savings, relevant deals, and smart ideas for your money.</p>
+                    </div>
+                    <div class="feature-panel">
+                        <div class="form-card" style="max-width: 500px; margin: 0 auto 30px auto; text-align: center; padding: 20px;">
+                            <button id="generateOpportunitiesBtn" class="btn btn-primary"><span id="icon-find-opportunities" class="btn-icon"></span> Find My Opportunities</button>
+                            <div id="opportunitiesStatus" class="status-area hidden"></div>
+                        </div>
+                        <div id="opportunities-results-wrapper" class="results-wrapper">
+                            <div class="empty-state">Your personalized financial opportunities will appear here.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+
+    <footer id="contact" class="footer" role="contentinfo">
+        <div class="container footer-grid">
+            <div class="footer-col about"><h3 class="footer-logo">Cravour</h3><p>Smart financial tools for ambitious businesses and creators.</p></div>
+            <div class="footer-col links"><h3 class="footer-title">Quick Links</h3><ul><li><a href="#features">Features</a></li><li><a href="#demo">AI Demo</a></li><li><a href="#about">About Us</a></li></ul></div>
+             <div class="footer-col contact"><h3 class="footer-title">Get in Touch</h3><ul><li><span class="footer-icon-placeholder"></span> <a href="mailto:contact@cravour.com">contact@cravour.com</a></li></ul></div>
+            <div class="footer-col waitlist">
+                <h3 class="footer-title">Contact Us</h3>
+                <p>Have a question or want to inquire about enterprise solutions? Reach out and let us know how we can help.</p>
+                <form id="contactForm" novalidate>
+                    <div id="contactFormMessage" class="status-area hidden"></div>
+                    <div class="form-group"><label for="contactName" class="sr-only">Your Name</label><input type="text" id="contactName" name="name" class="input-field" placeholder="Your Name" required></div>
+                    <div class="form-group"><label for="contactEmail" class="sr-only">Email Address</label><input type="email" id="contactEmail" name="email" class="input-field" placeholder="your@email.com" required></div>
+                    <div class="form-group"><label for="contactPhone" class="sr-only">Phone Number</label><input type="tel" id="contactPhone" name="phone" class="input-field" placeholder="Your Phone Number (Optional)"></div>
+                    <div class="form-group"><label for="contactMessageInput" class="sr-only">Your Message</label><textarea id="contactMessageInput" name="message" class="input-field" placeholder="Let us know how we can help..." required rows="4"></textarea></div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom"><p>© <span id="year"></span> Cravour. All Rights Reserved.</p></div>
+    </footer>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="auth-heading-login">
+        <div class="modal-content">
+            <button id="closeAuth" class="modal-close-btn" aria-label="Close modal">×</button>
+            <div id="loginView">
+                <form id="loginForm" class="auth-form" novalidate>
+                    <h2 id="auth-heading-login">Welcome Back</h2>
+                     <p style="text-align: center; margin-bottom: 20px; font-size: 0.9em;">Login to access your financial dashboard.</p>
+                    <div id="loginMessage" class="status-area hidden"></div>
+                    <div class="form-group"><label for="loginEmail">Email</label><input type="email" id="loginEmail" class="input-field" required autocomplete="email"></div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <p class="form-switch">No account? <button type="button" class="link-button" id="showRegister">Create an Account</button></p>
+                </form>
+            </div>
+            <div id="registerView" class="hidden">
+                <form id="registerForm" class="auth-form" novalidate>
+                     <h2 id="auth-heading-register">Create Your Free Account</h2>
+                     <p style="text-align: center; margin-bottom: 20px; font-size: 0.9em;">Get free access to the AI Financial Co-Pilot dashboard.</p>
+                    <div id="registerMessage" class="status-area hidden"></div>
+                     <div class="form-group"><label for="registerName">Full Name</label><input type="text" id="registerName" class="input-field" required autocomplete="name"></div>
+                    <div class="form-group"><label for="registerEmail">Email</label><input type="email" id="registerEmail" class="input-field" required autocomplete="email"></div>
+                    <button type="submit" class="btn btn-primary">Create Account</button>
+                    <p class="form-switch">Have an account? <button type="button" class="link-button" id="showLogin">Login</button></p>
+                </form>
+            </div>
+            <div id="verificationView" class="hidden">
+                <div class="auth-form">
+                    <h2>Check Your Email</h2>
+                    <p>We've sent a verification link to your email address. Please click the link to continue.</p>
+                    <div class="form-group" style="margin-top: 20px;">
+                        <p style="font-size: 0.9em; margin-bottom: 10px;">(This is a demo. No email was actually sent.)</p>
+                        <button id="verifyEmailBtn" class="btn btn-primary">Click to Verify</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Gateway Modal -->
+    <div id="paymentGatewayModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="payment-gateway-heading">
+        <div class="modal-content payment-gateway-modal">
+             <button id="closePaymentGateway" class="modal-close-btn" aria-label="Close payment modal">×</button>
+             <h2 id="payment-gateway-heading">Schedule Automated Payment</h2>
+             
+             <div class="payment-summary">
+                <p><strong>Merchant:</strong> <span id="paymentMerchantName"></span></p>
+                <p><strong>Amount:</strong> <span id="paymentAmountDisplay"></span></p>
+                <p><strong>Frequency:</strong> 
+                    <select id="paymentFrequency" class="input-field-inline">
+                        <option>Monthly</option>
+                        <option>Weekly</option>
+                        <option>One-Time</option>
+                    </select>
+                </p>
+             </div>
+             
+             <!-- Wallet Payment Section -->
+             <div id="walletPaymentSection" class="hidden">
+                 <h4>Pay with Cravour Wallet</h4>
+                 <p>Available Balance: <strong id="walletBalanceInfo"></strong></p>
+                 <div id="insufficientFundsMessage" class="status-area error-message hidden">Insufficient funds. Please fund your wallet.</div>
+                 <button id="payWithWalletBtn" class="btn btn-primary" style="width: 100%;"><span id="icon-pay-with-wallet" class="btn-icon"></span> Confirm & Pay with Wallet</button>
+             </div>
+             
+             <hr class="divider">
+
+             <!-- Paystack Section -->
+             <div id="paystackPaymentSection">
+                <h4>Pay with Card via Paystack</h4>
+                 <div class="payment-disclaimer">
+                    <span id="icon-info-circle" class="disclaimer-icon"></span>
+                    <p>You will be redirected to Paystack's secure checkout to complete this payment.</p>
+                </div>
+                <button id="payWithPaystackBtn" class="btn btn-primary" style="width: 100%; background-color: #00A8E8; border-color: #00A8E8;">
+                    <span id="icon-paystack" class="btn-icon"></span> Pay with Paystack
+                </button>
+             </div>
+            
+            <div id="paymentStatus" class="status-area hidden"></div>
+        </div>
+    </div>
+
+    <!-- Fund Wallet Modal -->
+    <div id="fundWalletModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="fund-wallet-heading">
+        <div class="modal-content">
+            <button id="closeFundWallet" class="modal-close-btn" aria-label="Close modal">×</button>
+            <form id="fundWalletForm" class="auth-form" novalidate>
+                <h2 id="fund-wallet-heading">Fund Your Cravour Wallet</h2>
+                <p style="text-align: center; margin-bottom: 20px; font-size: 0.9em;">This is a simulation. Enter an amount to add to your wallet balance.</p>
+                <div id="fundWalletStatus" class="status-area hidden"></div>
+                <div class="form-group">
+                    <label for="fundAmount">Amount</label>
+                    <input type="number" id="fundAmount" class="input-field" required min="1">
+                </div>
+                <button type="submit" class="btn btn-primary">Add Funds</button>
+            </form>
+        </div>
+    </div>
+    
+    <script type="module" src="./index.tsx"></script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
