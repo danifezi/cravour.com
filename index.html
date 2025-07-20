@@ -32,7 +32,7 @@
                 </ul>
                 <div class="header-actions" id="header-actions-container">
                      <button id="loginBtn" class="btn btn-secondary-outline">Login</button>
-                     <button id="registerBtn" class="btn btn-primary">Book Consultation</button>
+                     <button id="registerBtn" class="btn btn-primary">Sign Up Free</button>
                 </div>
             </nav>
             <button class="hamburger" aria-label="Open navigation menu" aria-controls="main-nav" aria-expanded="false">
@@ -46,7 +46,7 @@
             <div class="container hero-content">
                 <h1 id="hero-heading">AI-Powered Growth for Nigerian Businesses.</h1>
                 <p class="lead">We design and build custom AI solutions—from intelligent financial dashboards to automated workflows—that help you cut costs, boost efficiency, and scale faster in the Nigerian market.</p>
-                <button id="ctaConsultationBtn" class="btn btn-primary btn-primary-lg">Book a Free Consultation</button>
+                <button id="ctaSignUpBtn" class="btn btn-primary btn-primary-lg">Get Started For Free</button>
             </div>
         </section>
 
@@ -179,14 +179,15 @@
             <div class="footer-col links"><h3 class="footer-title">Quick Links</h3><ul><li><a href="#services">Our Capabilities</a></li><li><a href="#demo">AI Demo</a></li><li><a href="#about">About Us</a></li></ul></div>
              <div class="footer-col contact"><h3 class="footer-title">Get in Touch</h3><ul><li><i class="fas fa-map-marker-alt"></i> Lagos, Nigeria</li><li><i class="fas fa-envelope"></i> <a href="mailto:contact@cravour.com">contact@cravour.com</a></li></ul></div>
             <div class="footer-col waitlist">
-                <h3 class="footer-title">Book Your Free Consultation</h3>
-                <p>Ready to see how AI can transform your business? Fill out the form below, and our team will be in touch.</p>
-                <form id="consultationForm">
-                    <div id="consultationMessage" class="status-area hidden"></div>
-                    <div class="form-group"><label for="consultationName" class="sr-only">Your Name</label><input type="text" id="consultationName" class="input-field" placeholder="Your Name" required></div>
-                    <div class="form-group"><label for="consultationCompany" class="sr-only">Company Name</label><input type="text" id="consultationCompany" class="input-field" placeholder="Company Name" required></div>
-                    <div class="form-group"><label for="consultationEmail" class="sr-only">Email Address</label><input type="email" id="consultationEmail" class="input-field" placeholder="your@email.com" required></div>
-                    <button type="submit" class="btn btn-primary">Request Consultation</button>
+                <h3 class="footer-title">Send Us a Message</h3>
+                <p>Have a question or a specific project in mind? Drop us a line, and our team will get back to you.</p>
+                <form id="contactForm">
+                    <div id="contactFormMessage" class="status-area hidden"></div>
+                    <div class="form-group"><label for="contactName" class="sr-only">Your Name</label><input type="text" id="contactName" class="input-field" placeholder="Your Name" required></div>
+                    <div class="form-group"><label for="contactCompany" class="sr-only">Company Name</label><input type="text" id="contactCompany" class="input-field" placeholder="Company Name" required></div>
+                    <div class="form-group"><label for="contactEmail" class="sr-only">Email Address</label><input type="email" id="contactEmail" class="input-field" placeholder="your@email.com" required></div>
+                    <div class="form-group"><label for="contactMessageInput" class="sr-only">Your Message</label><textarea id="contactMessageInput" class="input-field" placeholder="Your message..." required rows="4"></textarea></div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
                 </form>
             </div>
         </div>
@@ -203,7 +204,6 @@
                      <p style="text-align: center; margin-bottom: 20px; font-size: 0.9em;">Login to access the full Financial Co-Pilot dashboard.</p>
                     <div id="loginMessage" class="status-area hidden"></div>
                     <div class="form-group"><label for="loginEmail">Email</label><input type="email" id="loginEmail" class="input-field" required autocomplete="email"></div>
-                    <div class="form-group"><label for="loginPassword">Password</label><input type="password" id="loginPassword" class="input-field" required autocomplete="current-password"></div>
                     <button type="submit" class="btn btn-primary">Login</button>
                     <p class="form-switch">No account? <button type="button" class="link-button" id="showRegister">Sign Up Free</button></p>
                 </form>
@@ -215,7 +215,6 @@
                     <div id="registerMessage" class="status-area hidden"></div>
                      <div class="form-group"><label for="registerName">Full Name</label><input type="text" id="registerName" class="input-field" required autocomplete="name"></div>
                     <div class="form-group"><label for="registerEmail">Email</label><input type="email" id="registerEmail" class="input-field" required autocomplete="email"></div>
-                    <div class="form-group"><label for="registerPassword">Password</label><input type="password" id="registerPassword" class="input-field" required minlength="6" autocomplete="new-password"></div>
                     <button type="submit" class="btn btn-primary">Create Account</button>
                     <p class="form-switch">Have an account? <button type="button" class="link-button" id="showLogin">Login</button></p>
                 </form>
@@ -274,6 +273,7 @@
                 </div>
                  <button type="submit" class="btn btn-primary" style="width: 100%;"><i class="fas fa-shield-alt"></i> Schedule Secure Payment</button>
                  <div id="paymentStatus" class="status-area hidden"></div>
+                 <p style="text-align: center; font-size: 0.9em; margin-top: 15px; color: var(--color-text-secondary);">Powered by <strong>Paystack</strong></p>
              </form>
         </div>
     </div>

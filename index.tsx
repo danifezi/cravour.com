@@ -48,7 +48,7 @@ const demoResultsContainer = document.getElementById('demo-results-wrapper') as 
 const authModal = document.getElementById('authModal') as HTMLDivElement;
 const loginBtn = document.getElementById('loginBtn') as HTMLButtonElement;
 const registerBtn = document.getElementById('registerBtn') as HTMLButtonElement;
-const ctaConsultationBtn = document.getElementById('ctaConsultationBtn') as HTMLButtonElement;
+const ctaSignUpBtn = document.getElementById('ctaSignUpBtn') as HTMLButtonElement;
 const closeAuthBtn = document.getElementById('closeAuth') as HTMLButtonElement;
 const showRegisterBtn = document.getElementById('showRegister') as HTMLButtonElement;
 const showLoginBtn = document.getElementById('showLogin') as HTMLButtonElement;
@@ -98,11 +98,12 @@ const paymentList = document.getElementById('paymentList') as HTMLDivElement;
 const paymentStatus = document.getElementById('paymentStatus') as HTMLDivElement;
 
 // Footer Elements
-const consultationForm = document.getElementById('consultationForm') as HTMLFormElement;
-const consultationNameInput = document.getElementById('consultationName') as HTMLInputElement;
-const consultationCompanyInput = document.getElementById('consultationCompany') as HTMLInputElement;
-const consultationEmailInput = document.getElementById('consultationEmail') as HTMLInputElement;
-const consultationMessage = document.getElementById('consultationMessage') as HTMLDivElement;
+const contactForm = document.getElementById('contactForm') as HTMLFormElement;
+const contactNameInput = document.getElementById('contactName') as HTMLInputElement;
+const contactCompanyInput = document.getElementById('contactCompany') as HTMLInputElement;
+const contactEmailInput = document.getElementById('contactEmail') as HTMLInputElement;
+const contactMessageInput = document.getElementById('contactMessageInput') as HTMLTextAreaElement;
+const contactFormMessage = document.getElementById('contactFormMessage') as HTMLDivElement;
 
 // --- AI Schemas ---
 const shoppingPlanSchema = {
@@ -349,12 +350,10 @@ function renderAppView() {
         `;
         headerActionsContainer.innerHTML = `
             <button id="headerLoginBtn" class="btn btn-secondary-outline">Login</button>
-            <button id="headerConsultationBtn" class="btn btn-primary">Book Consultation</button>
+            <button id="headerSignUpBtn" class="btn btn-primary">Sign Up Free</button>
         `;
         document.getElementById('headerLoginBtn')!.addEventListener('click', () => openAuthModal(false));
-        document.getElementById('headerConsultationBtn')!.addEventListener('click', () => {
-            document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-        });
+        document.getElementById('headerSignUpBtn')!.addEventListener('click', () => openAuthModal(true));
     }
 }
 
@@ -863,20 +862,29 @@ function handleMobileMenu() {
     hamburger.setAttribute('aria-expanded', String(isActive));
 }
 
-function handleConsultationSubmit(e: Event) {
+function handleContactFormSubmit(e: Event) {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
-    const email = consultationEmailInput.value;
-    const name = consultationNameInput.value;
-    const company = consultationCompanyInput.value;
+    const name = contactNameInput.value;
+    const company = contactCompanyInput.value;
+    const email = contactEmailInput.value;
+    const message = contactMessageInput.value;
 
-    if (email && name && company && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        showStatusMessage(consultationMessage, "Thank you! We'll be in touch shortly.", 'success');
-        form.reset();
-    } else {
-        showStatusMessage(consultationMessage, "Please fill out all fields correctly.", 'error');
+    if (!name || !company || !email || !message || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showStatusMessage(contactFormMessage, "Please fill out all fields correctly.", 'error');
+        hideStatusMessage(contactFormMessage, 4000);
+        return;
     }
-    hideStatusMessage(consultationMessage, 4000);
+
+    const subject = `Message from ${name} at ${company}`;
+    const body = `Name: ${name}\nCompany: ${company}\nEmail: ${email}\n\nMessage:\n${message}`;
+    const mailtoLink = `mailto:contact@cravour.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    window.location.href = mailtoLink;
+
+    showStatusMessage(contactFormMessage, "Opening your email client...", 'success');
+    form.reset();
+    hideStatusMessage(contactFormMessage, 4000);
 }
 
 // --- Auth & Modal Logic ---
@@ -996,16 +1004,12 @@ function initialize() {
     // Event Listeners
     hamburger?.addEventListener('click', handleMobileMenu);
     demoForm?.addEventListener('submit', handleGenerateDemoPlan);
-    consultationForm?.addEventListener('submit', handleConsultationSubmit);
+    contactForm?.addEventListener('submit', handleContactFormSubmit);
     
     // Auth Modal Listeners
     loginBtn?.addEventListener('click', () => openAuthModal(false));
-    registerBtn?.addEventListener('click', () => {
-         document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-    });
-    ctaConsultationBtn?.addEventListener('click', () => {
-         document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-    });
+    registerBtn?.addEventListener('click', () => openAuthModal(true));
+    ctaSignUpBtn?.addEventListener('click', () => openAuthModal(true));
     closeAuthBtn?.addEventListener('click', closeAuthModal);
     authModal?.addEventListener('click', (e) => {
         if (e.target === authModal) closeAuthModal();
