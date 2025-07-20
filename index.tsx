@@ -253,6 +253,7 @@ const loginEmailInput = document.getElementById('loginEmail') as HTMLInputElemen
 
 // Dashboard Elements
 const appDashboard = document.getElementById('app-dashboard') as HTMLElement;
+const appOverlay = document.getElementById('app-overlay') as HTMLDivElement;
 const sidebarMenu = document.getElementById('sidebar-menu') as HTMLUListElement;
 const logoutBtn = document.getElementById('logoutBtn') as HTMLButtonElement;
 const allDashboardViews = document.querySelectorAll('.dashboard-view');
@@ -609,18 +610,48 @@ function calculateMerchantSummary(user: User): MerchantSummary[] {
         .sort((a, b) => b.totalSpent - a.totalSpent);
 }
 
+function renderSkeletonLoader(container: HTMLElement, type: 'cards' | 'list' = 'cards') {
+    if (!container) return;
+    let skeletonHtml = '';
+    if (type === 'cards') {
+        skeletonHtml = `
+            <div class="skeleton-card">
+                <div class="skeleton-line title"></div>
+                <div class="skeleton-grid">
+                    <div class="skeleton-item"></div>
+                    <div class="skeleton-item"></div>
+                    <div class="skeleton-item"></div>
+                </div>
+                <div class="skeleton-line heading"></div>
+                <div class="skeleton-line"></div>
+                <div class="skeleton-line"></div>
+            </div>
+        `;
+    } else { // 'list' for ad copy
+        skeletonHtml = `
+            <div class="ad-copy-grid">
+                <div class="skeleton-card ad-copy">
+                    <div class="skeleton-line small-heading"></div>
+                    <div class="skeleton-line heading"></div>
+                    <div class="skeleton-line small-heading"></div>
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line small-heading"></div>
+                    <div class="skeleton-line cta"></div>
+                </div>
+            </div>
+        `;
+    }
+    container.innerHTML = skeletonHtml;
+    container.parentElement?.classList.remove('hidden');
+    container.classList.remove('hidden');
+}
+
 // --- View & UI Management ---
 function renderAppView() {
     if (currentUser) {
         landingPage.classList.add('hidden');
         appDashboard.classList.remove('hidden');
-        renderSidebar();
-        renderCurrentView();
-        
-        // Update header for logged-in state (mobile view)
-        navListLinks.innerHTML = ``;
-        headerActionsContainer.innerHTML = ``; // Handled by sidebar on desktop
-        
     } else {
         landingPage.classList.remove('hidden');
         appDashboard.classList.add('hidden');
@@ -638,6 +669,14 @@ function renderAppView() {
         `;
         document.getElementById('headerLoginBtn')!.addEventListener('click', () => openAuthModal(false));
         document.getElementById('headerSignUpBtn')!.addEventListener('click', () => openAuthModal(true));
+
+        // Ensure mobile menu is reset
+        mainNav.classList.remove('active');
+        hamburger.classList.remove('is-active');
+        const sidebar = document.querySelector('.app-sidebar') as HTMLElement;
+        sidebar.classList.remove('active');
+        appOverlay.classList.add('hidden');
+        document.body.style.overflow = '';
     }
     renderIcons();
 }
@@ -1190,719 +1229,115 @@ function renderOpportunities(data: OpportunitiesData, container: HTMLElement) {
                     <span class="card-type">${opp.type}</span>
                 </div>
             </div>
-            <p class="card-body">${opp.description}</p>
+            <div class="card-body">
+                <p>${opp.description}</p>
+            </div>
             <div class="card-footer">
-                ${opp.potentialSavings ? `<span class="potential-savings">${opp.potentialSavings}</span>` : ''}
-                <button class="btn btn-small-action">${opp.actionText}</button>
+                <p>Potential Benefit: <strong class="potential-savings">${opp.potentialSavings}</strong></p>
+                <button class="btn btn-secondary-outline" style="margin-top: 10px;">${opp.actionText}</button>
             </div>
         </div>
     `).join('');
+
     container.innerHTML = `<div class="opportunities-grid">${opportunitiesHtml}</div>`;
 }
 
 function renderSavedOpportunities() {
     if (!opportunitiesResultsContainer) return;
     if (!currentUser || !currentUser.opportunities || currentUser.opportunities.length === 0) {
-        opportunitiesResultsContainer.innerHTML = '<div class="empty-state">Your personalized financial opportunities will appear here.</div>';
+        opportunitiesResultsContainer.innerHTML = '<div class="empty-state">Generate opportunities to see them here.</div>';
         return;
     }
     const latestOpportunities = currentUser.opportunities[currentUser.opportunities.length - 1];
     renderOpportunities(latestOpportunities, opportunitiesResultsContainer);
 }
 
-function renderIcons() {
-    document.querySelectorAll('.btn-icon').forEach(el => {
-        const iconKey = el.id.replace('icon-', '').replace(/-(\w)/g, (match, p1) => p1.toUpperCase());
-        if (icons[iconKey as keyof typeof icons]) {
-            el.innerHTML = icons[iconKey as keyof typeof icons];
-        }
-    });
-
-    // Landing page icons are now hardcoded in index.html for faster first paint
-    document.querySelectorAll('.value-icon-placeholder').forEach(el => el.innerHTML = icons.check);
-    document.querySelectorAll('.footer-icon-placeholder').forEach(el => el.innerHTML = icons.envelope);
-    
-    // Modals
-    const iconPayWithWallet = document.getElementById('icon-pay-with-wallet');
-    if (iconPayWithWallet) iconPayWithWallet.innerHTML = icons.wallet;
-    const iconInfoCircle = document.getElementById('icon-info-circle');
-    if (iconInfoCircle) iconInfoCircle.innerHTML = icons.infoCircle;
-    const iconPaystack = document.getElementById('icon-paystack');
-    if (iconPaystack) iconPaystack.innerHTML = icons.paystack;
-}
-
-
-// --- Event Handlers ---
-async function handleGenerateDemoPlan(e: Event) {
-    e.preventDefault();
-    if (!ai) {
-        showStatusMessage(demoStatusArea, "AI Service is not configured. Check API key.", 'error');
-        return;
-    }
-
-    const description = demoGoalInput.value;
-    if (description.trim().length < 10) {
-        showStatusMessage(demoStatusArea, "Please provide a more detailed goal.", 'error');
-        hideStatusMessage(demoStatusArea, 3000);
-        return;
-    }
-
-    demoGenerateBtn.disabled = true;
-    demoGoalInput.disabled = true;
-    demoGenerateBtn.innerHTML = '<div class="loading-spinner"></div> Analyzing...';
-    demoResultsContainer.innerHTML = '';
-    showStatusMessage(demoStatusArea, "Generating your business plan...", 'info', true);
-    demoStatusArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-    try {
-        const prompt = `You are an expert business consultant. A user wants help with the following goal: "${description}". Your primary goal is to provide a practical, itemized plan with estimated costs. Infer the currency, defaulting to US Dollars ($). Recommend realistic online merchants or services (e.g., for web design, logistics, payment). Provide actionable tips for saving money during their startup phase. Your response MUST be a single, valid JSON object that strictly adheres to the provided schema.`;
-        
-        const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash",
-            contents: prompt,
-            config: { responseMimeType: "application/json", responseSchema: shoppingPlanSchema },
-        });
-        
-        const responseText = response.text?.trim();
-        if (!responseText) {
-            throw new Error("AI returned an empty response.");
-        }
-        
-        const plan = parseJsonFromAi<ShoppingPlan>(responseText);
-
-        hideStatusMessage(demoStatusArea);
-        renderGeneratedPlan(plan, demoResultsContainer);
-
-    } catch (error: any) {
-        console.error("AI Generation Error:", error);
-        const errorMessage = error.message.includes("plan format") || error.message.includes("incomplete plan")
-            ? error.message 
-            : "An error occurred while generating the analysis. Please try again.";
-        showStatusMessage(demoStatusArea, errorMessage, 'error');
-        demoResultsContainer.innerHTML = '<div class="empty-state">Could not generate an analysis.</div>';
-    } finally {
-        demoGenerateBtn.disabled = false;
-        demoGoalInput.disabled = false;
-        demoGenerateBtn.innerHTML = `<span id="icon-generate-plan" class="btn-icon">${icons.cogs}</span> Generate AI Plan`;
-    }
-}
-
-async function handleGenerateBudget(e: Event) {
-    e.preventDefault();
-    const description = budgetDescriptionInput.value;
-    const currency = budgetCurrencySelect.value;
-    if (description.trim().length < 20) {
-        showStatusMessage(budgetStatusArea, "Please provide more details about your goals and financials.", 'error', false);
-        hideStatusMessage(budgetStatusArea, 3000);
-        return;
-    }
-
-    generateBudgetBtn.disabled = true;
-    generateBudgetBtn.innerHTML = `<div class="loading-spinner"></div> Creating...`;
-    showStatusMessage(budgetStatusArea, "Your AI co-pilot is drafting your budget...", 'info', true);
-    budgetResultsContainer.innerHTML = '';
-
-    try {
-        const prompt = `As a friendly financial advisor, create a detailed personal or small business budget based on: "${description}". The user's specified currency is ${currency}. The budget must strictly follow the provided JSON schema, using the specified currency. Provide simple, actionable recommendations.`;
-
-        const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash",
-            contents: prompt,
-            config: { responseMimeType: "application/json", responseSchema: budgetPlanSchema },
-        });
-
-        const plan = parseJsonFromAi<BudgetPlan>(response.text);
-        if(currentUser) {
-            currentUser.budgets.push(plan);
-            saveUserDatabase();
-            renderDashboardSummary();
-        }
-        renderBudgetPlan(plan, budgetResultsContainer);
-        hideStatusMessage(budgetStatusArea);
-
-    } catch (error: any) {
-        console.error("Budget Generation Error:", error);
-        showStatusMessage(budgetStatusArea, error.message, 'error');
-        budgetResultsContainer.innerHTML = '<div class="empty-state">Could not generate a budget.</div>';
-    } finally {
-        generateBudgetBtn.disabled = false;
-        generateBudgetBtn.innerHTML = `<span id="icon-create-budget" class="btn-icon">${icons.magic}</span> Create My Budget`;
-    }
-}
-
-async function handleGenerateExpenseReport(e: Event) {
-    e.preventDefault();
-    const expenses = expenseDataInput.value;
-    if (expenses.trim().length < 10) {
-        showStatusMessage(expenseStatusArea, "Please paste your spending data.", 'error');
-        hideStatusMessage(expenseStatusArea, 3000);
-        return;
-    }
-    analyzeExpensesBtn.disabled = true;
-    analyzeExpensesBtn.innerHTML = `<div class="loading-spinner"></div> Analyzing...`;
-    showStatusMessage(expenseStatusArea, "Analyzing your spending for optimization opportunities...", 'info', true);
-    expenseResultsContainer.innerHTML = '';
-    
-    try {
-        const userCurrency = currentUser?.budgets?.[currentUser.budgets.length - 1]?.summary?.currency || '$';
-        const prompt = `A user has provided their spending data: "${expenses}". Act as a financial analyst AI. Your task is to provide a detailed report based on this data.
-1.  **Categorize Expenses:** Group the expenses into logical categories (e.g., 'Software', 'Food', 'Utilities').
-2.  **Analyze Habits:** Calculate daily and weekly spending averages (assume a 30-day period if not specified). Identify the peak spending day of the week if possible from the text (e.g., "lunch on tuesday"). If you cannot determine days, state 'Not Available'. Provide a concise summary of their spending trend.
-3.  **Provide Suggestions:** Offer specific cost-cutting tips and relevant savings or investment opportunities.
-4.  **Format Output:** The user's currency is ${userCurrency}. Your entire response MUST be a single, valid JSON object that strictly adheres to the provided schema. For recurring expenses, suggest a generic merchant category and a plausible brand example.`;
-
-        const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash",
-            contents: prompt,
-            config: { responseMimeType: "application/json", responseSchema: expenseReportSchema },
-        });
-
-        const report = parseJsonFromAi<ExpenseReport>(response.text);
-         if(currentUser) {
-            currentUser.expenses.push(report);
-            saveUserDatabase();
-            renderDashboardSummary();
-        }
-        renderExpenseReport(report, expenseResultsContainer);
-        hideStatusMessage(expenseStatusArea);
-
-    } catch (error: any) {
-        console.error("Expense Analysis Error:", error);
-        showStatusMessage(expenseStatusArea, error.message, 'error');
-        expenseResultsContainer.innerHTML = '<div class="empty-state">Could not generate a report.</div>';
-    } finally {
-        analyzeExpensesBtn.disabled = false;
-        analyzeExpensesBtn.innerHTML = `<span id="icon-analyze-spending" class="btn-icon">${icons.chartLine}</span> Analyze My Spending`;
-    }
-}
-
-async function handleGeneratePerformanceReview() {
-    if (!currentUser || currentUser.budgets.length === 0 || currentUser.expenses.length === 0) {
-        showStatusMessage(reviewStatusArea, "Please generate a budget and a spending report first.", 'info');
-        hideStatusMessage(reviewStatusArea, 5000);
-        return;
-    }
-
-    generateReviewBtn.disabled = true;
-    generateReviewBtn.innerHTML = `<div class="loading-spinner"></div> Analyzing...`;
-    showStatusMessage(reviewStatusArea, "Comparing your budget to your spending...", 'info', true);
-    reviewResultsContainer.innerHTML = '';
-
-    const latestBudget = currentUser.budgets[currentUser.budgets.length - 1];
-    const latestExpenses = currentUser.expenses[currentUser.expenses.length - 1];
-
-    try {
-        const prompt = `As a helpful financial assistant, compare a user's budget with their actual spending.
-        Budget: ${JSON.stringify(latestBudget)}
-        Spending: ${JSON.stringify(latestExpenses)}
-        Provide a detailed performance review. Analyze variances by comparing budget allocations to categorized expenses. Calculate an overall budget adherence score and offer simple, encouraging insights for improving their financial habits. The response must be a valid JSON object adhering to the specified schema.`;
-
-        const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash",
-            contents: prompt,
-            config: { responseMimeType: "application/json", responseSchema: performanceReviewSchema },
-        });
-        
-        const report = parseJsonFromAi<PerformanceReview>(response.text);
-        renderPerformanceReview(report, reviewResultsContainer);
-        hideStatusMessage(reviewStatusArea);
-
-    } catch (error: any) {
-         console.error("Performance Review Error:", error);
-        showStatusMessage(reviewStatusArea, error.message, 'error');
-        reviewResultsContainer.innerHTML = '<div class="empty-state">Could not generate a performance review.</div>';
-    } finally {
-        generateReviewBtn.disabled = false;
-        generateReviewBtn.innerHTML = `<span id="icon-generate-review" class="btn-icon">${icons.sync}</span> Generate Performance Review`;
-    }
-}
-
-async function handleGenerateAdCopy(e: Event) {
-    e.preventDefault();
-     if (!ai) {
-        showStatusMessage(demoStatusArea, "AI Service is not configured. Check API key.", 'error');
-        return;
-    }
-    
-    const form = e.currentTarget as HTMLFormElement;
-    const nameInput = form.querySelector('input[type="text"]') as HTMLInputElement;
-    const descInput = form.querySelector('textarea') as HTMLTextAreaElement;
-    const platformSelect = form.querySelector('select') as HTMLSelectElement;
-    const generateBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
-    const statusArea = form.parentElement?.querySelector('.status-area') as HTMLDivElement;
-    
-    if (!nameInput || !descInput || !platformSelect || !generateBtn || !statusArea || !adCopyResultsContainerDashboard) {
-        console.error("Could not find all required form elements for ad copy generation.");
-        return;
-    }
-    
-    if (nameInput.value.trim().length < 3 || descInput.value.trim().length < 10) {
-        showStatusMessage(statusArea, "Please provide a more detailed product name and description.", 'error');
-        hideStatusMessage(statusArea, 3000);
-        return;
-    }
-
-    generateBtn.disabled = true;
-    nameInput.disabled = true;
-    descInput.disabled = true;
-    platformSelect.disabled = true;
-    generateBtn.innerHTML = '<div class="loading-spinner"></div> Generating...';
-    showStatusMessage(statusArea, "Generating creative ad copy...", 'info', true);
-
-    try {
-        const prompt = `Act as a creative marketing assistant. A user needs ad copy for their product.
-        Product Name: "${nameInput.value}"
-        Description: "${descInput.value}"
-        Target Platform: "${platformSelect.value}"
-        Generate 3 distinct, compelling ad copy variations. The tone should be suitable for the target audience and platform. The call to action should be relevant for the platform (e.g., 'Shop Now', 'Click the link in bio'). The response MUST be a single, valid JSON object that strictly adheres to the provided schema.`;
-
-        const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash",
-            contents: prompt,
-            config: { responseMimeType: "application/json", responseSchema: creativeCopySchema },
-        });
-
-        const adCopyData = parseJsonFromAi<CreativeCopy>(response.text);
-        renderAdCopy(adCopyData, adCopyResultsContainerDashboard);
-        if (currentUser) {
-            if (adCopyData.adCopies && adCopyData.adCopies.length > 0) {
-                currentUser.creativeCopies.push(adCopyData);
-                saveUserDatabase();
-            }
-            renderSavedAdCopyLibrary();
-        }
-        hideStatusMessage(statusArea);
-
-    } catch (error: any) {
-        console.error("Ad Copy Generation Error:", error);
-        showStatusMessage(statusArea, "An error occurred while generating ad copy. Please try again.", 'error');
-        adCopyResultsContainerDashboard.innerHTML = '<div class="empty-state">Could not generate ad copy.</div>';
-    } finally {
-        generateBtn.disabled = false;
-        nameInput.disabled = false;
-        descInput.disabled = false;
-        platformSelect.disabled = false;
-        generateBtn.innerHTML = `<span id="icon-generate-ads" class="btn-icon">${icons.magic}</span> Generate Ad Copy`;
-    }
-}
-
-async function handleGenerateOpportunities() {
-    if (!currentUser || currentUser.budgets.length === 0 || currentUser.expenses.length === 0) {
-        showStatusMessage(opportunitiesStatusArea, "Please complete your budget and spending reports first for personalized advice.", 'info');
-        hideStatusMessage(opportunitiesStatusArea, 5000);
-        return;
-    }
-
-    generateOpportunitiesBtn.disabled = true;
-    generateOpportunitiesBtn.innerHTML = `<div class="loading-spinner"></div> Analyzing...`;
-    showStatusMessage(opportunitiesStatusArea, "Analyzing your financial profile for opportunities...", 'info', true);
-    opportunitiesResultsContainer.innerHTML = '';
-
-    const latestBudget = currentUser.budgets[currentUser.budgets.length - 1];
-    const latestExpenses = currentUser.expenses[currentUser.expenses.length - 1];
-
-    try {
-        const prompt = `Act as an AI-powered financial advisor. Analyze a user's budget and spending reports to find actionable financial opportunities.
-        Budget: ${JSON.stringify(latestBudget)}
-        Spending: ${JSON.stringify(latestExpenses)}
-        Focus on providing a diverse mix of up to 3-4 high-impact suggestions. These can include ways to save on recurring bills, smart ways to use leftover budget, and relevant deals or investment ideas from popular platforms (e.g., High-Yield Savings Accounts, Robo-Advisors, cashback services). The response MUST be a valid JSON object adhering to the specified schema.`;
-
-        const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash",
-            contents: prompt,
-            config: { responseMimeType: "application/json", responseSchema: opportunitiesSchema },
-        });
-
-        const opportunitiesData = parseJsonFromAi<OpportunitiesData>(response.text);
-        if (currentUser) {
-            currentUser.opportunities.push(opportunitiesData);
-            saveUserDatabase();
-            renderSavedOpportunities();
-        }
-        hideStatusMessage(opportunitiesStatusArea);
-
-    } catch (error: any) {
-        console.error("Opportunities Generation Error:", error);
-        showStatusMessage(opportunitiesStatusArea, error.message, 'error');
-        opportunitiesResultsContainer.innerHTML = '<div class="empty-state">Could not generate opportunities at this time.</div>';
-    } finally {
-        generateOpportunitiesBtn.disabled = false;
-        generateOpportunitiesBtn.innerHTML = `<span id="icon-find-opportunities" class="btn-icon">${icons.searchDollar}</span> Find My Opportunities`;
-    }
-}
-
 
 function renderPaymentList() {
-    if (!currentUser || !currentUser.payments.length) {
+    if (!currentUser || currentUser.payments.length === 0) {
         paymentList.innerHTML = `<div class="empty-state">No automated payments scheduled.</div>`;
         return;
     }
     const currency = currentUser.budgets[0]?.summary?.currency || '$';
-    paymentList.innerHTML = currentUser.payments.map(p => `
+
+    const paymentsHtml = currentUser.payments.map((p, index) => `
         <div class="payment-item">
             <div>
                 <p><strong>${p.merchant}</strong></p>
                 <p style="font-size: 0.9em; color: var(--color-text-secondary);">${p.frequency}</p>
             </div>
-            <p class="amount">${currency}${p.amount.toLocaleString()}</p>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <p class="amount error">${currency}${p.amount.toLocaleString()}</p>
+                <button class="btn btn-small-action" data-payment-index="${index}">Cancel</button>
+            </div>
         </div>
     `).join('');
+
+    paymentList.innerHTML = paymentsHtml;
 }
 
-function processSuccessfulPayment() {
-    if (!currentUser) return;
-    const newPayment = {
-        merchant: paymentMerchantNameSpan.textContent || "Unknown",
-        amount: parseFloat(paymentAmountDisplaySpan.dataset.amount!),
-        frequency: paymentFrequencySelect.value
-    };
-    currentUser.payments.push(newPayment);
-    saveUserDatabase();
-    renderPaymentList();
-    renderDashboardSummary();
-}
 
-function handlePayWithPaystack() {
-    if (!currentUser || !PAYSTACK_PUBLIC_KEY) return;
-    
-    const amount = parseFloat(paymentAmountDisplaySpan.dataset.amount!);
-    const currency = (currentUser.budgets[0]?.summary?.currency || '$').replace('$', 'USD').replace('€', 'EUR').replace('£', 'GBP').replace('₦', 'NGN');
-
-    const handler = (window as any).PaystackPop.setup({
-        key: PAYSTACK_PUBLIC_KEY,
-        email: currentUser.email,
-        amount: amount * 100, // Paystack expects amount in kobo/cents
-        currency: currency,
-        ref: 'cravour_' + Math.floor((Math.random() * 1000000000) + 1), // unique reference
-        onClose: function() {
-            showStatusMessage(paymentStatus, 'Payment window closed.', 'info');
-            hideStatusMessage(paymentStatus, 3000);
-        },
-        callback: function(response: any) {
-            // In a real application, you would send `response.reference` to your backend 
-            // to verify the transaction status before updating the user's records.
-            console.log('Paystack response:', response);
-            showStatusMessage(paymentStatus, "Payment successful! Scheduling...", 'success', true);
-            
-            processSuccessfulPayment();
-
-            setTimeout(() => {
-                closePaymentGatewayModal();
-                hideStatusMessage(paymentStatus);
-            }, 1500);
+function renderIcons() {
+    const iconPlaceholders = document.querySelectorAll('[id^="icon-"]');
+    iconPlaceholders.forEach(placeholder => {
+        const iconKey = placeholder.id.replace('icon-', '').replace(/-/g, '_');
+        const camelCaseKey = iconKey.replace(/_([a-z])/g, g => g[1].toUpperCase());
+        if (icons[camelCaseKey as keyof typeof icons]) {
+            placeholder.innerHTML = icons[camelCaseKey as keyof typeof icons];
         }
     });
-
-    handler.openIframe();
+    document.querySelectorAll('.value-icon-placeholder').forEach(el => el.innerHTML = icons.cogs);
+    document.querySelectorAll('.footer-icon-placeholder').forEach(el => el.innerHTML = icons.envelope);
+    document.querySelectorAll('.disclaimer-icon').forEach(el => el.innerHTML = icons.infoCircle);
+    document.querySelectorAll('.verified-icon').forEach(el => el.innerHTML = icons.check);
 }
 
-
-async function handlePayWithWallet() {
-    if (!currentUser) return;
-    const amount = parseFloat(paymentAmountDisplaySpan.dataset.amount!);
-
-    showStatusMessage(paymentStatus, "Processing wallet payment...", 'info', true);
-
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    currentUser.wallet.balance -= amount;
-    currentUser.wallet.transactions.push({
-        id: `txn_${Date.now()}`,
-        date: new Date().toISOString(),
-        type: 'payment',
-        description: `Payment to ${paymentMerchantNameSpan.textContent}`,
-        amount: amount,
-    });
-    
-    processSuccessfulPayment();
-    
-    renderWalletView();
-    renderDashboardSummary();
-    
-    showStatusMessage(paymentStatus, "Wallet payment successful!", 'success');
-    setTimeout(() => {
-        closePaymentGatewayModal();
-        hideStatusMessage(paymentStatus);
-    }, 1500);
-}
-
-
+// --- Event Handlers & Logic ---
 function handleMobileMenu() {
-    const isActive = mainNav.classList.toggle('active');
-    hamburger.classList.toggle('is-active');
-    hamburger.setAttribute('aria-expanded', String(isActive));
-}
-
-/**
-* ===================================================================
-* DEPLOYMENT GUIDE: CONNECTING THE CONTACT FORM
-* ===================================================================
-* This form is set up to send a POST request to a backend endpoint.
-* To make this work on platforms like Netlify or Firebase, you need
-* to create a serverless function.
-*
-* The frontend expects a JSON response:
-* - Success: { "message": "Your success message" }
-* - Error:   { "error": "Your error message" }
-*
-* --- Netlify (using Netlify Functions) ---
-* 1. Create a file: /netlify/functions/contact.js
-* 2. The form sends to '/api/contact'. Configure netlify.toml:
-*    [functions]
-*      directory = "netlify/functions"
-*    [[redirects]]
-*      from = "/api/*"
-*      to = "/.netlify/functions/:splat"
-*      status = 200
-* 3. Example function (contact.js):
-*    exports.handler = async function(event, context) {
-*      if (event.httpMethod !== "POST") {
-*          return { statusCode: 405, body: '{"error":"Method Not Allowed"}' };
-*      }
-*      const data = JSON.parse(event.body);
-*      // Add your email sending logic here (e.g., using SendGrid, Nodemailer)
-*      console.log("Received data:", data);
-*      return {
-*          statusCode: 200,
-*          body: JSON.stringify({ message: "Message sent successfully!" }),
-*      };
-*    };
-*
-* --- Firebase (using Cloud Functions) ---
-* 1. Initialize Firebase functions in your project.
-* 2. Write a function in `functions/index.js` (or .ts).
-* 3. Deploy the function. It will get a public URL.
-* 4. Update the `apiEndpoint` variable in this file to your function's URL.
-* 5. Example function (HTTP Request type):
-*    const functions = require("firebase-functions");
-*    const cors = require("cors")({origin: true});
-*    exports.contact = functions.https.onRequest((req, res) => {
-*      cors(req, res, () => {
-*        if(req.method !== 'POST'){
-*           return res.status(405).json({error: 'Method not allowed'});
-*        }
-*        const data = req.body;
-*        // Add email sending logic
-*        console.log("Received data:", data);
-*        res.status(200).json({ message: "Message sent!" });
-*      });
-*    });
-*
-* --- GitHub Pages ---
-* GitHub Pages only hosts static files. You cannot run a backend function.
-* You would need to use a third-party service like Formspree, FormKeep,
-* or point the form's action to a separate backend hosted elsewhere.
-*/
-async function handleContactFormSubmit(e: Event) {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
-
-    const name = contactNameInput.value.trim();
-    const email = contactEmailInput.value.trim();
-    const message = contactMessageInput.value.trim();
-
-    if (!name || !email || !message || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        showStatusMessage(contactFormMessage, "Please fill out all required fields correctly.", 'error');
-        hideStatusMessage(contactFormMessage, 4000);
-        return;
-    }
-
-    submitButton.disabled = true;
-    submitButton.innerHTML = '<div class="loading-spinner"></div> Sending...';
-    showStatusMessage(contactFormMessage, "Sending your message...", 'info', true);
+    const isDashboardActive = !appDashboard.classList.contains('hidden');
     
-    // In a live deployment, this endpoint would point to your serverless function.
-    const apiEndpoint = '/api/contact';
-
-    try {
-        const response = await fetch(apiEndpoint, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                name,
-                email,
-                phone: contactPhoneInput.value.trim(),
-                message,
-            }),
-        });
-
-        const result = await response.json();
-
-        if (!response.ok) {
-            throw new Error(result.error || 'Server error. Please try again later.');
-        }
-
-        showStatusMessage(contactFormMessage, result.message, 'success');
-        form.reset();
-        hideStatusMessage(contactFormMessage, 5000);
-
-    } catch (error: any) {
-        console.error("Contact Form Submission Error:", error);
-        
-        // As the '/api/contact' endpoint doesn't exist in this environment, we simulate success.
-        // In a real deployment with a misconfigured backend, the error message below would be shown.
-        // showStatusMessage(contactFormMessage, "Could not send message. Please try again later.", 'error');
-        setTimeout(() => {
-             showStatusMessage(contactFormMessage, "Thank you! Your message has been sent successfully.", 'success');
-            form.reset();
-            hideStatusMessage(contactFormMessage, 5000);
-        }, 1500);
-
-    } finally {
-        setTimeout(() => {
-            submitButton.disabled = false;
-            submitButton.innerHTML = 'Send Message';
-        }, 1500);
-    }
-}
-
-// --- Auth & Modal Logic ---
-function openAuthModal(isRegister = false) {
-    authModal.classList.remove('hidden');
-    loginView.classList.toggle('hidden', isRegister);
-    registerView.classList.toggle('hidden', !isRegister);
-    verificationView.classList.add('hidden');
-    document.body.style.overflow = 'hidden';
-    authModal.setAttribute('aria-labelledby', isRegister ? 'auth-heading-register' : 'auth-heading-login');
-}
-
-function closeAuthModal() {
-    authModal.classList.add('hidden');
-    document.body.style.overflow = 'auto';
-    pendingVerificationEmail = null;
-}
-
-function openPaymentGatewayModal(merchant: string, amount: string) {
-    if (!currentUser) return;
-    const latestBudget = currentUser?.budgets?.[currentUser.budgets.length - 1];
-    const currency = latestBudget?.summary?.currency || '$';
-    const amountNum = parseFloat(amount);
-    
-    paymentMerchantNameSpan.textContent = merchant;
-    paymentAmountDisplaySpan.textContent = `${currency}${amountNum.toLocaleString()}`;
-    paymentAmountDisplaySpan.dataset.amount = amount;
-
-    // Wallet Section Logic
-    walletPaymentSection.classList.remove('hidden');
-    walletBalanceInfo.textContent = `${currency}${currentUser.wallet.balance.toLocaleString()}`;
-    if (currentUser.wallet.balance >= amountNum) {
-        payWithWalletBtn.disabled = false;
-        insufficientFundsMessage.classList.add('hidden');
+    if (isDashboardActive) {
+        // Handle sidebar for logged-in users on mobile
+        const sidebar = document.querySelector('.app-sidebar') as HTMLElement;
+        sidebar.classList.toggle('active');
+        appOverlay.classList.toggle('hidden');
+        hamburger.classList.toggle('is-active');
+        document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
     } else {
-        payWithWalletBtn.disabled = true;
-        insufficientFundsMessage.classList.remove('hidden');
+        // Handle nav menu for logged-out users on mobile
+        mainNav.classList.toggle('active');
+        hamburger.classList.toggle('is-active');
     }
-
-    paymentGatewayModal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
 }
 
-function closePaymentGatewayModal() {
-    paymentGatewayModal.classList.add('hidden');
-    document.body.style.overflow = 'auto';
-    hideStatusMessage(paymentStatus);
+function openAuthModal(isRegistering: boolean) {
+    authModal.classList.remove('hidden');
+    switchAuthView(isRegistering);
 }
 
-function openFundWalletModal() {
-    fundWalletModal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
+function switchAuthView(isRegistering: boolean) {
+    registerView.classList.toggle('hidden', !isRegistering);
+    loginView.classList.toggle('hidden', isRegistering);
+    verificationView.classList.add('hidden');
 }
 
-function closeFundWalletModal() {
-    fundWalletModal.classList.add('hidden');
-    document.body.style.overflow = 'auto';
-    fundWalletForm.reset();
-    hideStatusMessage(fundWalletStatus);
-}
-
-async function handleFundWalletSubmit(e: Event) {
+async function handleRegister(e: Event) {
     e.preventDefault();
-    if (!currentUser) return;
-
-    const amount = parseInt(fundAmountInput.value);
-    if (isNaN(amount) || amount <= 0) {
-        showStatusMessage(fundWalletStatus, "Please enter a valid amount.", 'error');
-        return;
-    }
-
-    showStatusMessage(fundWalletStatus, "Processing fund transfer...", 'info', true);
-    await new Promise(resolve => setTimeout(resolve, 1500));
-
-    currentUser.wallet.balance += amount;
-    currentUser.wallet.transactions.push({
-        id: `txn_${Date.now()}`,
-        date: new Date().toISOString(),
-        type: 'fund',
-        description: 'Wallet funded',
-        amount: amount,
-    });
-    saveUserDatabase();
-    
-    renderWalletView();
-    renderDashboardSummary();
-
-    showStatusMessage(fundWalletStatus, "Funds added successfully!", 'success');
-    setTimeout(() => {
-        closeFundWalletModal();
-    }, 1500);
-}
-
-
-function handleLogin(e: Event) {
-    e.preventDefault();
-    const messageEl = document.getElementById('loginMessage') as HTMLDivElement;
-    const email = loginEmailInput.value;
-    const user = userDatabase.get(email);
-
-    if (!user) {
-        showStatusMessage(messageEl, "Account not found. Please register.", 'error');
-        return;
-    }
-
-    if (!user.verified) {
-        showStatusMessage(messageEl, "Your account is not verified. Please check your email.", 'error');
-        return;
-    }
-
-    currentUser = user;
-    // Backwards compatibility for users without a wallet
-    currentUser.wallet = currentUser.wallet || { balance: 0, transactions: [] };
-    saveCurrentLoggedInUser(user.email);
-    showStatusMessage(messageEl, 'Login successful! Redirecting...', 'success');
-    
-    // Get user location after successful login
-    navigator.geolocation.getCurrentPosition(position => {
-        currentUser!.location = {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-        };
-        saveUserDatabase();
-    }, (error) => {
-        console.warn("Could not get user location:", error.message);
-    });
-
-    setTimeout(() => {
-        closeAuthModal();
-        currentView = 'dashboard';
-        renderAppView();
-    }, 1500);
-}
-
-function handleRegister(e: Event) {
-    e.preventDefault();
-    const messageEl = document.getElementById('registerMessage') as HTMLDivElement;
     const name = registerNameInput.value;
-    const email = registerEmailInput.value;
-
+    const email = registerEmailInput.value.toLowerCase();
+    
+    if (!name || !email) {
+        showStatusMessage(document.getElementById('registerMessage')!, "Please fill in all fields.", "error");
+        return;
+    }
     if (userDatabase.has(email)) {
-        showStatusMessage(messageEl, "An account with this email already exists.", 'error');
+        showStatusMessage(document.getElementById('registerMessage')!, "An account with this email already exists.", "error");
         return;
     }
 
     const newUser: User = {
-        name: name.split(' ')[0] || "User",
-        email: email,
+        name,
+        email,
         verified: false,
         wallet: { balance: 0, transactions: [] },
         budgets: [],
@@ -1911,179 +1346,629 @@ function handleRegister(e: Event) {
         creativeCopies: [],
         opportunities: [],
     };
-
     userDatabase.set(email, newUser);
     saveUserDatabase();
+    
     pendingVerificationEmail = email;
-
-    registerView.classList.add('hidden');
     verificationView.classList.remove('hidden');
+    registerView.classList.add('hidden');
 }
 
-function handleVerification() {
-    if (!pendingVerificationEmail) return;
-
-    const user = userDatabase.get(pendingVerificationEmail);
-    if (user) {
+function handleVerifyEmail() {
+    if (pendingVerificationEmail && userDatabase.has(pendingVerificationEmail)) {
+        const user = userDatabase.get(pendingVerificationEmail)!;
         user.verified = true;
-        currentUser = user;
+        userDatabase.set(pendingVerificationEmail, user);
         saveUserDatabase();
-        saveCurrentLoggedInUser(user.email);
-
-        setTimeout(() => {
-            closeAuthModal();
-            currentView = 'dashboard';
-            renderAppView();
-        }, 1000);
+        
+        currentUser = user;
+        saveCurrentLoggedInUser(pendingVerificationEmail);
+        authModal.classList.add('hidden');
+        renderAppView();
+        initializeDashboard();
+        pendingVerificationEmail = null;
     }
 }
 
+function handleLogin(e: Event) {
+    e.preventDefault();
+    const email = loginEmailInput.value.toLowerCase();
+    const messageContainer = document.getElementById('loginMessage')!;
+    if (!email) {
+        showStatusMessage(messageContainer, "Please enter your email.", "error");
+        return;
+    }
+    if (userDatabase.has(email)) {
+        const user = userDatabase.get(email)!;
+        if (user.verified) {
+            currentUser = user;
+            saveCurrentLoggedInUser(email);
+            authModal.classList.add('hidden');
+            renderAppView();
+            initializeDashboard();
+            loginForm.reset();
+        } else {
+            pendingVerificationEmail = email;
+            loginView.classList.add('hidden');
+            verificationView.classList.remove('hidden');
+        }
+    } else {
+        showStatusMessage(messageContainer, "No account found with that email.", "error");
+    }
+}
 
 function handleLogout() {
     currentUser = null;
     saveCurrentLoggedInUser(null);
-    currentView = 'dashboard';
     renderAppView();
 }
 
-/**
- * Initializes the application.
- */
-function initialize() {
-    userDatabase = loadUserDatabase();
-    const loggedInUserEmail = loadCurrentLoggedInUser();
-    if (loggedInUserEmail) {
-        currentUser = userDatabase.get(loggedInUserEmail) || null;
-        if (currentUser) {
-            // Backwards compatibility for users without a wallet from old data
-            currentUser.wallet = currentUser.wallet || { balance: 0, transactions: [] };
-        }
-    }
 
-    if (!API_KEY) {
-        showStatusMessage(demoStatusArea, "Configuration Error: API_KEY is missing. AI Features are disabled.", 'error');
-        if(demoGenerateBtn) demoGenerateBtn.disabled = true;
-    } else {
-        ai = new GoogleGenAI({ apiKey: API_KEY });
+async function handleGenerateDemoPlan(e: Event) {
+    e.preventDefault();
+    const goal = demoGoalInput.value;
+    if (!goal) {
+        showStatusMessage(demoStatusArea, "Please describe your business goal.", "error");
+        return;
     }
-    if (!PAYSTACK_PUBLIC_KEY) {
-        console.error("Configuration Error: PAYSTACK_PUBLIC_KEY is missing. Paystack payments are disabled.");
-        if (payWithPaystackBtn) payWithPaystackBtn.disabled = true;
-    }
-    
-    if (yearSpan) yearSpan.textContent = new Date().getFullYear().toString();
-    
-    // Event Listeners
-    hamburger?.addEventListener('click', handleMobileMenu);
-    demoForm?.addEventListener('submit', handleGenerateDemoPlan);
-    contactForm?.addEventListener('submit', handleContactFormSubmit);
-    
-    // Sign Up CTA Listeners
-    ctaSignUpBtn?.addEventListener('click', () => openAuthModal(true));
-    
-    // Auth Modal Listeners
-    document.getElementById('headerLoginBtn')?.addEventListener('click', () => openAuthModal(false));
-    closeAuthBtn?.addEventListener('click', closeAuthModal);
-    authModal?.addEventListener('click', (e) => {
-        if (e.target === authModal) closeAuthModal();
-    });
-    showRegisterBtn?.addEventListener('click', () => {
-        loginView.classList.add('hidden');
-        verificationView.classList.add('hidden');
-        registerView.classList.remove('hidden');
-        authModal.setAttribute('aria-labelledby', 'auth-heading-register');
-    });
-    showLoginBtn?.addEventListener('click', () => {
-        registerView.classList.add('hidden');
-        verificationView.classList.add('hidden');
-        loginView.classList.remove('hidden');
-        authModal.setAttribute('aria-labelledby', 'auth-heading-login');
-    });
-    loginForm?.addEventListener('submit', handleLogin);
-    registerForm?.addEventListener('submit', handleRegister);
-    verifyEmailBtn?.addEventListener('click', handleVerification);
-    
-    // Dashboard Listeners
-    sidebarMenu.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetLink = (e.target as HTMLElement).closest('a');
-        if (targetLink) {
-            const view = targetLink.getAttribute('data-view') as AppView;
-            if (view) {
-                currentView = view;
-                renderCurrentView();
+    showStatusMessage(demoStatusArea, "AI is building your plan...", "info", true);
+    demoGenerateBtn.disabled = true;
+    renderSkeletonLoader(demoResultsContainer, 'cards');
+
+    try {
+        const prompt = `A user wants to start a business. Their goal is: "${goal}". Generate a comprehensive shopping and budget plan for them. Be realistic and provide actionable tips.`;
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: prompt,
+            config: {
+                responseMimeType: "application/json",
+                responseSchema: shoppingPlanSchema
             }
-        }
-    });
-    logoutBtn.addEventListener('click', handleLogout);
+        });
+
+        const plan = parseJsonFromAi<ShoppingPlan>(response.text);
+        renderGeneratedPlan(plan, demoResultsContainer);
+        hideStatusMessage(demoStatusArea, 500);
+
+    } catch (error) {
+        console.error("Demo Plan Generation Error:", error);
+        const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+        showStatusMessage(demoStatusArea, `Error: ${errorMessage}`, "error");
+        demoResultsContainer.innerHTML = '<div class="empty-state">Could not generate plan. Please try a different prompt.</div>';
+    } finally {
+        demoGenerateBtn.disabled = false;
+    }
+}
+
+
+async function handleGenerateBudgetPlan(e: Event) {
+    e.preventDefault();
+    if (!currentUser) return;
     
-    budgetPlannerForm?.addEventListener('submit', handleGenerateBudget);
-    expenseAnalyzerForm?.addEventListener('submit', handleGenerateExpenseReport);
-    expenseResultsContainer?.addEventListener('click', (e) => {
-        const target = e.target as HTMLElement;
-        if (target.tagName === 'BUTTON' && target.hasAttribute('data-merchant')) {
-            const merchant = target.getAttribute('data-merchant')!;
-            const amount = target.getAttribute('data-amount')!;
-            openPaymentGatewayModal(merchant, amount);
-        }
-        if (target.tagName === 'BUTTON' && target.hasAttribute('data-map-query')) {
-            const query = target.getAttribute('data-map-query')!;
-            const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
-            window.open(url, '_blank');
-        }
+    const description = budgetDescriptionInput.value;
+    const currency = budgetCurrencySelect.value;
+    if (!description) {
+        showStatusMessage(budgetStatusArea, 'Please describe your financial situation.', 'error');
+        return;
+    }
+
+    showStatusMessage(budgetStatusArea, 'AI is drafting your budget...', 'info', true);
+    generateBudgetBtn.disabled = true;
+    renderSkeletonLoader(budgetResultsContainer, 'cards');
+
+    try {
+        const prompt = `Based on the following user description, create a detailed budget plan. Ensure the currency is set to '${currency}'. Description: "${description}"`;
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: prompt,
+            config: {
+                responseMimeType: "application/json",
+                responseSchema: budgetPlanSchema
+            }
+        });
+
+        const budgetPlan = parseJsonFromAi<BudgetPlan>(response.text);
+        renderBudgetPlan(budgetPlan, budgetResultsContainer);
+        currentUser.budgets.push(budgetPlan);
+        saveUserDatabase();
+        hideStatusMessage(budgetStatusArea, 500);
+    } catch (error) {
+        console.error(error);
+        const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+        showStatusMessage(budgetStatusArea, `Error: ${errorMessage}`, 'error');
+        budgetResultsContainer.innerHTML = `<div class="empty-state">Could not generate budget. Please try again.</div>`;
+    } finally {
+        generateBudgetBtn.disabled = false;
+    }
+}
+
+async function handleAnalyzeExpenses(e: Event) {
+    e.preventDefault();
+    if (!currentUser) return;
+    
+    const data = expenseDataInput.value;
+    if (!data) {
+        showStatusMessage(expenseStatusArea, 'Please paste your expense data.', 'error');
+        return;
+    }
+    
+    const currency = currentUser.budgets[currentUser.budgets.length - 1]?.summary?.currency || 'USD';
+    
+    showStatusMessage(expenseStatusArea, 'AI is analyzing your spending...', 'info', true);
+    analyzeExpensesBtn.disabled = true;
+    renderSkeletonLoader(expenseResultsContainer, 'cards');
+
+    try {
+        const prompt = `Analyze the following expense data for a month. The user's primary currency is ${currency}. Provide a detailed report, including spending habits (daily/weekly average, peak day, trend), categorization, cost-cutting tips, and investment opportunities. Data: "${data}"`;
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: prompt,
+            config: {
+                responseMimeType: "application/json",
+                responseSchema: expenseReportSchema
+            }
+        });
+
+        const expenseReport = parseJsonFromAi<ExpenseReport>(response.text);
+        renderExpenseReport(expenseReport, expenseResultsContainer);
+        currentUser.expenses.push(expenseReport);
+        saveUserDatabase();
+        hideStatusMessage(expenseStatusArea, 500);
+    } catch (error) {
+        console.error(error);
+        const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+        showStatusMessage(expenseStatusArea, `Error: ${errorMessage}`, 'error');
+        expenseResultsContainer.innerHTML = `<div class="empty-state">Could not analyze expenses. Please try again.</div>`;
+    } finally {
+        analyzeExpensesBtn.disabled = false;
+    }
+}
+
+async function handleGenerateReview() {
+    if (!currentUser || currentUser.budgets.length === 0 || currentUser.expenses.length === 0) {
+        showStatusMessage(reviewStatusArea, 'Please create a budget and analyze expenses first.', 'info');
+        return;
+    }
+
+    showStatusMessage(reviewStatusArea, 'AI is reviewing your performance...', 'info', true);
+    generateReviewBtn.disabled = true;
+    renderSkeletonLoader(reviewResultsContainer, 'cards');
+
+    const latestBudget = JSON.stringify(currentUser.budgets[currentUser.budgets.length - 1]);
+    const latestExpenses = JSON.stringify(currentUser.expenses[currentUser.expenses.length - 1]);
+
+    try {
+        const prompt = `Given the user's budget and their actual spending, generate a performance review. Budget: ${latestBudget}. Expenses: ${latestExpenses}. Calculate adherence and provide actionable insights.`;
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: prompt,
+            config: {
+                responseMimeType: "application/json",
+                responseSchema: performanceReviewSchema
+            }
+        });
+
+        const review = parseJsonFromAi<PerformanceReview>(response.text);
+        renderPerformanceReview(review, reviewResultsContainer);
+        hideStatusMessage(reviewStatusArea, 500);
+    } catch (error) {
+        console.error(error);
+        const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+        showStatusMessage(reviewStatusArea, `Error: ${errorMessage}`, 'error');
+        reviewResultsContainer.innerHTML = '<div class="empty-state">Could not generate review. Please try again.</div>';
+    } finally {
+        generateReviewBtn.disabled = false;
+    }
+}
+
+async function handleGenerateCreativeCopyDashboard(e: Event) {
+    e.preventDefault();
+    if (!currentUser) return;
+
+    const form = e.target as HTMLFormElement;
+    const productName = (form.elements.namedItem('productNameDashboard') as HTMLInputElement).value;
+    const platform = (form.elements.namedItem('adPlatformDashboard') as HTMLSelectElement).value;
+    const description = (form.elements.namedItem('productDescriptionDashboard') as HTMLTextAreaElement).value;
+    const statusArea = document.getElementById('adCopyStatusDashboard')!;
+    const generateBtn = document.getElementById('generateAdCopyBtnDashboard') as HTMLButtonElement;
+
+    if (!productName || !description) {
+        showStatusMessage(statusArea, 'Please fill in all fields.', 'error');
+        return;
+    }
+
+    showStatusMessage(statusArea, 'AI is writing your ad copy...', 'info', true);
+    generateBtn.disabled = true;
+    renderSkeletonLoader(adCopyResultsContainerDashboard, 'list');
+
+    try {
+        const prompt = `Generate 3 ad copy variations for a product named "${productName}". The target platform is ${platform}. The product description is: "${description}".`;
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: prompt,
+            config: {
+                responseMimeType: "application/json",
+                responseSchema: creativeCopySchema,
+            }
+        });
+
+        const copyData = parseJsonFromAi<CreativeCopy>(response.text);
+        renderAdCopy(copyData, adCopyResultsContainerDashboard);
+        currentUser.creativeCopies.push(copyData);
+        saveUserDatabase();
+        renderSavedAdCopyLibrary();
+        hideStatusMessage(statusArea, 500);
+    } catch (error) {
+        console.error(error);
+        const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+        showStatusMessage(statusArea, `Error: ${errorMessage}`, 'error');
+        adCopyResultsContainerDashboard.innerHTML = '<div class="empty-state">Could not generate copy. Please try again.</div>';
+    } finally {
+        generateBtn.disabled = false;
+    }
+}
+
+async function handleGenerateOpportunities() {
+    if (!currentUser || currentUser.budgets.length === 0 || currentUser.expenses.length === 0) {
+        showStatusMessage(opportunitiesStatusArea, 'Complete your budget and expense reports for personalized insights.', 'info');
+        return;
+    }
+
+    showStatusMessage(opportunitiesStatusArea, 'AI is searching for opportunities...', 'info', true);
+    generateOpportunitiesBtn.disabled = true;
+    renderSkeletonLoader(opportunitiesResultsContainer, 'cards');
+
+    const userProfile = JSON.stringify({
+        budget: currentUser.budgets[currentUser.budgets.length - 1],
+        expenses: currentUser.expenses[currentUser.expenses.length - 1],
+        merchants: calculateMerchantSummary(currentUser),
     });
 
-    generateReviewBtn?.addEventListener('click', handleGeneratePerformanceReview);
-    generateOpportunitiesBtn?.addEventListener('click', handleGenerateOpportunities);
-    
-    // Payment & Wallet Gateway Listeners
-    closePaymentGatewayBtn?.addEventListener('click', closePaymentGatewayModal);
-    paymentGatewayModal?.addEventListener('click', (e) => {
-        if (e.target === paymentGatewayModal) closePaymentGatewayModal();
-    });
-    payWithPaystackBtn?.addEventListener('click', handlePayWithPaystack);
-    payWithWalletBtn?.addEventListener('click', handlePayWithWallet);
-    
-    // Fund Wallet Modal Listeners
-    closeFundWalletBtn?.addEventListener('click', closeFundWalletModal);
-    fundWalletModal?.addEventListener('click', (e) => {
-        if(e.target === fundWalletModal) closeFundWalletModal();
-    });
-    fundWalletForm?.addEventListener('submit', handleFundWalletSubmit);
+    try {
+        const prompt = `Based on this user's financial profile, identify 3-4 specific, actionable opportunities for savings, investment, or relevant merchant deals. Profile: ${userProfile}`;
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: prompt,
+            config: {
+                responseMimeType: "application/json",
+                responseSchema: opportunitiesSchema,
+            }
+        });
 
-    // Creative Suite & Wallet Tab Listeners
+        const opportunities = parseJsonFromAi<OpportunitiesData>(response.text);
+        renderOpportunities(opportunities, opportunitiesResultsContainer);
+        currentUser.opportunities.push(opportunities);
+        saveUserDatabase();
+        hideStatusMessage(opportunitiesStatusArea, 500);
+    } catch (error) {
+        console.error(error);
+        const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+        showStatusMessage(opportunitiesStatusArea, `Error: ${errorMessage}`, 'error');
+        opportunitiesResultsContainer.innerHTML = '<div class="empty-state">Could not find opportunities. Please try again.</div>';
+    } finally {
+        generateOpportunitiesBtn.disabled = false;
+    }
+}
+
+
+function handleExpenseReportActions(e: Event) {
+    const target = e.target as HTMLButtonElement;
+    if (target.matches('[data-merchant]')) {
+        const merchant = target.dataset.merchant!;
+        const amount = parseFloat(target.dataset.amount!);
+        openPaymentGateway(merchant, amount);
+    }
+    // Add map logic later if needed
+}
+
+function handlePaymentListActions(e: Event) {
+     const target = e.target as HTMLButtonElement;
+     if (target.matches('[data-payment-index]')) {
+        const index = parseInt(target.dataset.paymentIndex!, 10);
+        if (currentUser && confirm(`Are you sure you want to cancel the payment to ${currentUser.payments[index].merchant}?`)) {
+            currentUser.payments.splice(index, 1);
+            saveUserDatabase();
+            renderPaymentList();
+        }
+    }
+}
+
+function handleCopyActions(e: Event) {
+    const target = e.target as HTMLElement;
+    const copyBtn = target.closest('.copy-btn') as HTMLButtonElement;
+    if (copyBtn && copyBtn.dataset.copyText) {
+        copyToClipboard(copyBtn.dataset.copyText, copyBtn);
+    }
+}
+
+function handleCreativeSuiteTabs(e: Event) {
+    const target = e.target as HTMLElement;
+    if (target.matches('.tab-link')) {
+        const tabId = target.dataset.tab;
+        creativeSuiteContainer.querySelectorAll('.tab-link').forEach(t => t.classList.remove('active'));
+        creativeSuiteContainer.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        target.classList.add('active');
+        document.getElementById(tabId!)?.classList.add('active');
+    }
+}
+
+
+function openFundWalletModal() {
+    fundWalletModal.classList.remove('hidden');
+    fundAmountInput.focus();
+}
+
+function handleFundWallet(e: Event) {
+    e.preventDefault();
+    if (!currentUser) return;
+    const amount = parseFloat(fundAmountInput.value);
+    if (isNaN(amount) || amount <= 0) {
+        showStatusMessage(fundWalletStatus, 'Please enter a valid amount.', 'error');
+        return;
+    }
+    
+    currentUser.wallet.balance += amount;
+    currentUser.wallet.transactions.push({
+        id: `fund_${Date.now()}`,
+        date: new Date().toISOString(),
+        type: 'fund',
+        description: 'Wallet funded',
+        amount: amount
+    });
+    
+    saveUserDatabase();
+    showStatusMessage(fundWalletStatus, `Successfully added ${amount} to your wallet.`, 'success');
+    fundWalletForm.reset();
+    setTimeout(() => {
+        fundWalletModal.classList.add('hidden');
+        hideStatusMessage(fundWalletStatus);
+        if (currentView === 'wallet') {
+            renderWalletView();
+        }
+    }, 1500);
+}
+
+
+let currentPayment = { merchant: '', amount: 0 };
+
+function openPaymentGateway(merchant: string, amount: number) {
+    if (!currentUser) return;
+    
+    currentPayment = { merchant, amount };
+    const currency = currentUser.budgets[0]?.summary.currency || '$';
+    
+    paymentMerchantNameSpan.textContent = merchant;
+    paymentAmountDisplaySpan.textContent = `${currency}${amount.toLocaleString()}`;
+    
+    // Wallet payment option
+    if (currentUser.wallet.balance > 0) {
+        walletPaymentSection.classList.remove('hidden');
+        walletBalanceInfo.textContent = `${currency}${currentUser.wallet.balance.toLocaleString()}`;
+        if (currentUser.wallet.balance < amount) {
+            payWithWalletBtn.disabled = true;
+            insufficientFundsMessage.classList.remove('hidden');
+        } else {
+            payWithWalletBtn.disabled = false;
+            insufficientFundsMessage.classList.add('hidden');
+        }
+    } else {
+        walletPaymentSection.classList.add('hidden');
+    }
+
+    paymentGatewayModal.classList.remove('hidden');
+}
+
+
+function handlePayWithPaystack() {
+    if (!currentUser || !PAYSTACK_PUBLIC_KEY) return;
+    
+    const handler = (window as any).PaystackPop.setup({
+        key: PAYSTACK_PUBLIC_KEY,
+        email: currentUser.email,
+        amount: currentPayment.amount * 100, // Paystack amount is in kobo/cents
+        currency: currentUser.budgets[0]?.summary.currency.toUpperCase() || 'USD',
+        ref: `cravour_${Date.now()}`,
+        metadata: {
+            merchant: currentPayment.merchant
+        },
+        onClose: function(){
+            showStatusMessage(paymentStatus, 'Payment window closed.', 'info');
+        },
+        callback: function(response: any){
+            // Here you would verify the transaction on your backend
+            console.log('Paystack response:', response);
+            showStatusMessage(paymentStatus, `Payment to ${currentPayment.merchant} was successful!`, 'success');
+            
+            currentUser!.payments.push({
+                merchant: currentPayment.merchant,
+                amount: currentPayment.amount,
+                frequency: paymentFrequencySelect.value
+            });
+            saveUserDatabase();
+            
+            setTimeout(() => {
+                paymentGatewayModal.classList.add('hidden');
+                hideStatusMessage(paymentStatus);
+                renderPaymentList();
+            }, 2000);
+        }
+    });
+    handler.openIframe();
+}
+
+
+function handlePayWithWallet() {
+    if (!currentUser || currentUser.wallet.balance < currentPayment.amount) return;
+
+    currentUser.wallet.balance -= currentPayment.amount;
+    currentUser.wallet.transactions.push({
+        id: `payment_${Date.now()}`,
+        date: new Date().toISOString(),
+        type: 'payment',
+        description: `Payment to ${currentPayment.merchant}`,
+        amount: currentPayment.amount
+    });
+    
+    currentUser.payments.push({
+        merchant: currentPayment.merchant,
+        amount: currentPayment.amount,
+        frequency: paymentFrequencySelect.value
+    });
+
+    saveUserDatabase();
+    showStatusMessage(paymentStatus, `Paid ${currentPayment.amount} to ${currentPayment.merchant} from your wallet.`, 'success');
+
+    setTimeout(() => {
+        paymentGatewayModal.classList.add('hidden');
+        hideStatusMessage(paymentStatus);
+        renderPaymentList();
+        if (currentView === 'wallet') {
+            renderWalletView();
+        }
+    }, 2000);
+}
+
+
+async function handleContactFormSubmit(e: Event) {
+    e.preventDefault();
+    const submitButton = contactForm.querySelector('button[type="submit"]') as HTMLButtonElement;
+    submitButton.disabled = true;
+    showStatusMessage(contactFormMessage, "Sending message...", 'info', true);
+
+    const formData = new FormData(contactForm);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+        // This is where you'd call your backend function (e.g., Netlify/Firebase function)
+        // const response = await fetch('/.netlify/functions/send-email', {
+        // const response = await fetch('YOUR_BACKEND_ENDPOINT_URL', {
+        //     method: 'POST',
+        //     body: JSON.stringify(data),
+        //     headers: { 'Content-Type': 'application/json' }
+        // });
+        // if (!response.ok) throw new Error(`Server responded with ${response.status}`);
+        
+        // ---- SIMULATION START ----
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        console.log("Simulated form submission:", data);
+        // ---- SIMULATION END ----
+
+        showStatusMessage(contactFormMessage, "Thank you! Your message has been sent.", 'success');
+        contactForm.reset();
+
+    } catch (error) {
+        console.error("Contact Form Error:", error);
+        const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+        showStatusMessage(contactFormMessage, `Failed to send message: ${errorMessage}`, 'error');
+    } finally {
+        submitButton.disabled = false;
+        hideStatusMessage(contactFormMessage, 5000);
+    }
+}
+
+
+// --- Initialization Functions ---
+function initializeLandingPage() {
+    if (yearSpan) yearSpan.textContent = new Date().getFullYear().toString();
+    hamburger.addEventListener('click', handleMobileMenu);
+    
+    // Auth Modal Triggers - using event delegation on body to ensure buttons exist
     document.body.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
-        const tabLink = target.closest('.tab-link');
-        const copyButton = target.closest('.copy-btn') as HTMLButtonElement;
-
-        // Tab switching logic
-        if (tabLink) {
-            const tabId = tabLink.getAttribute('data-tab');
-            const parentContainer = tabLink.closest('.creative-suite-container, .result-card');
-            if(parentContainer && tabId) {
-                parentContainer.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
-                parentContainer.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-                tabLink.classList.add('active');
-                document.getElementById(tabId)?.classList.add('active');
-                if (tabId === 'library') {
-                    renderSavedAdCopyLibrary();
-                }
-            }
+        if (target.matches('#headerSignUpBtn') || target.matches('#ctaSignUpBtn')) {
+            openAuthModal(true);
         }
-        
-        // Copy to clipboard logic
-        if (copyButton) {
-            const textToCopy = copyButton.dataset.copyText;
-            if (textToCopy) {
-                copyToClipboard(textToCopy, copyButton);
+        if (target.matches('#headerLoginBtn')) {
+            openAuthModal(false);
+        }
+    });
+
+    demoForm.addEventListener('submit', handleGenerateDemoPlan);
+    closeAuthBtn.addEventListener('click', () => authModal.classList.add('hidden'));
+    showRegisterBtn.addEventListener('click', () => switchAuthView(true));
+    showLoginBtn.addEventListener('click', () => switchAuthView(false));
+    loginForm.addEventListener('submit', handleLogin);
+    registerForm.addEventListener('submit', handleRegister);
+    verifyEmailBtn.addEventListener('click', handleVerifyEmail);
+    contactForm.addEventListener('submit', handleContactFormSubmit);
+}
+
+function initializeDashboard() {
+    if (!currentUser) return;
+
+    renderSidebar();
+    renderCurrentView();
+
+    sidebarMenu.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        const link = target.closest('a[data-view]');
+        if (link) {
+            e.preventDefault();
+            const view = link.getAttribute('data-view') as AppView;
+            currentView = view;
+            renderCurrentView();
+            
+            const sidebar = document.querySelector('.app-sidebar') as HTMLElement;
+            if (sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+                appOverlay.classList.add('hidden');
+                hamburger.classList.remove('is-active');
+                document.body.style.overflow = '';
             }
         }
     });
-    creativeSuiteFormDashboard?.addEventListener('submit', handleGenerateAdCopy);
 
-    renderAppView();
+    logoutBtn.addEventListener('click', handleLogout);
+    appOverlay.addEventListener('click', handleMobileMenu);
+    budgetPlannerForm.addEventListener('submit', handleGenerateBudgetPlan);
+    expenseAnalyzerForm.addEventListener('submit', handleAnalyzeExpenses);
+    expenseResultsContainer.addEventListener('click', handleExpenseReportActions);
+    generateReviewBtn.addEventListener('click', handleGenerateReview);
+    paymentList.addEventListener('click', handlePaymentListActions);
+    creativeSuiteContainer.addEventListener('click', handleCreativeSuiteTabs);
+    creativeSuiteFormDashboard.addEventListener('submit', handleGenerateCreativeCopyDashboard);
+    adCopyResultsContainerDashboard.addEventListener('click', handleCopyActions);
+    savedAdCopyLibraryContainer.addEventListener('click', handleCopyActions);
+    generateOpportunitiesBtn.addEventListener('click', handleGenerateOpportunities);
+    fundWalletForm.addEventListener('submit', handleFundWallet);
+    closeFundWalletBtn.addEventListener('click', () => fundWalletModal.classList.add('hidden'));
+    closePaymentGatewayBtn.addEventListener('click', () => paymentGatewayModal.classList.add('hidden'));
+    payWithPaystackBtn.addEventListener('click', handlePayWithPaystack);
+    payWithWalletBtn.addEventListener('click', handlePayWithWallet);
 }
 
-// Start the application
-initialize();
+// --- Main App Start ---
+document.addEventListener('DOMContentLoaded', () => {
+    try {
+        if (!API_KEY || !PAYSTACK_PUBLIC_KEY) {
+            document.body.innerHTML = `<div style="padding: 40px; text-align: center; color: white;"><h1>Configuration Error</h1><p>Required API keys are missing. Please check your environment variables.</p></div>`;
+            return;
+        }
+        ai = new GoogleGenAI({ apiKey: API_KEY });
+    } catch (e) {
+        console.error("Failed to initialize AI SDK:", e);
+        document.body.innerHTML = `<div style="padding: 40px; text-align: center; color: white;"><h1>Initialization Error</h1><p>Could not connect to the AI service.</p></div>`;
+        return;
+    }
+    
+    userDatabase = loadUserDatabase();
+    
+    initializeLandingPage();
+
+    const loggedInUserEmail = loadCurrentLoggedInUser();
+    if (loggedInUserEmail && userDatabase.has(loggedInUserEmail)) {
+        currentUser = userDatabase.get(loggedInUserEmail)!;
+        if (currentUser.verified) {
+            renderAppView();
+            initializeDashboard();
+        } else {
+            // Handle case where user reloads on verification page
+            openAuthModal(false);
+            loginView.classList.add('hidden');
+            verificationView.classList.remove('hidden');
+            pendingVerificationEmail = loggedInUserEmail;
+        }
+    } else {
+        renderAppView();
+    }
+});

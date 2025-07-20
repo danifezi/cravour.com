@@ -6,6 +6,11 @@
     <title>Cravour | Your AI Financial Co-Pilot</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Preload critical fonts for performance -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
+
     <link rel="icon" href="https://img.icons8.com/color/48/cravour-dot-com.png" type="image/x-icon">
     <link rel="stylesheet" href="./index.css">
 
@@ -131,6 +136,7 @@
     </main>
 
     <div id="app-dashboard" class="hidden">
+        <div id="app-overlay" class="app-overlay hidden"></div>
         <div class="app-container">
             <aside class="app-sidebar">
                 <nav class="sidebar-nav">
