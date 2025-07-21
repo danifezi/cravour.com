@@ -1,8 +1,0 @@
-{
-  "name": "Cravour: Your AI Financial Co-Pilot",
-  "description": "A professional landing page for an AI-powered financial co-pilot designed to help freelancers and small businesses with intelligent budgeting, expense reporting, and an AI creative suite for ad generation.",
-  "requestFramePermissions": [
-    "geolocation"
-  ],
-  "prompt": ""
-}
