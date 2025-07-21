@@ -14,7 +14,7 @@
     <link rel="icon" href="https://img.icons8.com/color/48/cravour-dot-com.png" type="image/x-icon">
     <link rel="stylesheet" href="./index.css">
 
-    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <script src="https://js.paystack.co/v1/inline.js" defer></script>
     <script type="importmap">
 {
   "imports": {
@@ -125,6 +125,8 @@
         </section>
         
     </main>
+    
+    <div id="spotlight-tooltip" class="spotlight-tooltip hidden"></div>
 
     <div id="app-dashboard" class="hidden">
         <div id="app-overlay" class="app-overlay hidden"></div>
@@ -184,6 +186,17 @@
 
                     <!-- Main Dashboard Content -->
                     <div id="main-dashboard-content" class="hidden">
+                         <!-- AI Daily Briefing -->
+                        <div id="ai-daily-briefing" class="result-card glass-effect" style="margin-bottom: 40px;">
+                            <div class="view-header" style="margin-bottom: 20px; display:flex; justify-content: space-between; align-items: center;">
+                                <h3 class="result-heading" style="margin: 0; padding: 0; border: none;">AI Daily Briefing</h3>
+                                <button id="generateBriefingBtn" class="btn btn-secondary-outline"><span class="btn-icon" data-icon="sync"></span> Refresh Briefing</button>
+                            </div>
+                            <div id="briefing-results-wrapper" class="results-wrapper">
+                                <div class="empty-state">Click "Refresh Briefing" to get your personalized insights.</div>
+                            </div>
+                        </div>
+
                         <div id="dashboard-overview" class="dashboard-overview"></div>
                         <div class="content-grid-large" style="margin-top: 20px;">
                             <div id="dashboard-trend-chart-card" class="result-card glass-effect">
@@ -191,9 +204,9 @@
                                 <div id="dashboard-trend-chart-container" class="empty-state">Complete at least two budget/expense cycles to see your trend.</div>
                                 <div id="chart-tooltip" class="chart-tooltip hidden"></div>
                             </div>
-                            <div id="recent-activity" class="result-card glass-effect">
-                                <h3 class="result-heading">Recent Activity</h3>
-                                <div id="recent-activity-list" class="empty-state">Your recent activities will appear here.</div>
+                            <div id="smart-feed" class="result-card glass-effect">
+                                <h3 class="result-heading">Smart Feed</h3>
+                                <div id="smart-feed-list" class="empty-state">Your smart feed will show key financial events and insights here.</div>
                             </div>
                         </div>
                     </div>
@@ -202,8 +215,8 @@
                 <!-- Wallet & Pay View -->
                 <div id="view-wallet" class="dashboard-view hidden">
                     <div class="view-header">
-                        <h1>Wallet & Pay</h1>
-                        <p>Your central hub for managing funds, merchants, payments, and transfers.</p>
+                        <h1>Cravour Wallet</h1>
+                        <p>Your central hub for managing funds, merchants, payments, and investments.</p>
                     </div>
 
                     <div class="creative-suite-container">
@@ -242,7 +255,7 @@
                         <div id="wallet-tab-investments" class="tab-content">
                             <div class="result-card">
                                 <h3 class="result-heading">Your Investments</h3>
-                                <div id="investment-list" class="empty-state">Your simulated investments will appear here.</div>
+                                <div id="investment-list" class="empty-state">Act on investment opportunities to see your portfolio here.</div>
                            </div>
                         </div>
                         <!-- Merchants Tab -->
@@ -300,12 +313,12 @@
                                     <option value="₦" selected>NGN (₦)</option>
                                 </select>
                             </div>
-                            <button type="submit" id="generateBudgetBtn" class="btn btn-primary"><span class="btn-icon" data-icon="budget"></span> Create My Budget</button>
+                            <button type="submit" id="generateBudgetBtn" class="btn btn-primary"><span class="btn-icon" data-icon="budget"></span> Create My Budget Plan</button>
                             <div id="budgetStatus" class="status-area hidden"></div>
                         </form>
                         <div class="result-card">
                             <div id="budget-results-wrapper" class="results-wrapper">
-                                 <div class="empty-state">Your new budget will appear here.</div>
+                                 <div class="empty-state">Create a budget plan to see a detailed breakdown.</div>
                             </div>
                             <hr class="divider">
                             <div id="budget-history-container">
@@ -349,12 +362,12 @@
                                 <label for="expenseData">Paste Your Business Expenses</label>
                                 <textarea id="expenseData" class="input-field" rows="8" placeholder="e.g., Office Rent - ₦120000, Software Subscription - ₦15000, Client Lunch - ₦7500, Google Ads - ₦30000"></textarea>
                             </div>
-                            <button type="submit" id="analyzeExpensesBtn" class="btn btn-primary"><span class="btn-icon" data-icon="expenses"></span> Analyze My Spending</button>
+                            <button type="submit" id="analyzeExpensesBtn" class="btn btn-primary"><span class="btn-icon" data-icon="expenses"></span> Reveal Spending Insights</button>
                              <div id="expenseStatus" class="status-area hidden"></div>
                         </form>
                         <div class="result-card">
                             <div id="expense-results-wrapper" class="results-wrapper">
-                                 <div class="empty-state">Your expense analysis will appear here.</div>
+                                 <div class="empty-state">Analyze your spending to uncover powerful insights.</div>
                             </div>
                         </div>
                     </div>
@@ -372,11 +385,11 @@
                             <button id="shareReportBtn" class="btn btn-secondary-outline"><span class="btn-icon" data-icon="envelope"></span> Share Report via Email</button>
                         </div>
                          <div class="form-card" style="max-width: 500px; margin: 0 auto 30px auto; text-align: center; padding: 20px;">
-                            <button id="generateReviewBtn" class="btn btn-primary"><span class="btn-icon" data-icon="review"></span> Generate Performance Review</button>
+                            <button id="generateReviewBtn" class="btn btn-primary"><span class="btn-icon" data-icon="review"></span> Generate My Review</button>
                             <div id="reviewStatus" class="status-area hidden"></div>
                         </div>
                         <div id="review-results-wrapper" class="results-wrapper">
-                            <div class="empty-state">Your performance review will appear here.</div>
+                            <div class="empty-state">Generate a review to compare your budget vs. actual spending.</div>
                         </div>
                     </div>
                 </div>
@@ -539,6 +552,17 @@
             <h2 id="merchant-history-heading">Transaction History for <span id="merchantHistoryName"></span></h2>
             <div id="merchantHistoryList" class="results-wrapper">
                  <div class="empty-state">Loading history...</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Variance Details Modal -->
+    <div id="varianceDetailsModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="variance-details-heading">
+        <div class="modal-content glass-effect" style="max-width: 600px;">
+            <button id="closeVarianceDetails" class="modal-close-btn" aria-label="Close modal">×</button>
+            <h2 id="variance-details-heading">Spending Details for <span id="varianceCategoryName"></span></h2>
+            <div id="varianceDetailsList" class="results-wrapper">
+                 <div class="empty-state">Loading details...</div>
             </div>
         </div>
     </div>

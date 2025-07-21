@@ -10,7 +10,7 @@ const icons = {
     creative: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4.125 4.125a.375.375 0 0 0-.375.375v4.5a.375.375 0 0 0 .375.375h4.5a.375.375 0 0 0 .375-.375v-4.5a.375.375 0 0 0-.375-.375h-4.5Zm.75.75h3v3h-3v-3ZM15.375 4.125a.375.375 0 0 0-.375.375v4.5a.375.375 0 0 0 .375.375h4.5a.375.375 0 0 0 .375-.375v-4.5a.375.375 0 0 0-.375-.375h-4.5Zm.75.75h3v3h-3v-3ZM4.125 15.375a.375.375 0 0 0-.375.375v4.5a.375.375 0 0 0 .375.375h4.5a.375.375 0 0 0 .375-.375v-4.5a.375.375 0 0 0-.375-.375h-4.5Zm.75.75h3v3h-3v-3Z" fill-opacity="0.5" fill="currentColor"/><path d="M12.75 12a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 .75.75v6a.75.75 0 0 1-1.5 0v-5.25h-5.25a.75.75 0 0 1-.75-.75Zm-1.5-1.5a.75.75 0 0 0-1.5 0v6A.75.75 0 0 0 10.5 18h6a.75.75 0 0 0 0-1.5h-5.25v-5.25ZM9.75 3.75a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5h-5.25V10.5a.75.75 0 0 1-1.5 0v-6ZM3.75 10.5a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5h-6Z" fill="currentColor"/></svg>`,
     opportunities: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7.5a.75.75 0 0 1 .75.75v3h3a.75.75 0 0 1 0 1.5h-3v3a.75.75 0 0 1-1.5 0v-3h-3a.75.75 0 0 1 0-1.5h3v-3A.75.75 0 0 1 12 7.5Z" fill-opacity="0.5" fill="currentColor"/><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75a9.75 9.75 0 0 0 9.75-9.75C21.75 6.615 17.385 2.25 12 2.25ZM3.75 12a8.25 8.25 0 1 1 16.5 0a8.25 8.25 0 0 1-16.5 0Z" clip-rule="evenodd" fill="currentColor"/></svg>`,
     logout: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11.25 8.25a.75.75 0 0 0-1.5 0v7.5a.75.75 0 0 0 1.5 0v-7.5Z" fill-opacity="0.5" fill="currentColor"/><path d="M15.75 8.25a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 .75.75v7.5a.75.75 0 0 1-.75-.75h-4.5a.75.75 0 0 1-.75-.75V8.25ZM2.697 4.93a.75.75 0 0 1 1.06 0l5.25 5.25a.75.75 0 0 1 0 1.06l-5.25 5.25a.75.75 0 0 1-1.06-1.06l4.72-4.72-4.72-4.72a.75.75 0 0 1 0-1.06Z" fill="currentColor"/></svg>`,
-    cogs: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8.625a3.375 3.375 0 1 0 0 6.75a3.375 3.375 0 0 0 0-6.75Z" fill-opacity="0.5" fill="currentColor"/><path fill-rule="evenodd" d="M22.25 12c0 .99-.183 1.933-.518 2.787l.462 2.153a.75.75 0 0 1-.933 1.002l-2.31-.99a8.95 8.95 0 0 1-2.43.9V20a.75.75 0 0 1-.75.75H8.22a.75.75 0 0 1-.75-.75v-2.067a8.948 8.948 0 0 1-2.43-.9l-2.31.99a.75.75 0 0 1-.932-1.002l.461-2.153A8.98 8.98 0 0 1 1.75 12c0-.99.183-1.933.518-2.787l-.462-2.153a.75.75 0 0 1 .933-1.002l2.31.99a8.95 8.95 0 0 1 2.43-.9V4a.75.75 0 0 1 .75-.75h5.56a.75.75 0 0 1 .75.75v2.067c.86.299 1.675.72 2.43.9l2.31-.99a.75.75 0 0 1 .932 1.002l-.461 2.153A8.98 8.98 0 0 1 22.25 12Zm-1.636 0c0-1.42-.314-2.757-.88-3.921l-.22-.465.98-4.576-1.96-1.053-4.502 1.93-.497-.27a7.452 7.452 0 0 0-3.303-.896V2.75H8.22v3.003c-1.18.256-2.29.74-3.302.896l-.497.27-4.502-1.93-1.96 1.053.98 4.576-.22.465A7.48 7.48 0 0 0 3.25 12c0 1.42.314 2.757.88 3.921l.22.465-.98 4.576 1.96 1.053 4.502-1.93.497.27a7.452 7.452 0 0 0 3.303.896V21.25h5.56v-3.003c1.18-.256 2.29-.74 3.302-.896l.497-.27 4.502 1.93 1.96-1.053-.98-4.576.22-.465A7.48 7.48 0 0 0 20.614 12Z" clip-rule="evenodd" fill="currentColor"/></svg>`,
+    cogs: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8.625a3.375 3.375 0 1 0 0 6.75a3.375 3.375 0 0 0 0-6.75Z" fill-opacity="0.5" fill="currentColor"/><path fill-rule="evenodd" d="M22.25 12c0 .99-.183 1.933-.518 2.787l.462 2.153a.75.75 0 0 1-.933 1.002l-2.31-.99a8.95 8.95 0 0 1-2.43.9V20a.75.75 0 0 1-.75.75H8.22a.75.75 0 0 1-.75-.75v-2.067a8.948 8.948 0 0 1-2.43-.9l-2.31.99a.75.75 0 0 1-.932-1.002l.461-2.153A8.98 8.98 0 0 1 1.75 12c0-.99.183-1.933.518-2.787l-.462-2.153a.75.75 0 0 1 .933-1.002l2.31.99a8.95 8.95 0 0 1 2.43-.9V4a.75.75 0 0 1 .75-.75h5.56a.75.75 0 0 1 .75.75v2.067c.86.299 1.675.72 2.43.9l2.31-.99a.75.75 0 0 1 .932 1.002l-.461 2.153A8.98 8.98 0 0 1 22.25 12Zm-1.636 0c0-1.42-.314-2.757-.88-3.921l-.22-.465.98-4.576-1.96-1.053-4.502 1.93-.497-.27a7.452 7.452 0 0 0-3.303-.896V2.75H8.22v3.003c-1.18.256-2.29.74-3.302.896l-.497.27-4.502-1.93-1.96 1.053.98 4.576-.22.465A7.48 7.48 0 0 0 3.25 12c0 1.42.314 2.757.88 3.921l.22.465-.98 4.576 1.96 1.053 4.502-1.93.497.27a7.452 7.452 0 0 0 3.303.896V21.25h5.56v-3.003c1.18-.256 2.29-.74 3.302-.896l-.497-.27 4.502 1.93 1.96-1.053-.98-4.576.22-.465A7.48 7.48 0 0 0 20.614 12Z" clip-rule="evenodd" fill="currentColor"/></svg>`,
     magic: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m15.808 3.755-2.06 2.06a.75.75 0 0 1-1.06 0l-2.06-2.06a.75.75 0 0 1 1.06-1.06l2.06 2.06 2.06-2.06a.75.75 0 1 1 1.06 1.06Z" fill-opacity="0.5" fill="currentColor"/><path fill-rule="evenodd" d="M9.828 3.22a.75.75 0 0 1 1.06 0l3.89 3.89a2.25 2.25 0 0 1 0 3.182l-3.89 3.89a.75.75 0 0 1-1.06-1.06l3.89-3.89a.75.75 0 0 0 0-1.06L9.828 4.28a.75.75 0 0 1 0-1.06ZM5.293 6.728a.75.75 0 0 1 1.06 0l6 6a.75.75 0 0 1 0 1.06l-6 6a.75.75 0 0 1-1.06-1.06l5.47-5.47-5.47-5.47a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill="currentColor"/></svg>`,
     chartLine: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2.25 18a.75.75 0 0 0 0 1.5H21a.75.75 0 0 0 0-1.5H2.25Z" fill-opacity="0.5" fill="currentColor"/><path fill-rule="evenodd" d="m4.22 15.78 1.97-1.97a.75.75 0 0 1 1.06 0l3.25 3.25a.75.75 0 0 0 1.06 0L15.03 13.6a.75.75 0 0 1 1.06 0l4.72 4.72a.75.75 0 1 1-1.06 1.06l-4.19-4.19-3.47 3.47a2.25 2.25 0 0 1-3.18 0L5.28 16.84l-1.06-1.06Z" clip-rule="evenodd" fill="currentColor"/></svg>`,
     sync: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.25a.75.75 0 0 1 .75.75v3.66a8.216 8.216 0 0 1 4.237 2.016l2.126-2.125a.75.75 0 1 1 1.06 1.06l-2.125 2.125A8.25 8.25 0 0 1 12 20.25a.75.75 0 0 1 0-1.5 6.75 6.75 0 0 0 0-13.5.75.75 0 0 1-.75-.75V3a.75.75 0 0 1 .75-.75Z" fill-opacity="0.5" fill="currentColor"/><path d="M12 3.75a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0V4.5a.75.75 0 0 1 .75-.75ZM20.25 12a.75.75 0 0 0-.75-.75h-1.5a.75.75 0 0 0 0 1.5h1.5a.75.75 0 0 0 .75-.75Z" fill="currentColor"/></svg>`,
@@ -25,7 +25,7 @@ const icons = {
     arrowDown: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12.53 21.53a.75.75 0 0 1-1.06 0l-7.5-7.5a.75.75 0 0 1 1.06-1.06L12 19.94l6.97-6.97a.75.75 0 1 1 1.06 1.06l-7.5 7.5Z" clip-rule="evenodd" /></svg>`,
     trash: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1-3.878.512.75.75 0 1 1-.256-1.478l3.585-1.005A1.875 1.875 0 0 1 21.5 4.5v13.5A1.875 1.875 0 0 1 19.625 20h-15A1.875 1.875 0 0 1 2.75 18V4.5c0-.654.34-1.254.872-1.571l3.585-1.005a.75.75 0 0 1 1.06.256A48.815 48.815 0 0 1 12 4.705v-.227c0-1.564 1.258-2.833 2.81-2.833h.063c1.552 0 2.81 1.27 2.81 2.833ZM12 6.25a.75.75 0 0 1 .75.75v8.5a.75.75 0 0 1-1.5 0v-8.5a.75.75 0 0 1 .75-.75Z M9 7a.75.75 0 0 0-1.5 0v8.5a.75.75 0 0 0 1.5 0V7Zm6 0a.75.75 0 0 0-1.5 0v8.5a.75.75 0 0 0 1.5 0V7Z" clip-rule="evenodd" /></svg>`,
     twitter: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`,
-    instagram: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12.315 2c-2.43 0-2.714.01-3.66.052-1.4.06-2.31.28-3.11.583a5.55 5.55 0 0 0-1.99 1.99c-.303.8-.523 1.71-.583 3.11C2.01 8.586 2 8.87 2 11.315s.01 2.73.052 3.66c.06 1.4.28 2.31.583 3.11a5.55 5.55 0 0 0 1.99 1.99c.8.303 1.71.523 3.11.583 1-.04 1.23-.05 3.67-.05s2.73.01 3.67.05c1.4.06 2.31.28 3.11.583a5.55 5.55 0 0 0 1.99-1.99c.303-.8.523-1.71.583-3.11.04-1 .05-1.23.05-3.67s-.01-2.73-.05-3.67c-.06-1.4-.28-2.31-.583-3.11a5.55 5.55 0 0 0-1.99-1.99c-.8-.303-1.71-.523-3.11-.583C15.045 2.01 14.76 2 12.315 2zM8.47 11.315a3.845 3.845 0 1 0 7.69 0a3.845 3.845 0 0 0-7.69 0zM17.5 7.155a1.35 1.35 0 1 0 0-2.7 1.35 1.35 0 0 0 0 2.7z" clip-rule="evenodd"/><path d="M12.315 5.865a5.45 5.45 0 1 0 0 10.9 5.45 5.45 0 0 0 0-10.9zM8.47 11.315a3.845 3.845 0 1 1 7.69 0a3.845 3.845 0 0 1-7.69 0z"/></svg>`,
+    instagram: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12.315 2c-2.43 0-2.714.01-3.66.052-1.4.06-2.31.28-3.11.583a5.55 5.55 0 0 0-1.99 1.99c-.303.8-.523 1.71-.583 3.11C2.01 8.586 2 8.87 2 11.315s.01 2.73.052 3.66c.06 1.4.28 2.31.583 3.11a5.55 5.55 0 0 0 1.99 1.99c.8.303 1.71.523 3.11.583 1-.04 1.23-.05 3.67-.05s2.73.01 3.67.05c1.4.06 2.31.28 3.11.583a5.55 5.55 0 0 0 1.99-1.99c.303-.8.523-1.71-.583-3.11.04-1 .05-1.23.05-3.67s-.01-2.73-.05-3.67c-.06-1.4-.28-2.31-.583-3.11a5.55 5.55 0 0 0-1.99-1.99c-.8-.303-1.71-.523-3.11-.583C15.045 2.01 14.76 2 12.315 2zM8.47 11.315a3.845 3.845 0 1 0 7.69 0a3.845 3.845 0 0 0-7.69 0zM17.5 7.155a1.35 1.35 0 1 0 0-2.7 1.35 1.35 0 0 0 0 2.7z" clip-rule="evenodd"/><path d="M12.315 5.865a5.45 5.45 0 1 0 0 10.9 5.45 5.45 0 0 0 0-10.9zM8.47 11.315a3.845 3.845 0 1 1 7.69 0a3.845 3.845 0 0 1-7.69 0z"/></svg>`,
     facebook: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.04c-5.52 0-10 4.48-10 10s4.48 10 10 10s10-4.48 10-10S17.52 2.04 12 2.04zM13.6 19.95V14h2l.3-2.3h-2.3v-1.45c0-.66.18-1.11 1.13-1.11h1.2V7.12c-.21-.03-.92-.09-1.75-.09c-1.73 0-2.91 1.06-2.91 2.99V11.7H9.4v2.3h1.8v5.95h2.4z"/></svg>`,
 };
 
@@ -70,6 +70,7 @@ interface BudgetPlan {
         amount: number;
         percentage: number;
         description: string;
+        type: 'Fixed' | 'Variable';
     }[];
     recommendations: string[];
 }
@@ -152,6 +153,16 @@ interface OpportunitiesData {
     opportunities: Opportunity[];
 }
 
+interface BriefingPoint {
+    type: 'Insight' | 'Opportunity' | 'Next Step';
+    title: string;
+    description: string;
+}
+
+interface DailyBriefingData {
+    briefing: BriefingPoint[];
+}
+
 
 // --- App State Type Definitions ---
 interface WalletTransaction {
@@ -180,20 +191,25 @@ interface MerchantSummary extends Merchant {
     source: 'expenses' | 'manual';
 }
 
+interface SmartFeedItem {
+    id: string;
+    date: string;
+    type: 'achievement' | 'warning' | 'insight' | 'action';
+    text: string;
+    icon: keyof typeof icons;
+}
+
 type User = {
     name: string;
     email: string;
     verified: boolean;
-    location?: {
-        latitude: number;
-        longitude: number;
-    };
     onboarding: {
         budget: boolean;
         expenses: boolean;
         wallet: boolean;
         opportunities: boolean;
     };
+    spotlights: Record<string, boolean>;
     wallet: {
         balance: number;
         transactions: WalletTransaction[];
@@ -206,6 +222,8 @@ type User = {
     payments: { merchant: string; amount: number; frequency: string; }[];
     creativeCopies: CreativeCopy[];
     opportunities: OpportunitiesData[];
+    dailyBriefing: DailyBriefingData | null;
+    smartFeed: SmartFeedItem[];
 };
 
 type AppView = 'dashboard' | 'wallet' | 'budget' | 'expenses' | 'review' | 'creative' | 'opportunities';
@@ -302,7 +320,14 @@ const gettingStartedChecklist = document.getElementById('getting-started-checkli
 const dashboardOverview = document.getElementById('dashboard-overview') as HTMLDivElement;
 const dashboardTrendChartContainer = document.getElementById('dashboard-trend-chart-container') as HTMLDivElement;
 const chartTooltip = document.getElementById('chart-tooltip') as HTMLDivElement;
-const recentActivityList = document.getElementById('recent-activity-list') as HTMLDivElement;
+const smartFeedList = document.getElementById('smart-feed-list') as HTMLDivElement;
+const spotlightTooltip = document.getElementById('spotlight-tooltip') as HTMLDivElement;
+
+
+// AI Daily Briefing Elements
+const generateBriefingBtn = document.getElementById('generateBriefingBtn') as HTMLButtonElement;
+const briefingResultsWrapper = document.getElementById('briefing-results-wrapper') as HTMLDivElement;
+
 
 // Budget Planner Elements
 const budgetPlannerForm = document.getElementById('budgetPlannerForm') as HTMLFormElement;
@@ -344,7 +369,7 @@ const deleteOpportunitiesBtn = document.getElementById('deleteOpportunitiesBtn')
 const opportunitiesStatusArea = document.getElementById('opportunitiesStatus') as HTMLDivElement;
 const opportunitiesResultsContainer = document.getElementById('opportunities-results-wrapper') as HTMLDivElement;
 
-// Wallet & Pay View Elements
+// Cravour Wallet View Elements
 const walletViewContainer = document.getElementById('view-wallet') as HTMLElement;
 const walletTabsContainer = document.getElementById('wallet-tabs') as HTMLDivElement;
 const fundWalletBtn = document.getElementById('fundWalletBtn') as HTMLButtonElement;
@@ -391,6 +416,13 @@ const merchantHistoryModal = document.getElementById('merchantHistoryModal') as 
 const closeMerchantHistoryBtn = document.getElementById('closeMerchantHistory') as HTMLButtonElement;
 const merchantHistoryName = document.getElementById('merchantHistoryName') as HTMLSpanElement;
 const merchantHistoryList = document.getElementById('merchantHistoryList') as HTMLDivElement;
+
+// Variance Details Modal
+const varianceDetailsModal = document.getElementById('varianceDetailsModal') as HTMLDivElement;
+const closeVarianceDetailsBtn = document.getElementById('closeVarianceDetails') as HTMLButtonElement;
+const varianceCategoryName = document.getElementById('varianceCategoryName') as HTMLSpanElement;
+const varianceDetailsList = document.getElementById('varianceDetailsList') as HTMLDivElement;
+
 
 // Investment Simulator Modal
 const investmentSimulatorModal = document.getElementById('investmentSimulatorModal') as HTMLDivElement;
@@ -502,6 +534,7 @@ const budgetPlanSchema = {
                     amount: { type: Type.NUMBER },
                     percentage: { type: Type.NUMBER },
                     description: { type: Type.STRING },
+                    type: { type: Type.STRING, description: "The type of cost: 'Fixed' for recurring, predictable expenses (like rent, subscriptions) or 'Variable' for others." }
                 },
             }
         },
@@ -666,6 +699,24 @@ const opportunitiesSchema = {
     }
 };
 
+const dailyBriefingSchema = {
+    type: Type.OBJECT,
+    properties: {
+        briefing: {
+            type: Type.ARRAY,
+            items: {
+                type: Type.OBJECT,
+                properties: {
+                    type: { type: Type.STRING, description: "The type of point: 'Insight', 'Opportunity', or 'Next Step'." },
+                    title: { type: Type.STRING, description: "A short, catchy title for the point." },
+                    description: { type: Type.STRING, description: "A concise, actionable description for the point." }
+                }
+            },
+            description: "An array of exactly 3 briefing points."
+        }
+    }
+};
+
 
 // --- Helper Functions ---
 function showStatusMessage(container: HTMLElement, message: string, type: 'success' | 'error' | 'info', withSpinner = false, actions: { text: string, view: AppView }[] = []) {
@@ -758,7 +809,7 @@ function renderSkeletonLoader(container: HTMLElement, type: 'cards' | 'list' = '
                 <div class="skeleton-line"></div>
             </div>
         `;
-    } else { // 'list' for ad copy
+    } else { // 'list' for ad copy or briefing
         skeletonHtml = `
             <div class="ad-copy-grid">
                 <div class="skeleton-card ad-copy">
@@ -783,9 +834,20 @@ function renderAppView() {
     if (currentUser) {
         landingPage.classList.add('hidden');
         appDashboard.classList.remove('hidden');
+
+        // Hide the entire landing page nav container for logged-in users
+        mainNav.classList.add('hidden');
+        // Clear its content just in case, and remove the active class if it exists from mobile view
+        mainNav.classList.remove('active');
+        navListLinks.innerHTML = '';
+        headerActionsContainer.innerHTML = '';
+
     } else {
         landingPage.classList.remove('hidden');
         appDashboard.classList.add('hidden');
+        
+        // Show the landing page nav container for logged-out users
+        mainNav.classList.remove('hidden');
         
         // Restore header for logged-out user
         navListLinks.innerHTML = `
@@ -801,11 +863,11 @@ function renderAppView() {
         document.getElementById('headerLoginBtn')!.addEventListener('click', () => openAuthModal(false));
         document.getElementById('headerSignUpBtn')!.addEventListener('click', () => openAuthModal(true));
 
-        // Ensure mobile menu is reset
+        // Ensure mobile menu and sidebar are fully reset
         mainNav.classList.remove('active');
         hamburger.classList.remove('is-active');
         const sidebar = document.querySelector('.app-sidebar') as HTMLElement;
-        sidebar.classList.remove('active');
+        if(sidebar) sidebar.classList.remove('active');
         appOverlay.classList.add('hidden');
         document.body.style.overflow = '';
     }
@@ -851,17 +913,18 @@ function renderCurrentView() {
             break;
         case 'budget':
             renderBudgetHistory();
+            showSpotlight('budget', generateBudgetBtn, 'Describe your finances and goals here, and our AI will create a budget for you.');
             break;
         case 'expenses':
-            // Check if user has budget to derive currency
             if (!currentUser?.budgets.length) {
                 showStatusMessage(expenseStatusArea, "Please create a budget first to set your currency.", 'info');
             } else {
                 hideStatusMessage(expenseStatusArea);
             }
+            showSpotlight('expenses', analyzeExpensesBtn, 'Paste your business spending here. Our AI will analyze it for insights.');
             break;
         case 'review':
-            // The view is static now
+            showSpotlight('review', generateReviewBtn, 'Generate a review to see how your spending compares to your budget.');
             break;
         case 'creative':
             renderSavedAdCopyLibrary();
@@ -876,7 +939,7 @@ function renderCurrentView() {
 function renderSidebar() {
     const navItems = [
         { view: 'dashboard', label: 'Dashboard', icon: icons.dashboard },
-        { view: 'wallet', label: 'Wallet & Pay', icon: icons.wallet },
+        { view: 'wallet', label: 'Cravour Wallet', icon: icons.wallet },
         { view: 'budget', label: 'Budget Planner', icon: icons.budget },
         { view: 'expenses', label: 'Expense Tracker', icon: icons.expenses },
         { view: 'review', label: 'Performance Review', icon: icons.review },
@@ -905,9 +968,10 @@ function renderDashboardHomeView() {
     if (isChecklistComplete) {
         gettingStartedChecklist.classList.add('hidden');
         mainDashboardContent.classList.remove('hidden');
+        renderDailyBriefing();
         renderDashboardSummary();
         renderTrendChart();
-        renderRecentActivity();
+        renderSmartFeed();
     } else {
         gettingStartedChecklist.classList.remove('hidden');
         mainDashboardContent.classList.add('hidden');
@@ -994,27 +1058,46 @@ function renderDashboardSummary() {
     renderDashboardOverview(summaryData);
 }
 
-function renderRecentActivity() {
+function addFeedItem(type: SmartFeedItem['type'], text: string) {
     if (!currentUser) return;
-    const activities: string[] = [];
+    const iconMap: Record<SmartFeedItem['type'], keyof typeof icons> = {
+        achievement: 'check',
+        warning: 'infoCircle',
+        insight: 'magic',
+        action: 'opportunities',
+    };
+    currentUser.smartFeed.unshift({
+        id: `feed_${Date.now()}`,
+        date: new Date().toISOString(),
+        type,
+        text,
+        icon: iconMap[type],
+    });
+    // Keep feed to a manageable size
+    if (currentUser.smartFeed.length > 20) {
+        currentUser.smartFeed.pop();
+    }
+    saveUserDatabase();
+}
 
-    if (currentUser.budgets.length > 0) {
-        activities.push("Created a new budget plan.");
-    }
-    if (currentUser.expenses.length > 0) {
-        activities.push("Analyzed a new expense report.");
-    }
-    if (currentUser.payments.length > 0) {
-        activities.push(`Scheduled ${currentUser.payments.length} payment(s).`);
-    }
-
-    if (activities.length === 0) {
-        recentActivityList.innerHTML = `<div class="empty-state">Your recent activities will appear here.</div>`;
+function renderSmartFeed() {
+    if (!currentUser || !smartFeedList) return;
+    if (currentUser.smartFeed.length === 0) {
+        smartFeedList.innerHTML = `<div class="empty-state">Your smart feed will show key financial events and insights here.</div>`;
         return;
     }
-    
-    recentActivityList.innerHTML = activities.map(act => `<p class="payment-item">${act}</p>`).join('');
+    const feedHtml = currentUser.smartFeed.map(item => `
+        <div class="feed-item item-${item.type}">
+            <div class="feed-icon">${icons[item.icon]}</div>
+            <div class="feed-text">
+                <p>${item.text}</p>
+                <small>${new Date(item.date).toLocaleString()}</small>
+            </div>
+        </div>
+    `).join('');
+    smartFeedList.innerHTML = feedHtml;
 }
+
 
 function renderTrendChart() {
     if (!currentUser || currentUser.budgets.length < 2) {
@@ -1190,8 +1273,8 @@ function renderBudgetPlan(plan: BudgetPlan, container: HTMLElement) {
     const allocationsHtml = `
          <div class="result-section">
              <h3 class="result-heading">Detailed Allocations</h3>
-            <div class="table-wrapper"><table class="data-table"><thead><tr><th>Category</th><th>Amount (${currency})</th><th>% of Income</th><th>Description</th></tr></thead><tbody>
-            ${plan.allocations.map((item) => `<tr><td>${item.category}</td><td>${item.amount.toLocaleString()}</td><td>${item.percentage}%</td><td>${item.description}</td></tr>`).join('')}
+            <div class="table-wrapper"><table class="data-table"><thead><tr><th>Category</th><th>Amount (${currency})</th><th>% of Income</th><th>Type</th><th>Description</th></tr></thead><tbody>
+            ${plan.allocations.map((item) => `<tr><td>${item.category}</td><td>${item.amount.toLocaleString()}</td><td>${item.percentage}%</td><td><span class="tag ${item.type}">${item.type}</span></td><td>${item.description}</td></tr>`).join('')}
             </tbody></table></div>
         </div>
     `;
@@ -1202,8 +1285,20 @@ function renderBudgetPlan(plan: BudgetPlan, container: HTMLElement) {
             <ul>${plan.recommendations.map((tip: string) => `<li>${tip}</li>`).join('')}</ul>
         </div>
     ` : '';
-
+    
     container.innerHTML = summaryHtml + chartHtml + allocationsHtml + recommendationsHtml;
+    
+    // Add automation button if there are fixed costs
+    const hasFixedCosts = plan.allocations.some(a => a.type === 'Fixed');
+    if (hasFixedCosts) {
+        const button = document.createElement('button');
+        button.id = 'automateBudgetPaymentsBtn';
+        button.className = 'btn btn-automate';
+        button.innerHTML = `<span class="btn-icon">${icons.sync}</span> Automate Fixed Cost Payments`;
+        container.appendChild(button);
+        button.addEventListener('click', handleAutomateBudgetPayments);
+    }
+    
     renderIcons();
 }
 
@@ -1351,10 +1446,10 @@ function renderPerformanceReview(report: PerformanceReview, container: HTMLEleme
             <h3 class="result-heading">Budget vs. Actuals Breakdown</h3>
             <div class="table-wrapper"><table class="data-table">
                 <thead><tr><th>Category</th><th>Budgeted (${currency})</th><th>Actual (${currency})</th><th>Variance (${currency})</th></tr></thead>
-                <tbody>
+                <tbody id="variance-table-body">
                     ${report.varianceAnalysis.map((item) => {
                         const varianceClass = item.variance > 0 ? 'variance-negative' : item.variance < 0 ? 'variance-positive' : 'variance-neutral';
-                        return `<tr>
+                        return `<tr class="variance-row" data-category="${item.category}" style="cursor: pointer;">
                             <td>${item.category}</td>
                             <td>${item.budgetedAmount.toLocaleString()}</td>
                             <td>${item.actualAmount.toLocaleString()}</td>
@@ -1363,7 +1458,7 @@ function renderPerformanceReview(report: PerformanceReview, container: HTMLEleme
                     }).join('')}
                 </tbody>
             </table></div>
-            <p style="font-size: 0.9em; text-align: center; margin-top: 15px;"><span class="variance-positive">Green variance</span> means you spent less than budgeted (good!). <span class="variance-negative">Red variance</span> means you overspent.</p>
+            <p style="font-size: 0.9em; text-align: center; margin-top: 15px;"><span class="variance-positive">Green variance</span> means you spent less than budgeted (good!). <span class="variance-negative">Red variance</span> means you overspent. Click a row for details.</p>
         </div>
     `;
     
@@ -1593,6 +1688,37 @@ function renderInvestments() {
     investmentList.innerHTML = investmentsHtml;
 }
 
+function renderDailyBriefing() {
+    if (!currentUser || !briefingResultsWrapper) return;
+
+    if (!currentUser.dailyBriefing) {
+        briefingResultsWrapper.innerHTML = `<div class="empty-state">Click "Refresh Briefing" to get your personalized AI summary.</div>`;
+        return;
+    }
+
+    const getIconForType = (type: BriefingPoint['type']) => {
+        switch (type) {
+            case 'Insight': return icons.infoCircle;
+            case 'Opportunity': return icons.opportunities;
+            case 'Next Step': return icons.magic;
+            default: return icons.infoCircle;
+        }
+    };
+
+    const briefingHtml = currentUser.dailyBriefing.briefing.map(point => `
+        <div class="briefing-item">
+            <div class="briefing-icon">${getIconForType(point.type)}</div>
+            <div class="briefing-text">
+                <h4>${point.title}</h4>
+                <p>${point.description}</p>
+            </div>
+        </div>
+    `).join('');
+
+    briefingResultsWrapper.innerHTML = `<div class="briefing-list">${briefingHtml}</div>`;
+    renderIcons();
+}
+
 
 function renderIcons() {
     document.querySelectorAll<HTMLElement>('[data-icon]').forEach(el => {
@@ -1724,7 +1850,7 @@ function switchAuthView(isRegistering: boolean) {
     verificationView.classList.add('hidden');
 }
 
-async function handleRegister(e: Event) {
+function handleRegister(e: Event) {
     e.preventDefault();
     const name = registerNameInput.value;
     const email = registerEmailInput.value.toLowerCase();
@@ -1748,6 +1874,7 @@ async function handleRegister(e: Event) {
             wallet: false,
             opportunities: false
         },
+        spotlights: {},
         wallet: { balance: 0, transactions: [] },
         savingsVault: 0,
         investments: [],
@@ -1757,29 +1884,12 @@ async function handleRegister(e: Event) {
         payments: [],
         creativeCopies: [],
         opportunities: [],
+        dailyBriefing: null,
+        smartFeed: []
     };
     
-    // Get location
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                newUser.location = {
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude
-                };
-                userDatabase.set(email, newUser);
-                saveUserDatabase();
-            },
-            (error) => {
-                console.warn(`Geolocation error: ${error.message}. Continuing without location.`);
-                userDatabase.set(email, newUser);
-                saveUserDatabase();
-            }
-        );
-    } else {
-       userDatabase.set(email, newUser);
-       saveUserDatabase();
-    }
+    userDatabase.set(email, newUser);
+    saveUserDatabase();
     
     pendingVerificationEmail = email;
     verificationView.classList.remove('hidden');
@@ -1835,6 +1945,11 @@ function handleLogout() {
     renderAppView();
 }
 
+function initializeDashboard() {
+    if (!currentUser) return;
+    renderSidebar();
+    navigateToView('dashboard');
+}
 
 async function handleGenerateDemoPlan(e: Event) {
     e.preventDefault();
@@ -1899,8 +2014,9 @@ async function handleGenerateBudgetPlan(e: Event) {
     try {
         const prompt = `You are an AI financial planner inspired by "The Richest Man in Babylon". Based on the following user description, create a detailed budget plan. 
         
-        **CRITICAL RULE:** You MUST create a "Savings & Investment" category and allocate AT LEAST 10% of the total income to it. In the description for this category, briefly explain that this is the principle of "paying yourself first" to build wealth.
-        
+        **CRITICAL RULE 1:** You MUST create a "Savings & Investment" category and allocate AT LEAST 10% of the total income to it. In the description for this category, briefly explain that this is the principle of "paying yourself first" to build wealth.
+        **CRITICAL RULE 2:** For each allocation, identify if it's a 'Fixed' or 'Variable' cost. Fixed costs are predictable, recurring expenses like rent or subscriptions. Everything else is variable. Populate the 'type' field accordingly.
+
         Ensure the currency is set to '${currency}'. Description: "${description}"`;
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash",
@@ -1915,9 +2031,12 @@ async function handleGenerateBudgetPlan(e: Event) {
         renderBudgetPlan(budgetPlan, budgetResultsContainer);
         currentUser.budgets.push(budgetPlan);
         currentUser.onboarding.budget = true; // Onboarding Step
+        
+        addFeedItem('achievement', `New budget created for ${currency}${budgetPlan.summary.totalIncome.toLocaleString()}.`);
+        
         saveUserDatabase();
         
-        showStatusMessage(budgetStatusArea, 'Budget created! What\'s next?', 'success', false, [{text: 'Analyze My Expenses', view: 'expenses'}]);
+        showStatusMessage(budgetStatusArea, 'Budget created! What\'s next?', 'success', false, [{text: 'Reveal Spending Insights', view: 'expenses'}]);
 
         renderDashboardHomeView();
         renderBudgetHistory();
@@ -1929,6 +2048,37 @@ async function handleGenerateBudgetPlan(e: Event) {
     } finally {
         generateBudgetBtn.disabled = false;
     }
+}
+
+function handleAutomateBudgetPayments() {
+    if (!currentUser || currentUser.budgets.length === 0) return;
+
+    const latestBudget = currentUser.budgets[currentUser.budgets.length - 1];
+    const fixedCosts = latestBudget.allocations.filter(a => a.type === 'Fixed');
+
+    if (fixedCosts.length === 0) {
+        showStatusMessage(budgetStatusArea, "No fixed costs were identified in this budget to automate.", 'info');
+        return;
+    }
+    
+    let scheduledCount = 0;
+    fixedCosts.forEach(cost => {
+        // Avoid adding duplicates
+        const alreadyExists = currentUser!.payments.some(p => p.merchant === cost.category && p.amount === cost.amount);
+        if (!alreadyExists) {
+            currentUser!.payments.push({
+                merchant: cost.category,
+                amount: cost.amount,
+                frequency: "Monthly" // Defaulting to monthly
+            });
+            scheduledCount++;
+        }
+    });
+
+    addFeedItem('action', `${scheduledCount} fixed cost payment(s) have been automated.`);
+    saveUserDatabase();
+    showStatusMessage(budgetStatusArea, `${scheduledCount} fixed cost payment(s) have been scheduled in your Cravour Wallet.`, 'success');
+    hideStatusMessage(budgetStatusArea, 5000);
 }
 
 async function handleAnalyzeExpenses(e: Event) {
@@ -1944,6 +2094,23 @@ async function handleAnalyzeExpenses(e: Event) {
         showStatusMessage(expenseStatusArea, 'Please paste your expense data.', 'error');
         return;
     }
+
+    let userLocation: { latitude: number; longitude: number; } | null = null;
+    if (navigator.geolocation) {
+        showStatusMessage(expenseStatusArea, "Requesting location for local merchant suggestions...", 'info');
+        try {
+            const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+                navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 10000 });
+            });
+            userLocation = {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude
+            };
+        } catch (error) {
+            console.warn(`Geolocation error: ${(error as GeolocationPositionError).message}. Proceeding without local suggestions.`);
+        }
+    }
+
 
     const selectedPeriod = (expensePeriodSelector.querySelector('.active') as HTMLElement)?.dataset.period || 'monthly';
     let periodContext = "for a month";
@@ -1972,8 +2139,8 @@ async function handleAnalyzeExpenses(e: Event) {
     try {
         let prompt = `Analyze the following expense data ${periodContext}. The user's primary currency is ${currency}. Provide a detailed report, including spending habits (daily/weekly average, peak day, trend), categorization, cost-cutting tips, and investment opportunities. Data: "${data}"`;
 
-        if (currentUser.location) {
-            prompt += ` The user is located at latitude ${currentUser.location.latitude} and longitude ${currentUser.location.longitude} in Nigeria. Please also provide a list of 3-5 real, local Nigerian merchants relevant to their spending categories. For each merchant, provide their name, category, and a brief reason for the recommendation (e.g., 'offers bulk discounts on supplies').`;
+        if (userLocation) {
+            prompt += ` The user is located at latitude ${userLocation.latitude} and longitude ${userLocation.longitude} in Nigeria. Please also provide a list of 3-5 real, local Nigerian merchants relevant to their spending categories. For each merchant, provide their name, category, and a brief reason for the recommendation (e.g., 'offers bulk discounts on supplies').`;
         }
         
         const response = await ai.models.generateContent({
@@ -1989,6 +2156,8 @@ async function handleAnalyzeExpenses(e: Event) {
         renderExpenseReport(expenseReport, expenseResultsContainer);
         currentUser.expenses.push(expenseReport);
         currentUser.onboarding.expenses = true; // Onboarding Step
+        
+        addFeedItem('insight', `Expense analysis complete. Your largest expense category was "${expenseReport.expenseSummary.largestExpenseCategory}".`);
         saveUserDatabase();
         
         showStatusMessage(expenseStatusArea, 'Analysis complete! Ready to see how you performed?', 'success', false, [{ text: 'Review My Performance', view: 'review' }]);
@@ -2034,6 +2203,15 @@ async function handleGenerateReview() {
 
         const review = parseJsonFromAi<PerformanceReview>(response.text);
         renderPerformanceReview(review, reviewResultsContainer);
+        
+        if(review.adherenceScore < 70) {
+            addFeedItem('warning', `Your budget adherence was ${review.adherenceScore}%. Let's find ways to improve.`);
+        } else {
+             addFeedItem('achievement', `Great job! Your budget adherence score is ${review.adherenceScore}%.`);
+        }
+        saveUserDatabase();
+        renderSmartFeed();
+
         hideStatusMessage(reviewStatusArea, 500);
     } catch (error) {
         console.error(error);
@@ -2148,7 +2326,10 @@ async function handleGenerateOpportunities() {
         renderOpportunities(opportunities, opportunitiesResultsContainer);
         currentUser.opportunities.push(opportunities);
         currentUser.onboarding.opportunities = true; // Onboarding Step
+        
+        addFeedItem('action', 'New growth opportunities are ready for you to explore.');
         saveUserDatabase();
+
         hideStatusMessage(opportunitiesStatusArea, 500);
         renderDashboardHomeView();
     } catch (error) {
@@ -2158,6 +2339,61 @@ async function handleGenerateOpportunities() {
         opportunitiesResultsContainer.innerHTML = `<div class="empty-state">Could not find opportunities. Please try again with a more detailed profile.</div>`;
     } finally {
         generateOpportunitiesBtn.disabled = false;
+    }
+}
+
+async function handleGenerateBriefing() {
+    if (!currentUser) return;
+    if (currentUser.budgets.length === 0) {
+        briefingResultsWrapper.innerHTML = `<div class="empty-state">Create a budget to get your first briefing.</div>`;
+        return;
+    }
+    if (!ensureConfigured('ai')) {
+        briefingResultsWrapper.innerHTML = `<div class="empty-state">AI features are currently disabled.</div>`;
+        return;
+    }
+
+    renderSkeletonLoader(briefingResultsWrapper, 'list');
+    generateBriefingBtn.disabled = true;
+
+    try {
+        const userProfile = {
+            name: currentUser.name,
+            latestBudget: currentUser.budgets[currentUser.budgets.length - 1],
+            latestExpenses: currentUser.expenses.length > 0 ? currentUser.expenses[currentUser.expenses.length - 1] : 'No expenses tracked yet.',
+            walletBalance: currentUser.wallet.balance,
+            savingsVault: currentUser.savingsVault,
+            latestOpportunities: currentUser.opportunities.length > 0 ? currentUser.opportunities[currentUser.opportunities.length - 1] : 'No opportunities generated yet.'
+        };
+
+        const prompt = `You are Cravour, a proactive AI financial co-pilot. Analyze the user's full financial profile: ${JSON.stringify(userProfile, null, 2)}. 
+        Generate a concise, 3-point daily briefing designed to give the user immediate clarity and direction.
+        
+        1.  **Key Insight:** Provide one sharp, relevant observation about their recent financial activity. (e.g., "Your spending on 'Software' was higher than usual this month.")
+        2.  **Top Opportunity:** Identify the single most impactful opportunity from their profile. (e.g., "You can save ₦5,000/month by switching your 'Web Hosting' provider.") If no opportunities exist, suggest they generate some.
+        3.  **Your Next Step:** Guide the user to the next logical action in the app. If they just budgeted, tell them to track expenses. If they just tracked expenses, tell them to review their performance.
+
+        Provide the output in the specified JSON format.`;
+
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: prompt,
+            config: {
+                responseMimeType: "application/json",
+                responseSchema: dailyBriefingSchema,
+            }
+        });
+
+        const briefingData = parseJsonFromAi<DailyBriefingData>(response.text);
+        currentUser.dailyBriefing = briefingData;
+        saveUserDatabase();
+        renderDailyBriefing();
+
+    } catch (error) {
+        console.error(error);
+        briefingResultsWrapper.innerHTML = `<div class="empty-state">Could not generate briefing. Please try again.</div>`;
+    } finally {
+        generateBriefingBtn.disabled = false;
     }
 }
 
@@ -2262,7 +2498,9 @@ function handleFundWallet(e: Event) {
     }
     
     currentUser.onboarding.wallet = true; // Onboarding Step
+    addFeedItem('achievement', `Wallet funded with ${amount.toLocaleString()}.`);
     saveUserDatabase();
+
     showStatusMessage(fundWalletStatus, statusMessage, 'success');
     fundWalletForm.reset();
     setTimeout(() => {
@@ -2389,6 +2627,7 @@ function handlePayWithWallet() {
         successMessage = `Paid and scheduled ${frequency.toLowerCase()} payment to ${currentPayment.merchant}.`;
     }
 
+    addFeedItem('action', `Payment of ${currentPayment.amount.toLocaleString()} made to ${currentPayment.merchant}.`);
     saveUserDatabase();
     showStatusMessage(paymentStatus, successMessage, 'success');
 
@@ -2429,6 +2668,7 @@ function handleDirectTransfer(e: Event) {
         amount: amount,
     });
     
+    addFeedItem('action', `Transferred ${amount.toLocaleString()} to ${recipient}.`);
     saveUserDatabase();
     showStatusMessage(transferStatusArea, `Successfully sent ${amount.toLocaleString()} to ${recipient}.`, 'success');
     transferForm.reset();
@@ -2502,6 +2742,16 @@ function handleAddMerchant(e: Event) {
     renderAllMerchantsList();
 }
 
+function handleDeleteMerchant(merchantName: string) {
+    if (!currentUser) return;
+    const initialCount = currentUser.merchants.length;
+    currentUser.merchants = currentUser.merchants.filter(m => m.name !== merchantName);
+    
+    if (currentUser.merchants.length < initialCount) {
+        saveUserDatabase();
+        renderAllMerchantsList();
+    }
+}
 
 async function handleShareReport(e: Event) {
     const button = e.target as HTMLButtonElement;
@@ -2634,192 +2884,200 @@ function handleOpportunityActions(e: Event) {
 
     if (actionType === 'navigate' && actionTarget) {
         navigateToView(actionTarget as AppView);
-    } else if (actionType === 'invest' && opportunity) {
-        openInvestmentSimulatorModal(opportunity);
+    } else if (actionType === 'invest') {
+        openInvestmentSimulator(opportunity);
     }
 }
 
-function openInvestmentSimulatorModal(opportunity: Opportunity) {
-    if (!currentUser) return;
+function openInvestmentSimulator(opportunity: Opportunity) {
+    if(!currentUser) return;
     currentInvestmentOpportunity = opportunity;
-    investmentOpportunityTitle.textContent = opportunity.title;
-    investmentAmountInput.value = '';
-    investmentAmountInput.max = currentUser.savingsVault.toString();
-    maxInvestmentAmount.textContent = `Vault Balance: ₦${currentUser.savingsVault.toLocaleString()}`;
+    
+    investmentOpportunityTitle.textContent = `Simulate Investment: ${opportunity.title}`;
+    maxInvestmentAmount.textContent = `Available from Savings Vault: ${currentUser.savingsVault.toLocaleString()}`;
+    investmentAmountInput.max = String(currentUser.savingsVault);
+
     investmentSimulatorModal.classList.remove('hidden');
 }
 
-function handleSimulateInvestment(e: Event) {
+function handleInvestment(e: Event) {
     e.preventDefault();
     if (!currentUser || !currentInvestmentOpportunity) return;
-
     const amount = parseFloat(investmentAmountInput.value);
+
     if (isNaN(amount) || amount <= 0) {
-        showStatusMessage(investmentSimulatorStatus, 'Please enter a valid amount to invest.', 'error');
+        showStatusMessage(investmentSimulatorStatus, "Please enter a valid amount.", "error");
         return;
     }
     if (amount > currentUser.savingsVault) {
-        showStatusMessage(investmentSimulatorStatus, 'Investment amount exceeds your savings vault balance.', 'error');
+        showStatusMessage(investmentSimulatorStatus, "Investment amount exceeds available savings.", "error");
         return;
     }
-
-    // Update user state
+    
     currentUser.savingsVault -= amount;
-    const newInvestment: Investment = {
-        id: `invest_${Date.now()}`,
-        date: new Date().toISOString(),
-        name: currentInvestmentOpportunity.action.target,
-        amount: amount,
-    };
-    currentUser.investments.push(newInvestment);
+    currentUser.wallet.balance -= amount; // Also deduct from wallet as it's a real transaction source
 
-    currentUser.wallet.transactions.push({
-        id: `investment_${Date.now()}`,
+    currentUser.investments.push({
+        id: `inv_${Date.now()}`,
         date: new Date().toISOString(),
-        type: 'investment',
-        description: `Investment in ${currentInvestmentOpportunity.action.target}`,
+        name: currentInvestmentOpportunity.title,
         amount: amount,
     });
-
+    
+    currentUser.wallet.transactions.push({
+        id: `invest_${Date.now()}`,
+        date: new Date().toISOString(),
+        type: 'investment',
+        description: `Investment in ${currentInvestmentOpportunity.title}`,
+        amount: amount,
+    });
+    
+    addFeedItem('achievement', `Successfully invested ${amount.toLocaleString()} in ${currentInvestmentOpportunity.title}.`);
     saveUserDatabase();
-    showStatusMessage(investmentSimulatorStatus, `Successfully simulated ₦${amount.toLocaleString()} investment!`, 'success');
+    showStatusMessage(investmentSimulatorStatus, 'Investment successful!', 'success');
+    investmentSimulatorForm.reset();
     
     setTimeout(() => {
         investmentSimulatorModal.classList.add('hidden');
         hideStatusMessage(investmentSimulatorStatus);
-        renderDashboardHomeView(); // Re-render to show updated balances
-        if (currentView === 'wallet') renderWalletOverview();
+        navigateToView('wallet');
+        
+        // Ensure the correct wallet tab is active
+        const investmentsTab = walletTabsContainer.querySelector('[data-tab="investments"]') as HTMLElement;
+        handleWalletTabs({target: investmentsTab} as unknown as Event);
     }, 2000);
+
 }
 
-// --- Data Deletion Handlers ---
-
-function handleDeleteBudget(index: number) {
-    if (!currentUser) return;
-    if (confirm("Are you sure you want to delete this budget? This will also delete the associated expense report.")) {
-        currentUser.budgets.splice(index, 1);
-        if (currentUser.expenses[index]) {
-            currentUser.expenses.splice(index, 1);
-        }
-        saveUserDatabase();
-        renderBudgetHistory();
-        // Potentially re-render other parts of the dashboard
-        renderDashboardHomeView();
+function handleInvestmentListActions(e: Event) {
+    const target = e.target as HTMLButtonElement;
+    if (target.matches('[data-investment-id]')) {
+        const investmentId = target.dataset.investmentId!;
+        liquidateInvestment(investmentId);
     }
 }
 
-function handleDeleteCreativeCopy(index: number) {
-    if (!currentUser) return;
-    if (confirm("Are you sure you want to delete this set of ad copies?")) {
-        currentUser.creativeCopies.splice(index, 1);
-        saveUserDatabase();
-        renderSavedAdCopyLibrary();
-    }
-}
-
-function handleDeleteOpportunities() {
-    if (!currentUser || currentUser.opportunities.length === 0) return;
-    if (confirm("Are you sure you want to clear the latest opportunities report?")) {
-        currentUser.opportunities.pop();
-        saveUserDatabase();
-        renderSavedOpportunities();
-    }
-}
-
-function handleDeleteMerchant(merchantName: string) {
-    if (!currentUser) return;
-    if (confirm(`Are you sure you want to delete the manually added merchant "${merchantName}"?`)) {
-        currentUser.merchants = currentUser.merchants.filter(m => m.name !== merchantName);
-        saveUserDatabase();
-        renderAllMerchantsList();
-    }
-}
-
-function handleLiquidateInvestment(investmentId: string) {
+function liquidateInvestment(investmentId: string) {
     if (!currentUser) return;
     const investmentIndex = currentUser.investments.findIndex(inv => inv.id === investmentId);
     if (investmentIndex === -1) return;
 
-    const investment = currentUser.investments[investmentIndex];
-    if (confirm(`Are you sure you want to liquidate your investment in ${investment.name}? This will return ₦${investment.amount.toLocaleString()} to your main wallet.`)) {
-        // Return funds to wallet
-        currentUser.wallet.balance += investment.amount;
+    if (confirm("Are you sure you want to liquidate this investment? The funds will be returned to your wallet.")) {
+        const [investment] = currentUser.investments.splice(investmentIndex, 1);
         
-        // Add a transaction record
+        currentUser.wallet.balance += investment.amount;
         currentUser.wallet.transactions.push({
-            id: `liquidate_${Date.now()}`,
+            id: `liq_${Date.now()}`,
             date: new Date().toISOString(),
             type: 'liquidation',
             description: `Liquidation of ${investment.name}`,
             amount: investment.amount
         });
-        
-        // Remove from investments
-        currentUser.investments.splice(investmentIndex, 1);
 
+        addFeedItem('action', `Liquidated investment in ${investment.name}, returning ${investment.amount.toLocaleString()} to your wallet.`);
         saveUserDatabase();
         renderInvestments();
-        renderWalletOverview(); // Update wallet balance and transaction list
+        renderWalletOverview(); // Update main balance display too
         renderDashboardSummary();
     }
 }
 
-// --- Initialization Functions ---
-function initializeLandingPage() {
-    if (yearSpan) yearSpan.textContent = new Date().getFullYear().toString();
-    hamburger.addEventListener('click', handleMobileMenu);
-    headerLogo.addEventListener('click', (e) => {
-        e.preventDefault();
-        // If not logged in, it acts as a normal anchor to the top
-        if (!currentUser) {
-            window.location.hash = '';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    });
+function openVarianceDetailsModal(category: string) {
+    if (!currentUser || currentUser.expenses.length === 0) return;
+
+    varianceCategoryName.textContent = category;
+    const latestExpenses = currentUser.expenses[currentUser.expenses.length - 1];
+    const relevantExpenses = latestExpenses.categorizedExpenses.filter(exp => exp.category === category);
+    const currency = latestExpenses.expenseSummary.currency || '₦';
+
+    if (relevantExpenses.length === 0) {
+        varianceDetailsList.innerHTML = `<div class="empty-state">No specific transactions found for this category in the latest expense report.</div>`;
+    } else {
+        const detailsHtml = relevantExpenses.map(item => `
+            <div class="transaction-item">
+                <div class="transaction-icon error">${icons.expenses}</div>
+                <div class="transaction-details">
+                    <p><strong>${item.merchantBrandExample || item.merchantCategory}</strong></p>
+                    <p class="transaction-date">From latest expense report</p>
+                </div>
+                <div class="transaction-amount error">-${currency}${item.amount.toLocaleString()}</div>
+            </div>
+        `).join('');
+        varianceDetailsList.innerHTML = `<div class="transaction-list-modal">${detailsHtml}</div>`;
+    }
+
+    varianceDetailsModal.classList.remove('hidden');
+}
+
+function showSpotlight(key: string, targetElement: HTMLElement, text: string) {
+    if (!currentUser || currentUser.spotlights[key] || !targetElement) {
+        return;
+    }
+
+    const rect = targetElement.getBoundingClientRect();
+    spotlightTooltip.textContent = text;
+    spotlightTooltip.style.left = `${rect.left + rect.width / 2}px`;
+    spotlightTooltip.style.top = `${rect.bottom + 10}px`;
+    spotlightTooltip.classList.remove('hidden');
+
+    const handleClickOutside = () => {
+        spotlightTooltip.classList.add('hidden');
+        currentUser!.spotlights[key] = true;
+        saveUserDatabase();
+        document.removeEventListener('click', handleClickOutside, true);
+    };
+
+    setTimeout(() => {
+       document.addEventListener('click', handleClickOutside, true);
+    }, 100);
+}
+
+
+// --- App Initialization ---
+function initializeApp() {
+    yearSpan.textContent = new Date().getFullYear().toString();
     
-    document.body.addEventListener('click', (e) => {
-        const target = e.target as HTMLElement;
-        const headerSignUpBtn = document.getElementById('headerSignUpBtn');
-        const headerLoginBtn = document.getElementById('headerLoginBtn');
+    if (API_KEY) {
+        ai = new GoogleGenAI({ apiKey: API_KEY });
+        isAiConfigured = true;
+    } else {
+        console.error("API_KEY environment variable not found. AI features will be disabled.");
+    }
+    
+    if (PAYSTACK_PUBLIC_KEY) {
+        isPaystackConfigured = true;
+    } else {
+        console.error("Paystack public key not found. Payment features will be disabled.");
+    }
 
-        if (target === headerSignUpBtn || target === ctaSignUpBtn) {
-            openAuthModal(true);
-        }
-        if (target === headerLoginBtn) {
-            openAuthModal(false);
-        }
-    });
+    userDatabase = loadUserDatabase();
+    const loggedInEmail = loadCurrentLoggedInUser();
+    if (loggedInEmail && userDatabase.has(loggedInEmail)) {
+        currentUser = userDatabase.get(loggedInEmail)!;
+        initializeDashboard();
+    }
 
-    demoForm.addEventListener('submit', handleGenerateDemoPlan);
+    renderAppView();
+    addEventListeners();
+}
+
+function addEventListeners() {
+    // Nav & Modals
+    hamburger.addEventListener('click', handleMobileMenu);
+    appOverlay.addEventListener('click', handleMobileMenu);
+    ctaSignUpBtn.addEventListener('click', () => openAuthModal(true));
     closeAuthBtn.addEventListener('click', () => authModal.classList.add('hidden'));
     showRegisterBtn.addEventListener('click', () => switchAuthView(true));
     showLoginBtn.addEventListener('click', () => switchAuthView(false));
-    loginForm.addEventListener('submit', handleLogin);
+    
+    // Auth Forms
     registerForm.addEventListener('submit', handleRegister);
+    loginForm.addEventListener('submit', handleLogin);
     verifyEmailBtn.addEventListener('click', handleVerifyEmail);
-    contactForm.addEventListener('submit', handleContactFormSubmit);
-}
-
-function initializeDashboard() {
-    if (!currentUser) return;
-
-    renderSidebar();
-    renderCurrentView();
-
-    const sidebarLogo = document.getElementById('sidebarLogo') as HTMLAnchorElement;
-    sidebarLogo.addEventListener('click', (e) => {
-        e.preventDefault();
-        navigateToView('dashboard');
-    });
-
-    headerLogo.addEventListener('click', (e) => {
-        e.preventDefault();
-        if (currentUser) {
-            navigateToView('dashboard');
-        }
-    });
-
-    sidebarMenu.addEventListener('click', (e) => {
+    
+    // Dashboard
+    logoutBtn.addEventListener('click', handleLogout);
+    sidebarMenu.addEventListener('click', (e: Event) => {
         const target = e.target as HTMLElement;
         const link = target.closest('a[data-view]');
         if (link) {
@@ -2828,147 +3086,131 @@ function initializeDashboard() {
         }
     });
 
-    dashboardOverview.addEventListener('click', (e) => {
+    gettingStartedChecklist.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
-        const card = target.closest('.overview-card[data-view]') as HTMLDivElement;
-        if (card && card.dataset.view) {
-            navigateToView(card.dataset.view as AppView);
+        const item = target.closest('.getting-started-item');
+        if (!item || !currentUser) return;
+
+        if (item.classList.contains('completed')) return;
+
+        const view = item.getAttribute('data-view');
+        const action = item.getAttribute('data-action');
+
+        if (view) {
+            navigateToView(view as AppView);
+        } else if (action === 'fund-wallet') {
+            openFundWalletModal();
+        }
+    });
+    
+    // Landing Page
+    demoForm.addEventListener('submit', handleGenerateDemoPlan);
+    contactForm.addEventListener('submit', handleContactFormSubmit);
+    
+    // Budget Planner
+    budgetPlannerForm.addEventListener('submit', handleGenerateBudgetPlan);
+    budgetHistoryList.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        const deleteBtn = target.closest('[data-budget-index]');
+        if (deleteBtn && currentUser) {
+            const index = parseInt(deleteBtn.getAttribute('data-budget-index')!, 10);
+            if (confirm("Are you sure you want to delete this budget? Its associated expense report will also be deleted.")) {
+                currentUser.budgets.splice(index, 1);
+                // Also remove the corresponding expense report
+                if (currentUser.expenses.length > index) {
+                    currentUser.expenses.splice(index, 1);
+                }
+                saveUserDatabase();
+                renderBudgetHistory();
+                renderDashboardHomeView();
+            }
         }
     });
 
-    logoutBtn.addEventListener('click', handleLogout);
-    appOverlay.addEventListener('click', handleMobileMenu);
-    budgetPlannerForm.addEventListener('submit', handleGenerateBudgetPlan);
-    budgetStatusArea.addEventListener('click', (e) => {
-        const target = (e.target as HTMLElement).closest('[data-view]');
-        if (target) navigateToView(target.getAttribute('data-view') as AppView);
-    });
-    budgetHistoryList.addEventListener('click', (e) => {
-        const target = (e.target as HTMLElement).closest('[data-budget-index]');
-        if (target) {
-            const index = parseInt(target.getAttribute('data-budget-index')!, 10);
-            handleDeleteBudget(index);
-        }
-    });
+    // Expense Analyzer
     expenseAnalyzerForm.addEventListener('submit', handleAnalyzeExpenses);
-    expenseStatusArea.addEventListener('click', (e) => {
-        const target = (e.target as HTMLElement).closest('[data-view]');
-        if (target) navigateToView(target.getAttribute('data-view') as AppView);
-    });
     expensePeriodSelector.addEventListener('click', (e) => {
-        const target = e.target as HTMLButtonElement;
+        const target = e.target as HTMLElement;
         if (target.matches('.segmented-control-item')) {
-            expensePeriodSelector.querySelectorAll('.active').forEach(el => el.classList.remove('active'));
+            expensePeriodSelector.querySelectorAll('.segmented-control-item').forEach(btn => btn.classList.remove('active'));
             target.classList.add('active');
             customDateRangeContainer.classList.toggle('hidden', target.dataset.period !== 'custom');
         }
     });
     expenseResultsContainer.addEventListener('click', handleExpenseReportActions);
+    
+    // Performance Review
     generateReviewBtn.addEventListener('click', handleGenerateReview);
     shareReportBtn.addEventListener('click', handleShareReport);
-    paymentList.addEventListener('click', handlePaymentListActions);
+    reviewResultsContainer.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        const row = target.closest('.variance-row') as HTMLTableRowElement;
+        if (row && row.dataset.category) {
+            openVarianceDetailsModal(row.dataset.category);
+        }
+    });
+    closeVarianceDetailsBtn.addEventListener('click', () => varianceDetailsModal.classList.add('hidden'));
+
+    // AI Creative Suite
     creativeSuiteContainer.addEventListener('click', handleCreativeSuiteTabs);
     creativeSuiteFormDashboard.addEventListener('submit', handleGenerateCreativeCopyDashboard);
     adCopyResultsContainerDashboard.addEventListener('click', handleCopyActions);
     savedAdCopyLibraryContainer.addEventListener('click', (e) => {
-        handleCopyActions(e);
-        const target = (e.target as HTMLElement).closest('[data-creative-index]');
-        if(target) {
-            const index = parseInt(target.getAttribute('data-creative-index')!, 10);
-            handleDeleteCreativeCopy(index);
+        const target = e.target as HTMLElement;
+        const copyBtn = target.closest('.copy-btn');
+        const deleteBtn = target.closest('.delete-btn');
+        if (copyBtn) {
+            handleCopyActions(e);
+        } else if (deleteBtn && currentUser) {
+            const index = parseInt(deleteBtn.getAttribute('data-creative-index')!, 10);
+            currentUser.creativeCopies.splice(index, 1);
+            saveUserDatabase();
+            renderSavedAdCopyLibrary();
         }
     });
+
+    // Opportunities
     generateOpportunitiesBtn.addEventListener('click', handleGenerateOpportunities);
-    deleteOpportunitiesBtn.addEventListener('click', handleDeleteOpportunities);
+    deleteOpportunitiesBtn.addEventListener('click', () => {
+        if (currentUser && confirm("Are you sure you want to delete the current set of opportunities?")) {
+            currentUser.opportunities = [];
+            saveUserDatabase();
+            renderSavedOpportunities();
+        }
+    });
     opportunitiesResultsContainer.addEventListener('click', handleOpportunityActions);
 
-    // Onboarding checklist actions
-    gettingStartedChecklist.addEventListener('click', (e) => {
-        const target = e.target as HTMLElement;
-        const item = target.closest('.getting-started-item') as HTMLDivElement;
-        if(item) {
-            if(item.dataset.view) {
-                navigateToView(item.dataset.view as AppView);
-            } else if (item.dataset.action === 'fund-wallet') {
-                openFundWalletModal();
-            }
-        }
-    });
+    // AI Daily Briefing
+    generateBriefingBtn.addEventListener('click', handleGenerateBriefing);
 
-    // Wallet & Pay Listeners
-    walletTabsContainer?.addEventListener('click', handleWalletTabs);
-    fundWalletBtn?.addEventListener('click', openFundWalletModal);
-    transferMoneyBtn?.addEventListener('click', openTransferModal);
-    
-    fundWalletForm.addEventListener('submit', handleFundWallet);
+    // Cravour Wallet
+    walletTabsContainer.addEventListener('click', handleWalletTabs);
+    fundWalletBtn.addEventListener('click', openFundWalletModal);
     closeFundWalletBtn.addEventListener('click', () => fundWalletModal.classList.add('hidden'));
-    
-    transferForm.addEventListener('submit', handleDirectTransfer);
-    closeTransferModalBtn.addEventListener('click', () => transferModal.classList.add('hidden'));
+    fundWalletForm.addEventListener('submit', handleFundWallet);
 
+    transferMoneyBtn.addEventListener('click', openTransferModal);
+    closeTransferModalBtn.addEventListener('click', () => transferModal.classList.add('hidden'));
+    transferForm.addEventListener('submit', handleDirectTransfer);
+    
+    addMerchantForm.addEventListener('submit', handleAddMerchant);
+    allMerchantsListWallet.addEventListener('click', handleWalletClick);
+
+    // Payments
     closePaymentGatewayBtn.addEventListener('click', () => paymentGatewayModal.classList.add('hidden'));
     payWithPaystackBtn.addEventListener('click', handlePayWithPaystack);
     payWithWalletBtn.addEventListener('click', handlePayWithWallet);
-    addMerchantForm.addEventListener('submit', handleAddMerchant);
-    allMerchantsListWallet.addEventListener('click', handleWalletClick);
+    paymentList.addEventListener('click', handlePaymentListActions);
+
+    // Merchants
     closeMerchantHistoryBtn.addEventListener('click', () => merchantHistoryModal.classList.add('hidden'));
     
-    investmentList.addEventListener('click', (e) => {
-        const target = (e.target as HTMLElement).closest('[data-investment-id]');
-        if (target) {
-            const id = target.getAttribute('data-investment-id')!;
-            handleLiquidateInvestment(id);
-        }
-    });
-    
-    // Investment Simulator listeners
+    // Investments
     closeInvestmentSimulatorBtn.addEventListener('click', () => investmentSimulatorModal.classList.add('hidden'));
-    investmentSimulatorForm.addEventListener('submit', handleSimulateInvestment);
-
+    investmentSimulatorForm.addEventListener('submit', handleInvestment);
+    investmentList.addEventListener('click', handleInvestmentListActions);
 }
 
-// --- Main App Start ---
-document.addEventListener('DOMContentLoaded', () => {
-    if (API_KEY) {
-        try {
-            ai = new GoogleGenAI({ apiKey: API_KEY });
-            isAiConfigured = true;
-        } catch (e) {
-            console.error("AI SDK Initialization Error:", e);
-            isAiConfigured = false;
-        }
-    } else {
-        console.warn("AI API Key is missing.");
-    }
 
-    if (PAYSTACK_PUBLIC_KEY) {
-        isPaystackConfigured = true;
-    } else {
-        console.warn("Paystack Public Key is missing.");
-    }
-    
-    const configErrorBanner = document.getElementById('config-error-banner');
-    if (configErrorBanner && (!isAiConfigured || !isPaystackConfigured)) {
-        configErrorBanner.classList.remove('hidden');
-    }
-    
-    userDatabase = loadUserDatabase();
-    
-    initializeLandingPage();
-
-    const loggedInUserEmail = loadCurrentLoggedInUser();
-    if (loggedInUserEmail && userDatabase.has(loggedInUserEmail)) {
-        currentUser = userDatabase.get(loggedInUserEmail)!;
-        if (currentUser.verified) {
-            renderAppView();
-            initializeDashboard();
-        } else {
-            openAuthModal(false);
-            loginView.classList.add('hidden');
-            verificationView.classList.remove('hidden');
-            pendingVerificationEmail = loggedInUserEmail;
-        }
-    } else {
-        renderAppView();
-    }
-});
+// --- Kick things off ---
+initializeApp();
