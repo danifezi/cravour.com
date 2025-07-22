@@ -1152,3 +1152,279 @@ body[data-theme="light"] .theme-btn.active { background-color: var(--color-white
         display: none;
     }
 }
+
+
+/* --- SNAPSHOT VIEW WIDGETS --- */
+
+/* Key Metrics Widget */
+.key-metrics-widget {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    align-items: center;
+}
+.metric-item {
+    text-align: center;
+    padding: 10px;
+    position: relative;
+}
+.metric-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 50px;
+    background-color: var(--color-border);
+}
+@media (max-width: 500px) {
+    .metric-item:not(:last-child)::after { display: none; }
+     .metric-item { border-bottom: 1px solid var(--color-border); padding-bottom: 20px; }
+     .metric-item:last-child { border-bottom: none; }
+}
+
+.metric-title {
+    font-size: 0.9em;
+    color: var(--color-text-secondary);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.metric-value {
+    font-size: 1.8em;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    color: var(--color-text-primary);
+}
+.metric-value.spent {
+    color: var(--color-warning);
+}
+.metric-value.ok {
+    color: var(--color-success);
+}
+.metric-value.danger {
+    color: var(--color-error);
+}
+
+/* Financial Health Widget */
+.financial-health-widget {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 15px;
+    padding: 20px;
+}
+
+@media (min-width: 768px) {
+    .financial-health-widget {
+        flex-direction: row;
+        text-align: left;
+        justify-content: flex-start;
+        gap: 25px;
+    }
+}
+
+.financial-health-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    min-height: 150px;
+    width: 100%;
+}
+
+.budget-hero-mascot {
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+}
+.budget-hero-mascot svg {
+    width: 100%;
+    height: 100%;
+}
+
+.financial-health-score-display {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.score-progress-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotate(-90deg);
+}
+
+.score-progress-ring__circle_bg {
+    stroke: var(--color-border);
+}
+.score-progress-ring__circle {
+    transition: stroke-dashoffset 0.8s ease-out;
+}
+.score-progress-ring__circle.low { stroke: var(--color-error); }
+.score-progress-ring__circle.mid { stroke: var(--color-warning); }
+.score-progress-ring__circle.high { stroke: var(--color-success); }
+
+
+.score-text {
+    font-size: 2.2em;
+    font-weight: 700;
+    font-family: var(--font-heading);
+}
+
+.score-text.low { color: var(--color-error); }
+.score-text.mid { color: var(--color-warning); }
+.score-text.high { color: var(--color-success); }
+
+.financial-health-summary {
+    flex-grow: 1;
+}
+
+.financial-health-summary h3 {
+    font-size: 1.2em;
+    margin-bottom: 8px;
+}
+
+.financial-health-tip {
+    font-size: 1em;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+}
+
+/* Spending Breakdown Widget */
+.spending-breakdown-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.category-spending-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.category-spending-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95em;
+}
+.category-name {
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+.category-amount {
+    font-weight: 600;
+}
+.category-progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: var(--color-dark-grey);
+    border-radius: 4px;
+    overflow: hidden;
+}
+body[data-theme="light"] .category-progress-bar {
+    background-color: #e9ecef;
+}
+.category-progress-bar-inner {
+    height: 100%;
+    background-color: var(--color-gold-accent);
+    border-radius: 4px;
+    transition: width 0.5s ease-out;
+}
+
+/* Goals Progress Widget */
+.goals-progress-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.goal-progress-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+}
+.goal-progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95em;
+}
+.goal-name {
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+.goal-percentage {
+    font-weight: 600;
+}
+.goal-progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: var(--color-dark-grey);
+    border-radius: 4px;
+    overflow: hidden;
+}
+body[data-theme="light"] .goal-progress-bar {
+    background-color: #e9ecef;
+}
+.goal-progress-bar-inner {
+    height: 100%;
+    background-color: var(--color-success);
+    border-radius: 4px;
+    transition: width 0.5s ease-out;
+}
+.goal-progress-item.completed {
+    opacity: 0.7;
+}
+.goal-progress-item.completed .goal-progress-bar-inner {
+    background-color: var(--color-success);
+}
+.completed-badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: var(--color-success);
+    color: var(--color-white);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.completed-badge .btn-icon {
+    font-size: 1.1em;
+}
+
+/* Notification Bar */
+.notification-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    animation: fadeInModal 0.4s ease;
+}
+.notification-bar.type-success { background-color: rgba(46, 204, 113, 0.2); border-left: 4px solid var(--color-success); color: #adebad; }
+.notification-bar.type-warning { background-color: rgba(243, 156, 18, 0.2); border-left: 4px solid var(--color-warning); color: #f7d37e; }
+.notification-bar.type-info { background-color: rgba(52, 152, 219, 0.2); border-left: 4px solid var(--color-info); color: #a4d2f1; }
+.notification-content { display: flex; align-items: center; gap: 10px; font-weight: 500; }
+.notification-content .btn-icon { font-size: 1.3em; }
+.notification-dismiss { background: none; border: none; cursor: pointer; color: inherit; opacity: 0.7; }
+.notification-dismiss:hover { opacity: 1; }
+
+body[data-theme="light"] .notification-bar.type-success { color: #1e8449; }
+body[data-theme="light"] .notification-bar.type-warning { color: #b97400; }
+body[data-theme="light"] .notification-bar.type-info { color: #206d9e; }

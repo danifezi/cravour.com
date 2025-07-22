@@ -466,12 +466,10 @@ class CravourApp {
         });
 
         if (this.state.userTypeSelection === 'personal') {
-            if (this.state.authView === 'signup') {
-                this.setupNewPersonalAccount();
-            } else {
-                // For login, we reset to sample data as per current app behavior
-                this.setupPersonalAccount();
-            }
+            // For both login and signup of a personal account, we start fresh.
+            // This ensures the wallet is 0 until the user creates their first budget,
+            // which is more realistic for a returning user than loading sample data.
+            this.setupNewPersonalAccount();
         } else {
             this.setupBusinessAccount();
         }
@@ -493,37 +491,6 @@ class CravourApp {
         
         // This silently updates the chat history for the model's context
         await this.state.coPilotChat.sendMessage({ message: contextMessage });
-    }
-
-    private setupPersonalAccount() {
-        const startingWallet = 425000;
-        
-        this.setState({ 
-            currentView: 'insights',
-            expenses: [...sampleExpenses],
-            walletBalance: startingWallet,
-            initialWalletBalance: startingWallet,
-            periodStartDate: new Date().toISOString(),
-            nextExpenseId: sampleExpenses.length + 1,
-            budgets: [...sampleBudgets],
-            deals: [...sampleDeals],
-            financialGoals: sampleGoals.map(g => ({...g})),
-            nextGoalId: sampleGoals.length + 1,
-            pastPeriods: [],
-            selectedReportIndex: null,
-            financialHealthScore: null,
-            financialHealthTip: null,
-            financialSummary: null,
-            chatSessions: [],
-            nextSessionId: 1,
-            selectedChatSessionId: null,
-        });
-        
-        this.startNewChat(false);
-        setTimeout(() => {
-            this.generateFinancialHealthScore();
-            this.generateFinancialSummary();
-        }, 0);
     }
 
     private setupNewPersonalAccount() {
