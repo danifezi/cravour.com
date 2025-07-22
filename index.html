@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script type="importmap">
+    {
+      "imports": {
+        "@google/genai": "https://esm.sh/@google/genai@^1.10.0"
+      }
+    }
+    </script>
+
+    <title>Cravour: AI Budget Assistant for Nigeria</title>
+    <meta name="description" content="Cravour is your AI-powered Budget Assistant for Nigeria. Get smart spending advice, stick to your budget, and make every Naira count.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet"></noscript>
+
+    <link rel="stylesheet" href="index.css">
+    <script type="module" src="index.tsx" defer></script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body data-theme="dark" data-auth-state="logged-out">
+
+    <div id="config-banner" class="config-banner hidden">
+        <p><strong>Configuration Error:</strong> API_KEY is not set. Please follow the setup instructions.</p>
+    </div>
+
+    <header class="header">
+        <div class="container header-container">
+            <a href="#" class="header-logo" data-action="navigate" data-view="co-pilot">
+                <span class="logo-svg"></span>
+                Cravour
+            </a>
+            <nav class="header-nav">
+                <ul class="nav-list">
+                    <li><button class="nav-button" data-action="navigate" data-view="#features">Features</button></li>
+                    <li><button class="nav-button" data-action="navigate" data-view="#for-merchants">For Merchants</button></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="btn btn-secondary-outline" data-action="show-login">Log In</button>
+                <button class="btn btn-primary" data-action="show-signup">Get Budget Assistant</button>
+            </div>
+            <button class="mobile-menu-toggle" data-action="toggle-mobile-menu" aria-label="Toggle menu"></button>
+        </div>
+    </header>
+    <div class="mobile-nav-container"></div>
+    
+
+    <main id="landing-page">
+        <section id="hero-section" class="hero-section">
+            <div class="container interactive-hero-grid">
+                <div class="hero-content">
+                    <h1 class="fade-in">Your AI guide to the best prices in Nigeria.</h1>
+                    <p class="lead fade-in-delay1">Connecting merchants and customers.</p>
+                    <div class="hero-actions fade-in-delay2">
+                        <button class="btn btn-primary btn-lg" data-action="show-signup">Get Your Budget Assistant</button>
+                    </div>
+                </div>
+                <div class="skeleton-chat"></div>
+            </div>
+        </section>
+
+        <section id="features" class="features-section">
+            <div class="container">
+                <h2 class="section-title">Features That Empower Your Spending</h2>
+                <p class="section-subtitle">Go beyond simple tracking. Cravour gives you the tools and insights to make smarter financial decisions every day in Nigeria.</p>
+                <div class="features-grid">
+                    <div class="feature-card"><div class="feature-icon"></div><h3>Smart Budgeting</h3><p>Create budgets that work for you. Track your spending in Naira and always know where your money is going.</p></div>
+                    <div class="feature-card"><div class="feature-icon"></div><h3>AI Marketplace</h3><p>Discover exclusive offers from Nigerian shops, with personalized recommendations from your AI assistant.</p></div>
+                    <div class="feature-card"><div class="feature-icon"></div><h3>Proactive AI Insights</h3><p>Get automatic, personalized advice to help you stick to your budget and make smarter spending decisions.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="for-merchants" class="for-merchants-section">
+             <div class="container">
+                <div class="for-merchants-content">
+                    <h2 class="section-title">Partner with Cravour</h2>
+                    <p class="section-subtitle">Reach motivated Nigerian customers who are actively managing their budgets. Join our network of trusted merchants and grow your business.</p>
+                    <ul class="merchant-benefits"><li>Attract new, high-intent customers.</li><li>Showcase your products and deals directly to shoppers.</li><li>Receive payments instantly and track your sales.</li></ul>
+                    <button class="btn btn-primary btn-lg" data-action="show-signup">Partner With Us</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Cravour Nigeria. All rights reserved.</p>
+        </div>
+    </footer>
+
+     <div id="auth-modal" class="modal-overlay hidden">
+        <div class="modal-content glass-effect" id="auth-form-container">
+            <!-- Auth Form will be rendered here -->
+        </div>
+    </div>
+    
+    <div id="app-dashboard">
+        <!-- Main application dashboard will be rendered here -->
+    </div>
+
+    <div id="payment-modal">
+        <!-- Payment modal will be rendered here -->
+    </div>
+
+    <div id="action-modal">
+        <!-- General action modal will be rendered here -->
+    </div>
+
+    <div id="budget-modal">
+        <!-- Budget modal will be rendered here -->
+    </div>
+
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
