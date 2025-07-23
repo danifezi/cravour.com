@@ -31,6 +31,10 @@ const icons = {
     budgetHeroNeutral: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g transform="translate(50 50)"><circle r="45" fill="var(--color-gold-accent)"/><circle cx="-15" cy="-10" r="5" fill="#0D0D0D"/><circle cx="15" cy="-10" r="5" fill="#0D0D0D"/><line x1="-20" y1="20" x2="20" y2="20" stroke="#0D0D0D" stroke-width="4" stroke-linecap="round"/></g></svg>`,
     budgetHeroHappy: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g transform="translate(50 50)"><circle r="45" fill="var(--color-gold-accent)"/><circle cx="-15" cy="-10" r="5" fill="#0D0D0D"/><circle cx="15" cy="-10" r="5" fill="#0D0D0D"/><path d="M -20 15 Q 0 30 20 15" stroke="#0D0D0D" stroke-width="4" fill="none" stroke-linecap="round"/></g></svg>`,
     budgetHeroTriumphant: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g transform="translate(50 50)"><circle r="45" fill="var(--color-gold-accent)"/><path d="M -25 -15 L -10 -5 L -25 5 Z" fill="#0D0D0D"/><path d="M 25 -15 L 10 -5 L 25 5 Z" fill="#0D0D0D"/><path d="M -25 15 C -10 35, 10 35, 25 15" stroke="#0D0D0D" stroke-width="4" fill="none" stroke-linecap="round"/></g></svg>`,
+    bus: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3.75A1.5 1.5 0 0 1 4.5 2.25h15A1.5 1.5 0 0 1 21 3.75V15.75a1.5 1.5 0 0 1-1.5 1.5H15v1.5a.75.75 0 0 1-1.5 0v-1.5H9v1.5a.75.75 0 0 1-1.5 0v-1.5H4.5A1.5 1.5 0 0 1 3 15.75V3.75ZM6 8.25a.75.75 0 0 0 0 1.5h12a.75.75 0 0 0 0-1.5H6Z" /><path d="M4.5 19.5a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0ZM16.5 19.5a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0Z" /></svg>`,
+    car: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 5.25a.75.75 0 0 0 0 1.5h15a.75.75 0 0 0 0-1.5h-15Z" /><path fill-rule="evenodd" d="M3.75 9a.75.75 0 0 0-.75.75v6a.75.75 0 0 0 .75.75h16.5a.75.75 0 0 0 .75-.75v-6a.75.75 0 0 0-.75-.75H3.75Zm.75 1.5a.75.75 0 0 1 .75-.75h2.25a.75.75 0 0 1 0 1.5H5.25a.75.75 0 0 1-.75-.75Zm5.25-.75a.75.75 0 0 0 0 1.5h4.5a.75.75 0 0 0 0-1.5h-4.5Z" clip-rule="evenodd" /><path d="M5.25 19.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm13.5 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" /></svg>`,
+    food: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.25 4.507a2.625 2.625 0 0 0-5.25 0C6 5.877 7.123 7 8.625 7H10.5V5.25c0-.414.336-.75.75-.75h.001c.414 0 .749.335.749.749L12 5.25v1.5H8.625c1.458 0 2.56 1.05 2.623 2.343.052 1.072-.736 2.003-1.808 2.124L9.31 11.25H9.75v3.311c1.373.11 2.457.772 2.91 1.708a.75.75 0 0 1-1.32.761c-.24-.49-.899-.88-1.59-1.03V11.25H9.31l-.128.016a2.623 2.623 0 0 1-2.433-2.506c0-1.45 1.176-2.625 2.625-2.625h2.872V4.507Z" /><path d="M15.75 4.507a2.625 2.625 0 0 0-5.25 0C10.5 5.877 11.623 7 13.125 7H15V5.25c0-.414.336-.75.75-.75h.001c.414 0 .749.335.749.749L16.5 5.25v1.5h-1.875c1.458 0 2.56 1.05 2.623 2.343.052 1.072-.736 2.003-1.808 2.124l-.128.016h.439v3.311c1.373.11 2.457.772 2.91 1.708a.75.75 0 0 1-1.32.761c-.24-.49-.899-.88-1.59-1.03V11.25h-.378l-.128.016a2.623 2.623 0 0 1-2.433-2.506c0-1.45 1.176-2.625 2.625-2.625h2.872V4.507Z" /></svg>`,
+    walk: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M10.5 4.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM6 7.5a.75.75 0 0 1 .75.75v5.5a3.25 3.25 0 0 0 3.25 3.25h.5a.75.75 0 0 1 0 1.5h-.5a4.75 4.75 0 0 1-4.75-4.75V8.25A.75.75 0 0 1 6 7.5Zm6.75-.75a.75.75 0 0 0-.75.75v10.5a.75.75 0 0 0 1.5 0v-5.54l1.628 2.443a.75.75 0 0 0 1.244-.828L15.42 12l1.952-3.805a.75.75 0 0 0-1.244-.828L14.25 9.81V7.5a.75.75 0 0 0-.75-.75Z" clip-rule="evenodd" /></svg>`,
 };
 
 // --- Nigerian Market Data ---
@@ -54,30 +58,6 @@ const CATEGORIES = Object.keys(CATEGORY_MAP);
 const formatNaira = (amount: number): string => {
     return new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0 }).format(amount);
 };
-
-const sampleExpenses = [
-    { id: 1, name: "Bolt ride to VI", category: "Transportation", amount: 4500, date: "2024-07-15" },
-    { id: 2, name: "DSTV Subscription", category: "Bills & Utilities", amount: 18500, date: "2024-07-14" },
-    { id: 3, name: "Jumia food order", category: "Groceries", amount: 8200, date: "2024-07-12" },
-    { id: 4, name: "Airtel Data", category: "Data & Airtime", amount: 5000, date: "2024-07-10" },
-    { id: 5, name: "Market run at Balogun", category: "Shopping", amount: 25000, date: "2024-07-08" },
-    { id: 6, name: "PiggyVest Savings", category: "Savings & Investments", amount: 35000, date: "2024-07-05" },
-    { id: 7, name: "Monthly Rent", category: "Rent/Housing", amount: 150000, date: "2024-07-01" },
-];
-
-const sampleBudgets = [
-    { category: "Groceries", amount: 75000 },
-    { category: "Transportation", amount: 50000 },
-    { category: "Entertainment", amount: 40000 },
-    { category: "Shopping", amount: 60000 },
-    { category: "Rent/Housing", amount: 150000 },
-    { category: "Savings & Investments", amount: 50000 },
-];
-
-const sampleGoals = [
-    { id: 1, name: "Vacation to Ghana", target: 500000, completed: false },
-    { id: 2, name: "New MacBook", target: 1200000, completed: false },
-];
 
 const sampleDeals = [
     { id: 1, merchantId: 1, merchantName: "Shoprite", productName: "5kg Bag of Rice", price: 8900, category: "Groceries", imageUrl: "https://images.unsplash.com/photo-1586201375765-c124a27544e3?q=80&w=400&auto=format&fit=crop", location: "Lagos" },
@@ -177,7 +157,7 @@ class CravourApp {
 
         ai: GoogleGenAI | null;
     } = {
-        theme: 'dark',
+        theme: 'light',
         isLoggedIn: false,
         isMobileMenuOpen: false,
         isAppMenuOpen: false,
@@ -297,7 +277,7 @@ class CravourApp {
             demoChatHistory: [
                 { 
                     role: 'model', 
-                    parts: [{ text: JSON.stringify({type: 'text', payload: { message: "Hello! I'm your AI Budget Assistant. I've analyzed some sample data. Ask me a question, like 'Find a good lunch spot in Lekki for ₦10k?', to see how I can help you spend smarter!" }}) }]
+                    parts: [{ text: JSON.stringify({type: 'text', payload: { message: "Hello! I'm your financial co-pilot. Ask me how to master your money in Nigeria, like 'How can I get from Lekki to Ikota with ₦10,000?'" }}) }]
                 },
             ]
         });
@@ -339,7 +319,7 @@ class CravourApp {
             case 'logout': this.logout(); break;
             case 'navigate': this.navigate(view as string); break;
             case 'delete-expense': this.deleteExpense(parseInt((actionTarget as HTMLElement).dataset.id || '0')); break;
-            case 'delete-goal': this.deleteGoal(parseInt((actionTarget as HTMLElement).dataset.id || '0')); break;
+            case 'show-delete-goal-modal': this.showDeleteGoalModal(parseInt((actionTarget as HTMLElement).dataset.id || '0')); break;
             case 'demo-smart-query': this.handleDemoQuery(null, actionTarget.getAttribute('data-query') || ''); break;
             case 'buy-now': this.handleBuyNow(parseInt((actionTarget as HTMLElement).dataset.id || '0')); break;
             case 'confirm-payment': this.handleConfirmPayment(); break;
@@ -347,6 +327,7 @@ class CravourApp {
             case 'cravour-pay-reset': this.resetCravourPay(); break;
             case 'focus-add-form': this.focusAddForm((actionTarget as HTMLElement).dataset.formId || '', (actionTarget as HTMLElement).dataset.inputId || ''); break;
             case 'show-new-budget-modal': this.showNewBudgetModal(); break;
+            case 'show-add-funds-modal': this.showAddFundsModal(); break;
             case 'show-start-fresh-modal': this.showStartFreshModal(); break;
             case 'ai-suggest-budget-plan': this.generateAIBudgetPlan(); break;
             case 'show-add-budget-modal': this.showAddBudgetModal(); break;
@@ -355,7 +336,6 @@ class CravourApp {
             case 'start-new-chat': this.startNewChat(); break;
             case 'show-delete-chat-modal': this.showDeleteChatModal(parseInt((actionTarget as HTMLElement).dataset.id || '0')); break;
             case 'set-theme': this.setTheme((actionTarget as HTMLElement).dataset.theme as 'light' | 'dark'); break;
-
         }
     }
 
@@ -393,16 +373,20 @@ class CravourApp {
             case 'confirm-new-budget':
                 this.confirmNewBudget(form);
                 break;
+            case 'confirm-add-funds':
+                this.confirmAddFunds(form);
+                break;
             case 'confirm-start-fresh':
                 this.confirmStartFresh();
                 break;
             case 'confirm-delete-chat':
-                const sessionId = parseInt(actionParts[1], 10);
-                this.deleteChatSession(sessionId);
+                this.deleteChatSession(parseInt(actionParts[1], 10));
                 break;
             case 'confirm-delete-budget':
-                const category = actionParts[1];
-                this.deleteBudget(category);
+                this.deleteBudget(actionParts[1]);
+                break;
+            case 'confirm-delete-goal':
+                this.deleteGoal(parseInt(actionParts[1], 10));
                 break;
         }
     }
@@ -466,10 +450,30 @@ class CravourApp {
         });
 
         if (this.state.userTypeSelection === 'personal') {
-            // For both login and signup of a personal account, we start fresh.
-            // This ensures the wallet is 0 until the user creates their first budget,
-            // which is more realistic for a returning user than loading sample data.
-            this.setupNewPersonalAccount();
+            // Setup a clean slate for a personal account
+            this.setState({ 
+                currentView: 'insights',
+                expenses: [],
+                walletBalance: 0,
+                initialWalletBalance: 0,
+                periodStartDate: '',
+                nextExpenseId: 1,
+                budgets: [],
+                deals: [...sampleDeals],
+                financialGoals: [],
+                nextGoalId: 1,
+                pastPeriods: [],
+                selectedReportIndex: null,
+                financialHealthScore: null,
+                financialHealthTip: null,
+                financialSummary: null,
+                notification: null,
+                marketplaceRecommendations: [],
+                chatSessions: [],
+                nextSessionId: 1,
+                selectedChatSessionId: null,
+            });
+            this.startNewChat(false);
         } else {
             this.setupBusinessAccount();
         }
@@ -492,34 +496,6 @@ class CravourApp {
         // This silently updates the chat history for the model's context
         await this.state.coPilotChat.sendMessage({ message: contextMessage });
     }
-
-    private setupNewPersonalAccount() {
-        this.setState({ 
-            currentView: 'insights',
-            expenses: [],
-            walletBalance: 0,
-            initialWalletBalance: 0,
-            periodStartDate: '', // Will be set on first budget creation
-            nextExpenseId: 1,
-            budgets: [],
-            deals: [...sampleDeals], // Keep deals for the marketplace
-            financialGoals: [],
-            nextGoalId: 1,
-            pastPeriods: [],
-            selectedReportIndex: null,
-            financialHealthScore: null,
-            financialHealthTip: null,
-            financialSummary: null,
-            notification: null,
-            marketplaceRecommendations: [],
-            chatSessions: [],
-            nextSessionId: 1,
-            selectedChatSessionId: null,
-        });
-        
-        this.startNewChat(false);
-    }
-
 
     private setupBusinessAccount() {
         // For demo, we'll assign the business user to "Konga" (merchantId: 2)
@@ -722,11 +698,26 @@ class CravourApp {
         this.generateFinancialHealthScore();
         this.updateCoPilotContext();
     }
+    
+    private showDeleteGoalModal(id: number) {
+        if (!id) return;
+        const goal = this.state.financialGoals.find(g => g.id === id);
+        if (!goal) return;
+
+        const modalContent: ActionModalContent = {
+            type: 'confirm',
+            title: 'Delete Financial Goal?',
+            content: `<p>Are you sure you want to delete the goal "<strong>${goal.name}</strong>"? This action cannot be undone.</p>`,
+            action: `confirm-delete-goal/${id}`
+        };
+        this.setState({ showActionModal: modalContent });
+    }
 
     private deleteGoal(id: number) {
         this.setState({ financialGoals: this.state.financialGoals.filter(g => g.id !== id) });
         this.generateFinancialHealthScore();
         this.updateCoPilotContext();
+        this.hideActionModal();
     }
 
     private handleBuyNow(dealId: number) {
@@ -1029,6 +1020,41 @@ class CravourApp {
             this.generateFinancialSummary();
         }, 0);
     }
+    
+    private showAddFundsModal() {
+        const modalContent: ActionModalContent = {
+            type: 'prompt',
+            title: 'Add Funds to Wallet',
+            content: `
+                <p>Enter the amount you'd like to add to your current budget period. This will increase your total available funds.</p>
+                <div class="form-group">
+                    <label for="add-funds-amount">Amount to Add (NGN)</label>
+                    <input type="number" id="add-funds-amount" name="amount" class="input-field" required placeholder="e.g., 50000">
+                </div>
+            `,
+            action: 'confirm-add-funds'
+        };
+        this.setState({ showActionModal: modalContent });
+    }
+    
+    private confirmAddFunds(form: HTMLFormElement) {
+        const formData = new FormData(form);
+        const amountToAdd = parseFloat(formData.get('amount') as string);
+    
+        if (isNaN(amountToAdd) || amountToAdd <= 0) {
+            this.hideActionModal();
+            return;
+        }
+    
+        this.setState({
+            walletBalance: this.state.walletBalance + amountToAdd,
+            initialWalletBalance: this.state.initialWalletBalance + amountToAdd,
+            notification: { type: 'success', message: `${formatNaira(amountToAdd)} added to your wallet successfully!` }
+        });
+    
+        this.hideActionModal();
+        this.updateCoPilotContext();
+    }
 
     private showStartFreshModal() {
         const modalContent: ActionModalContent = {
@@ -1042,11 +1068,29 @@ class CravourApp {
     
     private confirmStartFresh() {
         // Reset to initial demo state
-        this.setupNewPersonalAccount();
         this.setState({
+            currentView: 'insights',
+            expenses: [],
+            walletBalance: 0,
+            initialWalletBalance: 0,
+            periodStartDate: '',
+            nextExpenseId: 1,
+            budgets: [],
+            deals: [...sampleDeals],
+            financialGoals: [],
+            nextGoalId: 1,
             pastPeriods: [],
             selectedReportIndex: null,
+            financialHealthScore: null,
+            financialHealthTip: null,
+            financialSummary: null,
+            notification: null,
+            marketplaceRecommendations: [],
+            chatSessions: [],
+            nextSessionId: 1,
+            selectedChatSessionId: null,
         });
+        this.startNewChat(false);
         this.hideActionModal();
     }
     
@@ -1098,32 +1142,37 @@ class CravourApp {
         const newChat = this.state.ai.chats.create({
             model: 'gemini-2.5-flash',
             config: {
-                 systemInstruction: `You are Cravour, an expert Nigerian Budget Assistant. Your personality is friendly, savvy, and encouraging.
-- ALWAYS respond in a valid JSON format.
-- If the user asks for purchasing advice, a deal, or product information, use the 'recommendation' type.
-- For all other conversational questions, use the 'text' type.
-- Your response MUST follow this schema: { "type": "text" | "recommendation", "payload": object }
+                 systemInstruction: `You are Cravour, an empowering and savvy financial co-pilot for users in Nigeria. Your personality is encouraging, insightful, and always focused on helping the user achieve their financial goals.
+- ALWAYS respond in a valid JSON format. Your response MUST follow this schema: { "type": "text" | "recommendation" | "trip_plan", "payload": object }
+- Use positive framing and forward-looking language. Instead of "You overspent," say "Let's see how we can align your spending with your goals next time."
+- Frame suggestions as opportunities, e.g., "Here's a smart move to boost your savings..."
 
 - For type="recommendation", the payload schema is:
 {
-  "summary": "A short, encouraging sentence about the recommendation. Example: 'Yes, you can afford this! Here's a great deal.'",
+  "summary": "An encouraging sentence about the recommendation. Example: 'You've got this! Here's a great deal that fits your goals.'",
   "isAffordable": boolean,
-  "deal": {
-    "productName": "string",
-    "merchantName": "string",
-    "price": "number",
-    "imageUrl": "string"
-  }
+  "deal": { "productName": "string", "merchantName": "string", "price": number, "imageUrl": "string" }
 }
-When creating a recommendation, find the best deal from the provided data based on the user's location and query. Check affordability against the user's wallet balance first.
+When creating a recommendation, find the best deal from the provided data. Check affordability against the user's wallet balance.
 
 - For type="text", the payload schema is:
 {
-  "message": "Your conversational answer as a string."
+  "message": "Your conversational, empowering answer as a string."
 }
 
-- All monetary values are in Nigerian Naira (NGN), use the symbol ₦.
-- IMPORTANT: Never mention "SILENT_CONTEXT_UPDATE" or acknowledge receiving data. Just use the data to answer questions.`
+- For type="trip_plan", the payload schema is:
+{
+  "summary": "An encouraging summary. e.g., 'Absolutely! Let's map out your journey to Ikota. It's well within your budget.'",
+  "isFeasible": boolean,
+  "totalCost": number,
+  "steps": [
+    { "mode": "Bus" | "Car" | "Ferry" | "Keke" | "Okada" | "Walk" | "Food" | "Misc", "description": "e.g., 'Lekki Phase 1 to CMS'", "cost": number }
+  ]
+}
+Use 'trip_plan' when a user asks about travel with a budget. Be resourceful and optimistic.
+
+- All monetary values are in Nigerian Naira (NGN).
+- IMPORTANT: Never mention "SILENT_CONTEXT_UPDATE". Just use the data to answer questions seamlessly.`
             },
         });
 
@@ -1132,7 +1181,7 @@ When creating a recommendation, find the best deal from the provided data based 
             activeChatMessages: [
                 {
                     role: 'model',
-                    parts: [{ text: JSON.stringify({ type: 'text', payload: { message: "Hello! I'm your Cravour AI Co-pilot. How can I help you manage your finances today?" }})}]
+                    parts: [{ text: JSON.stringify({ type: 'text', payload: { message: "Hello! I'm your Cravour co-pilot. I'm here to help you unlock your financial goals. What can we achieve today?" }})}]
                 }
             ]
         });
@@ -1191,26 +1240,23 @@ When creating a recommendation, find the best deal from the provided data based 
         if (isNewPeriod) {
             prompt = `
                 The user has just started a new budget period in Nigeria with a fresh wallet of ${formatNaira(this.state.walletBalance)}.
-                To welcome them, provide a Financial Health Score of 75 (a positive starting point) and a single, encouraging tip about starting a new budget.
+                To welcome them, provide a Financial Health Score of 75 (a positive starting point) and a single, empowering tip about seizing this fresh start.
             `;
         } else {
             prompt = `
-                You are a Financial Health Analyst for a Nigerian user. Your task is to analyze the user's financial data and provide a 'Financial Health Score', a single actionable tip, and an optional notification.
+                You are a Financial Health Analyst for a Nigerian user. Your tone is empowering and forward-looking.
                 
                 1.  **Calculate Financial Health Score (0-100):**
-                    -   Consider spending velocity (how fast the wallet is depleting).
-                    -   Analyze spending on 'needs' vs. 'wants'. A healthy ratio is key.
-                    -   Check spending against budget guidelines. Staying within budget is good.
-                    -   Evaluate progress towards 'Savings & Investments' goals. Consistent saving is very important.
-                    -   A score < 40 is poor. A score from 40-70 is average. A score > 70 is good.
+                    -   Analyze spending velocity, needs vs. wants ratio, budget adherence, and savings goal progress.
+                    -   Score < 40 is an opportunity area. 40-70 is solid progress. > 70 is excellent momentum.
     
                 2.  **Provide ONE Actionable Tip:**
-                    -   Based on the score, give the single most impactful piece of advice to improve it. Be specific and encouraging.
+                    -   Based on the score, give the single most impactful piece of advice. Frame it as a positive next step. E.g., Instead of "Stop spending," say "Imagine redirecting some of your 'Shopping' funds towards your 'New Laptop' goal to get it faster!"
     
                 3.  **Check for a Notification Event (OPTIONAL):**
-                    -   **Budget Warning:** If spending in any category exceeds 80% of its budget, create a 'warning' notification: "Heads up! You've used over 80% of your [Category Name] budget."
-                    -   **Goal Achieved:** If total savings contributions meet or exceed an uncompleted goal's target, create a 'success' notification: "Congratulations! You've reached your savings goal for '[Goal Name]'!"
-                    -   Only generate ONE notification, even if multiple events occur. Prioritize the goal achievement.
+                    -   **Budget Warning:** If spending in any category exceeds 80% of its budget, create a 'warning' notification: "Heads up! You're nearing your [Category Name] guideline. Let's stay on track!"
+                    -   **Goal Achieved:** If total savings contributions meet or exceed an uncompleted goal's target, create a 'success' notification: "Amazing work! You've successfully funded your '[Goal Name]' goal!"
+                    -   Only generate ONE notification. Prioritize the goal achievement.
     
                 **User's Financial Data:**
                 ${financialData}
@@ -1227,10 +1273,10 @@ When creating a recommendation, find the best deal from the provided data based 
                         type: Type.OBJECT,
                         properties: {
                             score: { type: Type.NUMBER, description: "A numerical financial health score from 0 to 100." },
-                            tip: { type: Type.STRING, description: "A single, actionable tip to improve the score." },
+                            tip: { type: Type.STRING, description: "A single, actionable, and empowering tip." },
                             notification: {
                                 type: Type.OBJECT,
-                                description: "An optional notification if a specific event is triggered. Null if no event.",
+                                description: "An optional notification. Null if no event.",
                                 nullable: true,
                                 properties: {
                                     type: { type: Type.STRING, description: "'warning' or 'success'." },
@@ -1284,25 +1330,25 @@ When creating a recommendation, find the best deal from the provided data based 
             this.setState({
                 isGeneratingSummary: false,
                 financialSummary: {
-                    title: "Your Weekly Summary",
+                    title: "Your Weekly Snapshot",
                     period: "Last 7 Days",
-                    keyInsight: "No spending recorded in the last 7 days. A quiet week for your wallet!",
-                    positiveCallout: "This is a great opportunity to plan your budget for the upcoming week.",
-                    suggestion: "Try adding a new savings goal to work towards."
+                    keyInsight: "It's been a quiet week for spending. You're in a great position to plan ahead!",
+                    positiveCallout: "This is a perfect moment of clarity before the next week begins.",
+                    suggestion: "How about setting a new, exciting savings goal to channel this momentum?"
                 }
             });
             return;
         }
     
         const prompt = `
-            You are a friendly and insightful Nigerian financial analyst. Your goal is to provide a user with a concise, encouraging, and actionable summary of their financial activity over the last 7 days.
+            You are a friendly and insightful Nigerian financial analyst. Your goal is to provide a user with a concise, encouraging, and actionable summary of their financial activity over the last 7 days. Your tone is positive and empowering.
     
             User's Financial Context:
             - Wallet Balance: ${formatNaira(this.state.walletBalance)}
             - Recent Expenses (last 7 days): ${JSON.stringify(recentExpenses)}
             - Budgets: ${JSON.stringify(this.state.budgets)}
     
-            Based on this data, generate a summary. Be positive and focus on one key insight and one actionable suggestion.
+            Based on this data, generate a summary. Focus on one key insight and one actionable suggestion, framed positively.
             Return your response ONLY as a valid JSON object adhering to the schema. Do not add any extra text or markdown.
         `;
     
@@ -1317,9 +1363,9 @@ When creating a recommendation, find the best deal from the provided data based 
                         properties: {
                             title: { type: Type.STRING, description: "A catchy title, like 'Your Weekly Snapshot' or 'Last Week's Financial Playback'."},
                             period: { type: Type.STRING, description: "The time period covered, e.g., 'Last 7 Days'." },
-                            keyInsight: { type: Type.STRING, description: "The single most important observation from their spending. e.g., 'Your biggest spending area was Transportation, making up 45% of your expenses.'"},
-                            positiveCallout: { type: Type.STRING, description: "An encouraging comment. e.g., 'You did a great job sticking to your Groceries budget!' or 'It's great that you're tracking your spending.'"},
-                            suggestion: { type: Type.STRING, description: "One clear, actionable piece of advice for the next week. e.g., 'Consider looking for deals on Jumia for your upcoming shopping to save a bit.'"}
+                            keyInsight: { type: Type.STRING, description: "The single most important observation. e.g., 'Transportation was your main focus this week, which shows you were on the move!'"},
+                            positiveCallout: { type: Type.STRING, description: "An encouraging comment. e.g., 'You did an amazing job staying on track with your Groceries guideline!'"},
+                            suggestion: { type: Type.STRING, description: "One clear, actionable piece of advice. e.g., 'For next week, let's see if we can find some transport deals to free up cash for your other goals.'"}
                         },
                         required: ['title', 'period', 'keyInsight', 'positiveCallout', 'suggestion']
                     }
@@ -1424,9 +1470,7 @@ When creating a recommendation, find the best deal from the provided data based 
         
         const systemInstruction = `You are demonstrating Cravour, an expert Nigerian Budget Assistant. Your goal is to provide clear, resourceful, and encouraging advice to help users manage their budget. All monetary values are in Nigerian Naira (NGN).
 - ALWAYS respond in a valid JSON format.
-- If the user asks for purchasing advice, a deal, or product information, use the 'recommendation' type.
-- For all other conversational questions, use the 'text' type.
-- Your response MUST follow this schema: { "type": "text" | "recommendation", "payload": object }
+- Your response MUST follow this schema: { "type": "text" | "recommendation" | "trip_plan", "payload": object }
 
 - For type="recommendation", find the best deal from the provided sample data based on the user's location and query. If no perfect match exists, be creative and create a plausible deal based on the user's request. The payload schema is:
 {
@@ -1437,8 +1481,19 @@ When creating a recommendation, find the best deal from the provided data based 
 
 - For type="text", the payload schema is: { "message": "Your conversational answer as a string." }
 
+- For type="trip_plan", the payload schema is:
+{
+  "summary": "A short, encouraging sentence about the trip plan.",
+  "isFeasible": boolean,
+  "totalCost": number,
+  "steps": [
+    { "mode": "Bus" | "Car" | "Ferry" | "Keke" | "Okada" | "Walk" | "Food" | "Misc", "description": "string", "cost": number }
+  ]
+}
+Use the 'trip_plan' type when the user asks about traveling between locations with a budget. Break down the journey into logical steps and estimate costs.
+
 Sample Data:
-Budgets: ${JSON.stringify(sampleBudgets)}
+Budgets: []
 Local Deals: ${JSON.stringify(sampleDeals)}`;
 
         try {
@@ -1567,7 +1622,7 @@ Local Deals: ${JSON.stringify(sampleDeals)}`;
                     </nav>
                     <div class="mobile-nav-actions">
                         <button class="btn btn-secondary-outline" data-action="show-login">Log In</button>
-                        <button class="btn btn-primary" data-action="show-signup">Get Your Budget Assistant</button>
+                        <button class="btn btn-primary" data-action="show-signup">Start Mastering Your Finances</button>
                     </div>
                 </div>
         `;
@@ -1578,8 +1633,8 @@ Local Deals: ${JSON.stringify(sampleDeals)}`;
         const isLoading = type === 'demo' ? this.state.isDemoLoading : this.state.isCoPilotLoading;
         const formId = `${type}-chat-form`;
         const messagesId = `${type}-chat-messages`;
-        const placeholder = type === 'demo' ? "Ask for deals, advice, and more..." : "Ask about your budget, deals, and more...";
-        const smartQueries = type === 'demo' ? ["Find me deals at Shoprite", "How's my 'Chop Money' budget?", "Any deals for a new phone?"] : [];
+        const placeholder = type === 'demo' ? "Ask about deals, trips, and more..." : "Ask your co-pilot anything...";
+        const smartQueries = type === 'demo' ? ["Find me deals at Shoprite", "Can I afford a trip to Ikoyi?", "Any deals for a new phone?"] : [];
 
         return `
             <div class="chat-messages" id="${messagesId}">${this.renderChatHistory(history)}</div>
@@ -1618,6 +1673,57 @@ Local Deals: ${JSON.stringify(sampleDeals)}`;
         `;
     }
 
+    private getTripStepIcon(mode: string): string {
+        const modeLower = mode.toLowerCase();
+        switch(modeLower) {
+            case 'bus': return icons.bus;
+            case 'car': return icons.car;
+            case 'food': return icons.food;
+            case 'walk': return icons.walk;
+            case 'ferry': return icons.transactions; // placeholder
+            case 'keke': return icons.transactions; // placeholder
+            case 'okada': return icons.transactions; // placeholder
+            default: return icons.transactions; // A generic circle icon for 'Misc'
+        }
+    }
+
+    private renderTripPlanCard(payload: any): string {
+        const { summary, isFeasible, totalCost, steps } = payload;
+
+        const stepsHtml = steps.map((step: any) => `
+            <li class="trip-plan-step">
+                <div class="trip-step-icon">
+                    <span class="btn-icon">${this.getTripStepIcon(step.mode)}</span>
+                </div>
+                <div class="trip-step-details">
+                    <span class="trip-step-description">${step.description}</span>
+                    <span class="trip-step-cost">${formatNaira(step.cost)}</span>
+                </div>
+            </li>
+        `).join('');
+
+        return `
+            <div class="ai-message">
+                <div class="trip-plan-card">
+                    <div class="trip-plan-header">
+                        <h3>Your Trip Plan</h3>
+                        <p class="trip-plan-summary ${isFeasible ? '' : 'infeasible'}">${summary}</p>
+                    </div>
+                    <ul class="trip-plan-steps">
+                        ${stepsHtml}
+                    </ul>
+                    <div class="trip-plan-footer">
+                        <span class="total-label">Total Estimated Cost</span>
+                        <strong class="total-cost">${formatNaira(totalCost)}</strong>
+                    </div>
+                     <button class="btn btn-secondary-outline" data-action="navigate" data-view="cravour-pay">
+                        Log Trip Expenses with Cravour Pay
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+    
     private renderChatHistory(history: ChatMessage[]): string {
         const isLoading = this.state.isDemoLoading || this.state.isCoPilotLoading;
     
@@ -1642,6 +1748,9 @@ Local Deals: ${JSON.stringify(sampleDeals)}`;
 
                         if (parsed.type === 'recommendation' && parsed.payload?.deal) {
                             return this.renderRecommendationCard(parsed.payload);
+                        }
+                        if (parsed.type === 'trip_plan' && parsed.payload?.steps) {
+                            return this.renderTripPlanCard(parsed.payload);
                         }
                         if (parsed.type === 'text' && parsed.payload?.message) {
                             return `<div class="ai-message message">${parsed.payload.message.replace(/\n/g, '<br>')}</div>`;
@@ -1743,6 +1852,7 @@ Local Deals: ${JSON.stringify(sampleDeals)}`;
             { view: 'budgets', label: 'Budget Planner', icon: 'budgets' },
             { view: 'goals', label: 'Goals', icon: 'target' },
             { view: 'deals', label: 'Marketplace', icon: 'marketplace' },
+            { view: 'cravour-pay', label: 'Cravour Pay', icon: 'pay' },
         ];
         if (this.state.pastPeriods.length > 0) {
             personalNav.push({ view: 'past-reports', label: 'Past Reports', icon: 'history' });
@@ -1814,6 +1924,7 @@ Local Deals: ${JSON.stringify(sampleDeals)}`;
             { view: 'budgets', label: 'Budget Planner', icon: 'budgets' },
             { view: 'goals', label: 'Goals', icon: 'target' },
             { view: 'deals', label: 'Marketplace', icon: 'marketplace' },
+            { view: 'cravour-pay', label: 'Cravour Pay', icon: 'pay' },
             { view: 'past-reports', label: 'Past Reports', icon: 'history' },
             { view: 'profile', label: 'Profile', icon: 'profile' },
             { view: 'settings', label: 'Settings', icon: 'settings' },
@@ -1860,6 +1971,7 @@ Local Deals: ${JSON.stringify(sampleDeals)}`;
                 case 'budgets': return this.renderBudgetPlannerView();
                 case 'goals': return this.renderGoalsView();
                 case 'deals': return this.renderMarketplaceView();
+                case 'cravour-pay': return this.renderCravourPayView();
                 case 'profile': return this.renderProfileView();
                 case 'settings': return this.renderSettingsView();
                 case 'past-reports': return this.renderPastReportsView();
@@ -2023,8 +2135,8 @@ Local Deals: ${JSON.stringify(sampleDeals)}`;
             ? this.state.expenses.map(exp => this.renderExpenseItem(exp, true)).join('')
             : this.renderActionableEmptyState(
                 'plusCircle',
-                "You haven't added any expenses yet.",
-                "Log your first transaction to see it here.",
+                "Your fresh start begins now!",
+                "Log your first expense to see your financial picture come to life.",
                 'Add Your First Expense',
                 'add-expense-card',
                 'expense-name-input'
@@ -2243,7 +2355,7 @@ Local Deals: ${JSON.stringify(sampleDeals)}`;
                 <div class="goal-card-header">
                     <h3>${goal.name}</h3>
                     ${!goal.completed ? `
-                     <button class="delete-btn" data-action="delete-goal" data-id="${goal.id}" aria-label="Delete goal">
+                     <button class="icon-btn delete-btn" data-action="show-delete-goal-modal" data-id="${goal.id}" aria-label="Delete goal">
                         ${icons.trash}
                     </button>
                     ` : ''}
@@ -2335,6 +2447,83 @@ Local Deals: ${JSON.stringify(sampleDeals)}`;
                 </div>
                 <div class="deal-card-footer">
                      <button class="btn btn-primary" data-action="buy-now" data-id="${deal.id}">Buy Now</button>
+                </div>
+            </div>
+        `;
+    }
+    
+    private renderCravourPayView() {
+        let content;
+        const { step, message, canAfford, details } = this.state.cravourPayState;
+
+        switch (step) {
+            case 'checking':
+                content = `
+                    <div class="cravour-pay-feedback">
+                        <div class="spinner"></div>
+                        <p>Analyzing your budget...</p>
+                    </div>
+                `;
+                break;
+            case 'confirming':
+                content = `
+                    <div class="cravour-pay-confirmation">
+                        <h3>Confirm Payment</h3>
+                        <div class="payment-details">
+                            <div class="detail-item"><span>To:</span><strong>${details?.merchant}</strong></div>
+                            <div class="detail-item"><span>Amount:</span><strong>${formatNaira(details?.amount || 0)}</strong></div>
+                            <div class="detail-item"><span>Category:</span><strong>${details?.category}</strong></div>
+                        </div>
+                        <p class="feedback-message ${canAfford ? 'positive' : 'negative'}">${message}</p>
+                        <div class="cravour-pay-actions">
+                            <button class="btn btn-secondary-outline" data-action="cravour-pay-reset">Cancel</button>
+                            <button class="btn btn-primary" data-action="cravour-pay-confirm" ${!canAfford ? 'disabled' : ''}>
+                                Confirm & Log Expense
+                            </button>
+                        </div>
+                    </div>
+                `;
+                break;
+            case 'success':
+                content = `
+                    <div class="cravour-pay-feedback success">
+                        <div class="btn-icon">${icons.checkCircle}</div>
+                        <p>Payment Logged Successfully!</p>
+                    </div>
+                `;
+                break;
+            case 'form':
+            default:
+                content = `
+                    <form id="cravour-pay-form">
+                        <div class="form-group">
+                            <label for="cravour-pay-amount">Amount (NGN)</label>
+                            <input type="number" id="cravour-pay-amount" name="amount" class="input-field" required placeholder="e.g., 10000">
+                        </div>
+                        <div class="form-group">
+                            <label for="cravour-pay-category">Category</label>
+                            <select id="cravour-pay-category" name="category" class="input-field" required>
+                                <option value="" disabled selected>Select a category</option>
+                                ${CATEGORIES.map(cat => `<option value="${cat}">${cat}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cravour-pay-merchant">Merchant / Description</label>
+                            <input type="text" id="cravour-pay-merchant" name="merchant" class="input-field" required placeholder="e.g., Shoprite">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Check & Continue</button>
+                    </form>
+                `;
+        }
+
+        return `
+            <div class="cravour-pay-view">
+                <div class="view-header">
+                    <h1>Cravour Pay</h1>
+                    <p class="view-subtitle">Quickly log an expense and see how it impacts your budget in real-time.</p>
+                </div>
+                <div class="card cravour-pay-card">
+                    ${content}
                 </div>
             </div>
         `;
@@ -2571,8 +2760,8 @@ Local Deals: ${JSON.stringify(sampleDeals)}`;
             <div class="end-of-period-view">
                 <div class="card end-of-period-card">
                     <div class="end-of-period-icon">${icons.wallet}</div>
-                    <h2>Welcome to Cravour!</h2>
-                    <p>Let's get you set up. Start by creating your first budget. This will be the total amount of funds you have available to spend for this period.</p>
+                    <h2>Your Journey to Financial Clarity Starts Now.</h2>
+                    <p>Let's get you set up. Your first step is to create a budget by telling us the total funds you have available to spend for this period.</p>
                     <div class="end-of-period-actions">
                         <button class="btn btn-primary" data-action="show-new-budget-modal">Create Your First Budget</button>
                     </div>
@@ -2648,17 +2837,25 @@ Local Deals: ${JSON.stringify(sampleDeals)}`;
 
                 <div class="snapshot-grid">
                     <div class="card key-metrics-widget" id="metrics-widget">
-                        <div class="metric-item">
-                            <div class="metric-title">Monthly Budget</div>
-                            <div class="metric-value">${formatNaira(initialBalance)}</div>
+                        <div class="metrics-values">
+                            <div class="metric-item">
+                                <div class="metric-title">Monthly Budget</div>
+                                <div class="metric-value">${formatNaira(initialBalance)}</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-title">Spent So Far</div>
+                                <div class="metric-value spent">${formatNaira(spent)}</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-title">Remaining</div>
+                                <div class="metric-value ${remaining > 0 ? 'ok' : 'danger'}">${formatNaira(remaining)}</div>
+                            </div>
                         </div>
-                        <div class="metric-item">
-                            <div class="metric-title">Spent So Far</div>
-                            <div class="metric-value spent">${formatNaira(spent)}</div>
-                        </div>
-                        <div class="metric-item">
-                            <div class="metric-title">Remaining</div>
-                            <div class="metric-value ${remaining > 0 ? 'ok' : 'danger'}">${formatNaira(remaining)}</div>
+                         <div class="metrics-actions">
+                            <button class="btn btn-secondary-outline" data-action="show-add-funds-modal">
+                                <span class="btn-icon">${icons.wallet}</span>
+                                <span>Add Funds</span>
+                            </button>
                         </div>
                     </div>
                     
@@ -2834,7 +3031,22 @@ Local Deals: ${JSON.stringify(sampleDeals)}`;
     }
 
     private renderEnterpriseDashboard() {
-        const { totalRevenue, totalSales, chartData } = this.calculateEnterpriseStats();
+        const { totalRevenue, totalSales, chartData, transactions } = this.calculateEnterpriseStats();
+        const recentTransactions = transactions.slice(0, 5);
+
+        const recentTransactionsHtml = recentTransactions.length > 0
+            ? recentTransactions.map(t => `
+                <div class="transaction-item">
+                    <div class="transaction-product">
+                        <strong>${t.productName}</strong>
+                        <span class="customer">by ${t.customerName}</span>
+                    </div>
+                    <div class="transaction-date">${new Date(t.date).toLocaleDateString('en-GB')}</div>
+                    <div class="transaction-amount">${formatNaira(t.price)}</div>
+                </div>
+            `).join('')
+            : '<div class="empty-state mini">No recent transactions.</div>';
+
         return `
             <div class="enterprise-dashboard-view">
                 <div class="view-header">
@@ -2853,6 +3065,12 @@ Local Deals: ${JSON.stringify(sampleDeals)}`;
                     <div class="card revenue-chart-card">
                         <h3>Revenue Over Time</h3>
                         ${this.renderRevenueChart(chartData)}
+                    </div>
+                    <div class="card recent-transactions-card">
+                        <h3>Recent Sales</h3>
+                        <div class="transaction-list">
+                            ${recentTransactionsHtml}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2961,8 +3179,8 @@ Local Deals: ${JSON.stringify(sampleDeals)}`;
                         <p>You are about to log this purchase. This will deduct the amount from your Cravour wallet and add it to your expenses.</p>
                     </div>
                      <div class="payment-modal-footer">
-                        <button class="btn btn-primary" data-action="confirm-payment">Confirm Purchase</button>
                         <button class="btn btn-secondary-outline" data-action="close-modal">Cancel</button>
+                        <button class="btn btn-primary" data-action="confirm-payment">Confirm Purchase</button>
                     </div>
                 `;
             } else if (this.state.paymentStep === 'processing') {
