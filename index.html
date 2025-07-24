@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script type="importmap">
+    {
+      "imports": {
+        "@google/genai": "https://esm.sh/@google/genai@^1.10.0",
+        "marked": "https://esm.sh/marked@12.0.2",
+        "dompurify": "https://esm.sh/dompurify@3.0.11"
+      }
+    }
+    </script>
+
+    <title>Cravour: AI Budget Assistant for Nigeria</title>
+    <meta name="description" content="Cravour is your AI-powered Budget Assistant for Nigeria. Get smart spending advice, stick to your budget, and make every Naira count.">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="icon" href="favicon.ico">
+    <meta name="theme-color" content="#121212">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet"></noscript>
+
+    <link rel="stylesheet" href="index.css">
+    <script type="module" src="index.tsx" defer></script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body data-theme="dark" data-auth-state="logged-out">
+
+    <div id="app-loader">
+        <div class="initial-spinner"></div>
+    </div>
+
+    <div id="config-banner" class="config-banner hidden">
+        <p><strong>Configuration Error:</strong> API_KEY is not set. AI features will be disabled.</p>
+    </div>
+
+    <header class="header">
+        <div class="container header-container">
+            <a href="#" class="header-logo" data-action="navigate" data-view="co-pilot">
+                <span class="logo-svg"></span>
+                Cravour
+            </a>
+            <nav class="header-nav">
+                <ul class="nav-list">
+                    <li><button class="nav-button" data-action="navigate" data-view="#features">Features</button></li>
+                    <li><button class="nav-button" data-action="navigate" data-view="#for-merchants">For Merchants</button></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="btn btn-secondary-outline" data-action="show-login">Log In</button>
+                <button class="btn btn-primary" data-action="show-signup">Get Started</button>
+            </div>
+            <button class="mobile-menu-toggle" data-action="toggle-mobile-menu" aria-label="Toggle menu">
+                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 01-.75-.75z" clip-rule="evenodd" /></svg>
+            </button>
+        </div>
+    </header>
+    <div class="mobile-nav-container"></div>
+    
+
+    <main id="landing-page">
+        <section id="hero-section" class="hero-section">
+            <div class="container interactive-hero-grid">
+                <div class="hero-content">
+                    <h1 class="fade-in">Smart budgeting meets savvy shopping.</h1>
+                    <p class="lead fade-in-delay1">Your AI guide to mastering your money in Nigeria. Stick to your budget while discovering great deals from local merchants.</p>
+                    <div class="hero-actions fade-in-delay2">
+                        <button class="btn btn-primary btn-lg" data-action="show-signup">Get Started Free</button>
+                    </div>
+                </div>
+                <div class="skeleton-chat"></div>
+            </div>
+        </section>
+
+        <section id="features" class="features-section">
+            <div class="container">
+                <h2 class="section-title">Features That Empower Your Spending</h2>
+                <p class="section-subtitle">Go beyond simple tracking. Cravour gives you the tools and insights to make smarter financial decisions every day in Nigeria.</p>
+                <div class="features-grid">
+                    <div class="feature-card"><div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.925 5.512a2.25 2.25 0 0 0-2.175-1.762H5.25a2.25 2.25 0 0 0-2.175 1.762l-1.313 7.875A2.25 2.25 0 0 0 3.938 16h16.125a2.25 2.25 0 0 0 2.175-2.613l-1.313-7.875ZM5.25 5.25h13.5c.31 0 .59.167.737.438l1.313 7.875a.75.75 0 0 1-.725.887H3.938a.75.75 0 0 1-.725-.887l1.313-7.875A.75.75 0 0 1 5.25 5.25Z"/><path d="M10 10.5a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z M18 8.625a.75.75 0 0 0-1.5 0V11a.75.75 0 0 0 1.5 0V8.625Z"/><path d="M4.5 17.25a.75.75 0 0 0 0 1.5h15a.75.75 0 0 0 0-1.5h-15Z"/></svg></div><h3>Smart Budgeting</h3><p>Create budgets that work for you. Track your spending in Naira and always know where your money is going.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 0 0 4.25 22.5h15.5a1.875 1.875 0 0 0 1.865-2.071l-1.263-12a1.875 1.875 0 0 0-1.865-1.679H16.5V6a4.5 4.5 0 1 0-9 0ZM12 3a3 3 0 0 0-3 3v.75h6V6a3 3 0 0 0-3-3Zm-3 9a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5H9Z" clip-rule="evenodd" /></svg></div><h3>AI Marketplace</h3><p>Discover exclusive offers from Nigerian shops, with personalized recommendations from your AI assistant.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.25a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 0 9 0 4.5 4.5 0 0 0-9 0Zm-2.39.264a.75.75 0 0 0 1.06 1.06l2.122-2.12a.75.75 0 0 0-1.061-1.061L5.11 12.264Zm13.84-.001a.75.75 0 0 0-1.06-1.06l-2.123 2.12a.75.75 0 0 0 1.061 1.061l2.122-2.12ZM12 7.5a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0V8.25A.75.75 0 0 1 12 7.5ZM5.11 7.236a.75.75 0 0 0-1.06 1.06l2.122 2.122a.75.75 0 1 0 1.06-1.06L5.11 7.236Zm13.84-.001a.75.75 0 1 0-1.06-1.06l-2.122 2.122a.75.75 0 0 0 1.06 1.06l2.122-2.122ZM12 16.5a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5a.75.75 0 0 1 .75-.75Z"/></svg></div><h3>Proactive AI Insights</h3><p>Get automatic, personalized advice to help you stick to your budget and make smarter spending decisions.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="for-merchants" class="for-merchants-section">
+             <div class="container">
+                <div class="for-merchants-content">
+                    <h2 class="section-title">Partner with Cravour</h2>
+                    <p class="section-subtitle">Reach motivated Nigerian customers who are actively managing their budgets. Join our network of trusted merchants and grow your business.</p>
+                    <ul class="merchant-benefits"><li>Attract new, high-intent customers.</li><li>Showcase your products and deals directly to shoppers.</li><li>Receive payments instantly and track your sales.</li></ul>
+                    <button class="btn btn-primary btn-lg" data-action="open-merchant-modal">Partner With Us</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Cravour Nigeria. All rights reserved.</p>
+            <p>For business inquiries, contact <a href="mailto:sales@cravour.com">sales@cravour.com</a></p>
+        </div>
+    </footer>
+
+     <div id="auth-modal" class="modal-overlay hidden">
+        <div class="modal-content glass-effect" id="auth-form-container">
+            <!-- Auth Form will be rendered here -->
+        </div>
+    </div>
+    
+    <div id="app-dashboard">
+        <!-- Main application dashboard will be rendered here -->
+    </div>
+
+    <div id="payment-modal">
+        <!-- Payment modal will be rendered here -->
+    </div>
+
+    <div id="action-modal">
+        <!-- General action modal will be rendered here -->
+    </div>
+
+    <div id="budget-modal">
+        <!-- Budget modal will be rendered here -->
+    </div>
+    
+    <div id="transaction-modal">
+        <!-- Transaction modal will be rendered here -->
+    </div>
+
+    <div id="goal-contribution-modal">
+        <!-- Goal contribution modal will be rendered here -->
+    </div>
+    
+    <div id="goal-modal">
+        <!-- Goal modal will be rendered here -->
+    </div>
+
+    <div id="pot-modal">
+        <!-- Pot modal will be rendered here -->
+    </div>
+    
+    <div id="pot-action-modal">
+        <!-- Pot fund/withdraw modal will be rendered here -->
+    </div>
+    
+    <div id="fund-wallet-modal">
+        <!-- Wallet funding modal will be rendered here -->
+    </div>
+
+    <div id="merchant-modal">
+        <!-- Merchant inquiry modal will be rendered here -->
+    </div>
+
+    <div id="recurring-transaction-modal">
+        <!-- Recurring transaction modal will be rendered here -->
+    </div>
+
+    <div id="toast-container"></div>
+
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
