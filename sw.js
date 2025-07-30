@@ -1,16 +1,17 @@
+
 // sw.js
 
-const CACHE_NAME = 'cravour-cache-v1';
+const CACHE_NAME = 'cravour-cache-v2';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/index.css',
+  './',
+  './index.html',
+  './index.css',
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap',
-  '/favicon.ico',
-  '/apple-touch-icon.png',
-  '/favicon-32x32.png',
-  '/favicon-16x16.png',
-  '/site.webmanifest'
+  './favicon.ico',
+  './apple-touch-icon.png',
+  './favicon-32x32.png',
+  './favicon-16x16.png',
+  './site.webmanifest'
 ];
 
 self.addEventListener('install', event => {
@@ -51,8 +52,6 @@ self.addEventListener('fetch', event => {
         return fetch(fetchRequest).then(
           response => {
             // Check if we received a valid response. We only cache 200 OK responses.
-            // The check for `response.type` has been removed to allow caching
-            // of cross-origin resources like fonts.
             if (!response || response.status !== 200) {
               return response;
             }
@@ -74,8 +73,10 @@ self.addEventListener('fetch', event => {
             return response;
           }
         ).catch(error => {
-            // In case of network error, return the main index.html as a fallback for the SPA.
-            return caches.match('/index.html');
+            // For failed navigation requests, return the main app shell.
+            if (event.request.mode === 'navigate') {
+                return caches.match('./index.html');
+            }
         });
       })
   );
