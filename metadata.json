@@ -1,6 +1,6 @@
 {
-  "name": "Cravour: AI Budget Assistant for Nigeria",
-  "description": "Cravour is your AI-powered Budget Assistant for Nigeria. Get smart spending advice, stick to your budget, and make every Naira count.",
+  "name": "Cravour: AI Financial Co-Pilot",
+  "description": "A responsive, secure, and AI-powered Single-Page Application that provides personalized budgeting, expense reporting, and an AI creative suite for ad generation. All AI logic is securely handled on the backend.",
   "requestFramePermissions": [],
   "prompt": ""
 }

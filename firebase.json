@@ -1,0 +1,52 @@
+{
+  "hosting": {
+    "public": "dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "index.tsx",
+      "public/app.html",
+      "src/app.ts",
+      "public/cravour-ads.html",
+      "public/create_plan.html",
+      "public/expense_report.html",
+      "public/fund_wallet.html",
+      "public/my_plans.html",
+      "public/merchant_onboarding.html"
+    ],
+    "rewrites": [
+      {
+        "source": "/api/**",
+        "function": "api"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "index.js",
+        "config",
+        "controllers",
+        "middleware",
+        "routes",
+        "services"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" install",
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ],
+      "runtime": "nodejs20"
+    }
+  ]
+}
